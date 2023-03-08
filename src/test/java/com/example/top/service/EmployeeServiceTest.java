@@ -13,7 +13,7 @@ class EmployeeServiceTest {
     private EmployeeService service;
 
     @Test
-    public void testAddMethod() {
+    public void testEmployeeMethods() {
         var emp = Employee.builder().firstname("mani1")
                 .lastname("sharma2").role("music director")
                 .gender("male").emailAddress("manisharme2@musictpp.com")
@@ -23,21 +23,10 @@ class EmployeeServiceTest {
     }
 
     @Test
-    public void testFindAllMethod() {
-        var employees = service.findAllEmployees();
-
-        System.out.println("employees = " + employees);
-    }
-
-    @Test
-    public void testRemoveMethod() {
-        service.removeEmployee(Employee.builder().firstname("mani1").build());
-    }
-
-    @Test
     public void testRoleMethods() {
         var role = new Role();
-        role.setId(3L);
-        service.removeRole(role);
+        role.setName("Sweeper");
+
+        service.updateRole(role, "Sweeper manager");
     }
 }
