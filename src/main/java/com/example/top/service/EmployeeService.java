@@ -45,7 +45,7 @@ public class EmployeeService {
     }
 
     public void removeEmployee(Employee employee) {
-        employeeRepository.delete(employee);
+        employeeRepository.removeEmployeeByFirstname(employee.getFirstname());
 
         var name = employee.getFirstname() + " " + employee.getLastname();
         log.info("Employee with name '" + name + "' has been deleted");
