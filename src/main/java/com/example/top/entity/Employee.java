@@ -23,10 +23,13 @@ public class Employee {
             generator = "employee_seq"
     )
     private Long id;
+    @Column(unique = true)
     private String firstname;
     private String lastname;
     private String role;
+    @Column(unique = true)
     private Long phoneNo;
+    @Column(unique = true)
     private String emailAddress;
     private String gender;
 
