@@ -14,4 +14,8 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
     @Transactional
     @Query(value = "update Role r set r.name = :newName where r.name = :oldName")
     int updateNameByName(String oldName, String newName);
+
+    @Modifying
+    @Transactional
+    int removeRoleByName(String name);
 }
