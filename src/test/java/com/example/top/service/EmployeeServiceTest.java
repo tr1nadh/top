@@ -14,12 +14,12 @@ class EmployeeServiceTest {
 
     @Test
     public void testAddMethod() {
-        var emp = Employee.builder().firstname("mani")
+        var emp = Employee.builder().firstname("mani1")
                 .lastname("sharma2").role("music director")
-                .gender("male").emailAddress("manisharme@musictpp.com")
-                .phoneNo(8648385921L).build();
+                .gender("male").emailAddress("manisharme2@musictpp.com")
+                .phoneNo(8648785921L).build();
 
-        service.addEmployee(null);
+        service.addEmployee(emp);
     }
 
     @Test
@@ -31,7 +31,7 @@ class EmployeeServiceTest {
 
     @Test
     public void testRemoveMethod() {
-        service.removeEmployee(Employee.builder().firstname("mani").build());
+        service.removeEmployee(Employee.builder().firstname("mani1").build());
     }
 
     @Test
