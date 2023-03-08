@@ -18,5 +18,6 @@ public class Role {
             generator = "role_seq"
     )
     private Long id;
+    @Column(unique = true)
     private String name;
 }
