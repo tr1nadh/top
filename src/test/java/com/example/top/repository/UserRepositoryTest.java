@@ -26,4 +26,11 @@ class UserRepositoryTest {
                                         .build();
         repository.save(user);
     }
+
+    @Test
+    public void testChangeUsername() {
+        var result = repository.updateUsernameByUsername("some", "newUsername");
+
+        System.out.println("result = " + result);
+    }
 }
