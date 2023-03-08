@@ -70,10 +70,12 @@ public class EmployeeService {
 
     public void updateRole(Role role, String name) {
         roleRepository.updateNameByName(role.getName(), name);
+
+        log.info("Successfully updated the role '" + role.getName() + "' to '" + name + "'");
     }
 
     public void removeRole(Role role) {
-        roleRepository.delete(role);
+        roleRepository.removeRoleByName(role.getName());
 
         log.info("Successfully deleted the role '" + role.getName() + "'") ;
     }
