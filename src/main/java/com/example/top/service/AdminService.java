@@ -13,6 +13,18 @@ public class AdminService {
     @Autowired
     private UserRepository repository;
 
+    public boolean changeUsername(String oldUsername, String newUsername) {
+        var result = repository.updateUsernameByUsername(oldUsername, newUsername);
+
+        if (result == 0) {
+            log.severe("User with the username '" + oldUsername + "' not found");
+            return false;
+        }
+
+        log.info("User with the username '" + oldUsername + "' has been changed to new username '" + newUsername + "'");
+        return true;
+    }
+
     public boolean changePassword(User user, String newPassword) {
         var username = user.getUsername();
         var userObj = repository.findByUsername(username);
