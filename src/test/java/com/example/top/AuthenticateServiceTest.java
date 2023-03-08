@@ -16,6 +16,6 @@ class AuthenticateServiceTest {
     public void testIfUsernameIsWrong() {
         var result = authenticateService.auth("nothing", "password");
 
-        Assert.isTrue(!result, "Working");
+        Assert.isTrue(!result, "Workings");
     }
 }
