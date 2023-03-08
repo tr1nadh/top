@@ -20,7 +20,6 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
-
     @Autowired
     private RoleRepository roleRepository;
 
