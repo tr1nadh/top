@@ -20,4 +20,11 @@ class AdminServiceTest {
 
         System.out.println("result from test = " + result);
     }
+
+    @Test
+    public void testToChangeUsername() {
+        var result = service.changeUsername("newUsername", "newName");
+
+        System.out.println("result = " + result);
+    }
 }
