@@ -5,9 +5,9 @@
     <title>Employee login</title>
 </head>
 <body>
-<form action="" method="get">
-    <label>Username: <input type="text"></label> <br/>
-    <label>Password: <input type="password"></label> <br/>
+<form action="auth" method="post">
+    <label>Username: <input type="text" name="username"></label> <br/>
+    <label>Password: <input type="password" name="password"></label> <br/>
     <a onclick="alert('Contact admin')" style="cursor: pointer; color: blue">Forgot password?</a>
     <input type="submit">
 </form>
