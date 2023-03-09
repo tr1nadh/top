@@ -43,8 +43,9 @@ public class EmployeeService {
         return employees;
     }
 
-    public void removeEmployee(Employee employee) {
-        employeeRepository.removeEmployeeByFirstname(employee.getFirstname());
+    public void removeEmployee(Long id) {
+        var employee = employeeRepository.getReferenceById(id);
+        employeeRepository.deleteById(id);
 
         var name = employee.getFirstname() + " " + employee.getLastname();
         log.info("Employee with name '" + name + "' has been deleted");
