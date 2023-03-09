@@ -14,7 +14,7 @@ public class AdminController {
 
     @PostMapping("/auth-admin")
     public ModelAndView authAdmin(String username, String password) {
-        if (authService.auth(username, password)) return new ModelAndView("forward:/employees");
+        if (authService.auth(username, password)) return new ModelAndView("redirect:/employees");
 
         var mv = new ModelAndView();
         mv.addObject("msg", "Username or password is wrong");
