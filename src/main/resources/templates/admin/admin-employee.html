@@ -14,13 +14,15 @@
         <th>PhoneNo</th>
         <th>EmailAddress</th>
         <th>Gender</th>
+        <th>Action</th>
         <br/>
-        <td th:text="${emp.firstname}"/>
-        <td th:text="${emp.lastname}"/>
-        <td th:text="${emp.role}"/>
-        <td th:text="${emp.phoneNo}"/>
-        <td th:text="${emp.emailAddress}"/>
-        <td th:text="${emp.gender}"/>
+        <td th:text="${emp.firstname}"></td>
+        <td th:text="${emp.lastname}"></td>
+        <td th:text="${emp.role}"></td>
+        <td th:text="${emp.phoneNo}"></td>
+        <td th:text="${emp.emailAddress}"></td>
+        <td th:text="${emp.gender}"></td>
+        <td><a th:href="@{/remove-emp?id={id}(id=${emp.id})}">Delete</a></td>
         <br/>
     </tr>
 </tbody>
