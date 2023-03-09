@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+<p th:text="${message}">Unknown error</p>
+<p th:text="${msg}">Unknown error</p>
+<a th:href="${fallbackUrl}">Back</a>
+<a href="/">Home</a>
+</body>
+</html>
