@@ -6,25 +6,32 @@
 </head>
 <body>
 <div th:insert="~{admin-fragments.html :: navbar}"></div>
-<tbody>
-    <tr th:each="emp : ${employees}">
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Role</th>
-        <th>PhoneNo</th>
-        <th>EmailAddress</th>
-        <th>Gender</th>
-        <th>Action</th>
-        <br/>
-        <td th:text="${emp.firstname}"></td>
-        <td th:text="${emp.lastname}"></td>
-        <td th:text="${emp.role}"></td>
-        <td th:text="${emp.phoneNo}"></td>
-        <td th:text="${emp.emailAddress}"></td>
-        <td th:text="${emp.gender}"></td>
-        <td><a th:href="@{/remove-emp?id={id}(id=${emp.id})}">Delete</a></td>
-        <br/>
-    </tr>
-</tbody>
+<table>
+    <thead>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Role</th>
+            <th>PhoneNo</th>
+            <th>EmailAddress</th>
+            <th>Gender</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="emp : ${employees}">
+            <td th:text="${emp.firstname}"></td>
+            <td th:text="${emp.lastname}"></td>
+            <td th:text="${emp.role}"></td>
+            <td th:text="${emp.phoneNo}"></td>
+            <td th:text="${emp.emailAddress}"></td>
+            <td th:text="${emp.gender}"></td>
+            <td>
+                <a>Update</a>
+                <a th:href="@{/remove-emp?id={id}(id=${emp.id})}">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
 </body>
 </html>
