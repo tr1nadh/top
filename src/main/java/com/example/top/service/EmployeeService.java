@@ -66,6 +66,7 @@ public class EmployeeService {
         }
 
         roleRepository.save(role);
+
         log.info("New role '" + role.getName() + "' is added");
         return true;
     }
