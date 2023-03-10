@@ -43,6 +43,14 @@ public class EmployeeService {
         return employees;
     }
 
+    public Employee getEmployee(Long id) {
+        var employee = employeeRepository.getReferenceById(id);
+
+        var name = employee.getFirstname() + " " + employee.getLastname();
+        log.info("Employee with name '" + name + "' has been retrieved");
+        return employee;
+    }
+
     public void removeEmployee(Long id) {
         var employee = employeeRepository.getReferenceById(id);
         employeeRepository.deleteById(id);
