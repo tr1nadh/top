@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.Modifying;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Modifying
-    int removeEmployeeByFirstname(String firstname);
+    int deleteEmployeeByFirstname(String firstname);
 }

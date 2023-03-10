@@ -14,5 +14,5 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
     int updateNameByName(String oldName, String newName);
 
     @Modifying
-    int removeRoleByName(String name);
+    int deleteRoleByName(String name);
 }
