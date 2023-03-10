@@ -32,6 +32,24 @@ public class EmployeeController {
         return mv;
     }
 
+    @GetMapping("/edit-employee")
+    public ModelAndView editEmployee(Long id) {
+        var employee = empService.getEmployee(id);
+
+        var mv = new ModelAndView();
+        mv.addObject("employee", employee);
+        mv.setViewName("admin-update-employee");
+
+        return mv;
+    }
+
+    @PostMapping("/update-emp")
+    public RedirectView updateEmployee(Employee employee) {
+        System.out.println("Update employee is pending " + employee.getFirstname());
+
+        return new RedirectView("employees");
+    }
+
     @GetMapping("/delete-emp")
     public RedirectView deleteEmployee(Long id) {
         empService.deleteEmployee(id);
