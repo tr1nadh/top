@@ -53,6 +53,19 @@ public class EmployeeService {
         return employee;
     }
 
+    public boolean updateEmployee(Employee employee) {
+//        var result = employeeRepository.updateById(employee.getId(), employee);
+//
+//        var name = employee.getFirstname() + " " + employee.getLastname();
+//        if (result == 0) {
+//            log.info("Employee with the name '" + name + "' has been successfully updated");
+//            return true;
+//        }
+//
+//        log.info("Employee with the name '" + name + "' has not updated");
+        return false;
+    }
+
     public void deleteEmployee(Long id) {
         var employee = employeeRepository.getReferenceById(id);
         employeeRepository.deleteById(id);
