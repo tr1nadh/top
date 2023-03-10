@@ -87,8 +87,9 @@ public class EmployeeService {
     }
 
     public void deleteRole(Role role) {
-        roleRepository.removeRoleByName(role.getName());
+        var result = roleRepository.removeRoleByName(role.getName());
 
+        if (result == 0) log.info("Role with the name '" + role.getName() + "' cannot be deleted");
         log.info("Successfully deleted the role '" + role.getName() + "'") ;
     }
 }
