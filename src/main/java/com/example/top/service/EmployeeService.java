@@ -51,7 +51,7 @@ public class EmployeeService {
         return employee;
     }
 
-    public void removeEmployee(Long id) {
+    public void deleteEmployee(Long id) {
         var employee = employeeRepository.getReferenceById(id);
         employeeRepository.deleteById(id);
 

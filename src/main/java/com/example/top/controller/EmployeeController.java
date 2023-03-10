@@ -25,7 +25,7 @@ public class EmployeeController {
 
     @GetMapping("/remove-emp")
     public RedirectView removeEmployee(Long id) {
-        empService.removeEmployee(id);
+        empService.deleteEmployee(id);
 
         return new RedirectView("employees");
     }
