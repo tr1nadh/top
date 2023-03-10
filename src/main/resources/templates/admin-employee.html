@@ -6,6 +6,7 @@
 </head>
 <body>
 <div th:insert="~{admin-fragments.html :: navbar}"></div>
+<a href="/add-employee">Add employee</a>
 <table>
     <thead>
         <tr>
@@ -28,7 +29,7 @@
             <td th:text="${emp.gender}"></td>
             <td>
                 <a>Update</a>
-                <a th:href="@{/remove-emp?id={id}(id=${emp.id})}">Delete</a>
+                <a th:href="@{/delete-emp?id={id}(id=${emp.id})}">Delete</a>
             </td>
         </tr>
     </tbody>
