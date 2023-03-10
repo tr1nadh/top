@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add employee</title>
+</head>
+<body>
+<form action="/add-emp" method="post">
+  <label>Firstname: <input type="text" name="firstname"></label> <br>
+  <label>Lastname: <input type="text" name="lastname"></label> <br>
+  <label>Role: <input type="text" name="role"></label> <br>
+  <label>PhoneNo: <input type="number" name="phoneNo"></label> <br>
+  <label>Email address: <input type="text" name="emailAddress"></label> <br>
+  <label>Gender:
+    <label><input type="radio" name="gender" value="Male">Male</label>
+    <label><input type="radio" name="gender" value="Female">Female</label>
+  </label> <br>
+  <input type="submit">
+  <a href="/employees">Back</a>
+</form>
+</body>
+</html>
