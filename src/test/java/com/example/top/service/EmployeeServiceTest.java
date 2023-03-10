@@ -14,12 +14,21 @@ class EmployeeServiceTest {
 
     @Test
     public void testEmployeeMethods() {
-        var emp = Employee.builder().firstname("mani1")
-                .lastname("sharma2").role("music director")
-                .gender("male").emailAddress("manisharme2@musictpp.com")
-                .phoneNo(8648785921L).build();
+        for (var i = 0; i < 100; i++) {
+            var emp = Employee.builder().firstname("mani" + i)
+                    .lastname("sharma" + i).role("music director")
+                    .gender("male").emailAddress("manisharme" + i + "@musictpp.com")
+                    .phoneNo(8648785L + i).build();
 
-        service.addEmployee(emp);
+            service.addEmployee(emp);
+        }
+    }
+
+    @Test
+    public void testGetEmployee() {
+        var emp = service.getEmployee(4L);
+
+        System.out.println("emp = " + emp);
     }
 
     @Test
@@ -27,6 +36,6 @@ class EmployeeServiceTest {
         var role = new Role();
         role.setName("Sweeper");
 
-        service.updateRole(role, "Sweeper manager");
+        service.updateRoleName(role, "Sweeper manager");
     }
 }
