@@ -28,7 +28,7 @@
             <td th:text="${emp.emailAddress}"></td>
             <td th:text="${emp.gender}"></td>
             <td>
-                <a>Update</a>
+                <a th:href="@{/edit-employee?id={id}(id=${emp.id})}">Update</a>
                 <a th:href="@{/delete-emp?id={id}(id=${emp.id})}">Delete</a>
             </td>
         </tr>
