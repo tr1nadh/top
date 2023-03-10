@@ -16,6 +16,13 @@ public class EmployeeController {
     @Autowired
     private EmployeeService empService;
 
+    @PostMapping("/add-emp")
+    public RedirectView addEmployee(Employee employee) {
+        empService.addEmployee(employee);
+
+        return new RedirectView("employees");
+    }
+
     @RequestMapping("/employees")
     public ModelAndView getEmployees() {
         var mv = new ModelAndView();
@@ -26,15 +33,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/delete-emp")
-    public RedirectView removeEmployee(Long id) {
+    public RedirectView deleteEmployee(Long id) {
         empService.deleteEmployee(id);
-
-        return new RedirectView("employees");
-    }
-
-    @PostMapping("/add-emp")
-    public RedirectView addEmployee(Employee employee) {
-        empService.addEmployee(employee);
 
         return new RedirectView("employees");
     }
