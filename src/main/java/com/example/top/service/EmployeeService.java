@@ -84,7 +84,7 @@ public class EmployeeService {
         log.info("Successfully updated the role '" + role.getName() + "' to '" + name + "'");
     }
 
-    public void removeRole(Role role) {
+    public void deleteRole(Role role) {
         roleRepository.removeRoleByName(role.getName());
 
         log.info("Successfully deleted the role '" + role.getName() + "'") ;
