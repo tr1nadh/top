@@ -18,7 +18,7 @@ public class EmployeeController {
     public ModelAndView getEmployees() {
         var mv = new ModelAndView();
         mv.addObject("employees", empService.findAllEmployees());
-        mv.setViewName("admin/admin-employee");
+        mv.setViewName("admin-employee");
 
         return mv;
     }

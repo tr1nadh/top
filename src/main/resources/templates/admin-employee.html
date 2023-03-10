@@ -5,7 +5,7 @@
     <title>Employees</title>
 </head>
 <body>
-<div th:insert="~{admin/admin-fragments.html :: navbar}"></div>
+<div th:insert="~{admin-fragments.html :: navbar}"></div>
 <tbody>
     <tr th:each="emp : ${employees}">
         <th>Firstname</th>
