@@ -80,7 +80,7 @@ public class EmployeeService {
         return roles;
     }
 
-    public void updateRole(Role role, String name) {
+    public void updateRoleName(Role role, String name) {
         roleRepository.updateNameByName(role.getName(), name);
 
         log.info("Successfully updated the role '" + role.getName() + "' to '" + name + "'");
