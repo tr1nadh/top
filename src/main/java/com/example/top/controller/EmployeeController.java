@@ -45,7 +45,7 @@ public class EmployeeController {
 
     @PostMapping("/update-emp")
     public RedirectView updateEmployee(Employee employee) {
-        System.out.println("Update employee is pending " + employee.getFirstname());
+        empService.updateEmployee(employee);
 
         return new RedirectView("employees");
     }
