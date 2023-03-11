@@ -54,15 +54,18 @@ public class EmployeeService {
     }
 
     public boolean updateEmployee(Employee employee) {
-//        var result = employeeRepository.updateById(employee.getId(), employee);
-//
-//        var name = employee.getFirstname() + " " + employee.getLastname();
-//        if (result == 0) {
-//            log.info("Employee with the name '" + name + "' has been successfully updated");
-//            return true;
-//        }
-//
-//        log.info("Employee with the name '" + name + "' has not updated");
+        var result = employeeRepository.updateEmployeeById(
+                employee.getFirstname(), employee.getLastname(), employee.getRole(),
+                employee.getPhoneNo(), employee.getEmailAddress(), employee.getGender(),
+                employee.getId());
+
+        var name = employee.getFirstname() + " " + employee.getLastname();
+        if (result == 0) {
+            log.info("Employee with the name '" + name + "' has been successfully updated");
+            return true;
+        }
+
+        log.info("Employee with the name '" + name + "' has not updated");
         return false;
     }
 
