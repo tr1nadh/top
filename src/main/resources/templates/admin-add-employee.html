@@ -9,7 +9,7 @@
   <label>Firstname: <input type="text" name="firstname"></label> <br>
   <label>Lastname: <input type="text" name="lastname"></label> <br>
   <label>Role:
-    <select>
+    <select name="role">
       <option th:each="role : ${roles}" th:value="${role.name}" th:text="${role.name}" name="role"></option>
     </select>
   </label> <br>
