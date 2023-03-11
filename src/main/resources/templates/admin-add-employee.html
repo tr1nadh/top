@@ -12,6 +12,7 @@
     <select name="role">
       <option th:each="role : ${roles}" th:value="${role.name}" th:text="${role.name}" name="role"></option>
     </select>
+    <a href="/add-role">Add new role</a>
   </label> <br>
   <label>PhoneNo: <input type="number" name="phoneNo"></label> <br>
   <label>Email address: <input type="text" name="emailAddress"></label> <br>
