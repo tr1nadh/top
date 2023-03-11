@@ -1,7 +1,6 @@
 package com.example.top.service;
 
 import com.example.top.entity.Employee;
-import com.example.top.entity.Role;
 import com.example.top.repository.EmployeeRepository;
 import com.example.top.repository.RoleRepository;
 import lombok.AllArgsConstructor;
@@ -77,35 +76,5 @@ public class EmployeeService {
         log.info("Employee with name '" + name + "' has been deleted");
     }
 
-    public boolean addRole(Role role) {
-        if (role == null) {
-            log.severe("Cannot add null as a role");
-            return false;
-        }
 
-        roleRepository.save(role);
-
-        log.info("New role '" + role.getName() + "' is added");
-        return true;
-    }
-
-    public List<Role> findAllRoles() {
-        var roles = roleRepository.findAll();
-
-        log.info("Successfully retrieved all roles");
-        return roles;
-    }
-
-    public void updateRoleName(Role role, String name) {
-        roleRepository.updateNameByName(role.getName(), name);
-
-        log.info("Successfully updated the role '" + role.getName() + "' to '" + name + "'");
-    }
-
-    public void deleteRole(Role role) {
-        var result = roleRepository.deleteRoleByName(role.getName());
-
-        if (result == 0) log.info("Role with the name '" + role.getName() + "' cannot be deleted");
-        log.info("Successfully deleted the role '" + role.getName() + "'") ;
-    }
 }
