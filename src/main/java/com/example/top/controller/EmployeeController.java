@@ -16,6 +16,17 @@ public class EmployeeController {
     @Autowired
     private EmployeeService empService;
 
+    @GetMapping("/add-employee")
+    public ModelAndView addEmployee() {
+        var roles = empService.findAllRoles();
+
+        var mv = new ModelAndView();
+        mv.addObject("roles", roles);
+        mv.setViewName("admin-add-employee");
+
+        return mv;
+    }
+
     @PostMapping("/add-emp")
     public RedirectView addEmployee(Employee employee) {
         empService.addEmployee(employee);
