@@ -2,6 +2,7 @@ package com.example.top.controller;
 
 import com.example.top.entity.Employee;
 import com.example.top.service.EmployeeService;
+import com.example.top.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,12 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService empService;
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping("/add-employee")
     public ModelAndView showAddEmployee() {
-        var roles = empService.findAllRoles();
+        var roles = roleService.findAllRoles();
 
         var mv = new ModelAndView();
         mv.addObject("roles", roles);
