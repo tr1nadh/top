@@ -15,13 +15,13 @@ public class EmployeeBill {
 
     @Id
     @SequenceGenerator(
-            name = "service_seq",
-            sequenceName = "service_seq",
+            name = "employee_bill_seq",
+            sequenceName = "employee_bill_seq",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "service_seq"
+            generator = "employee_bill_seq"
     )
     private Long id;
     private String service;
