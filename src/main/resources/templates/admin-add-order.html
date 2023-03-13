@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add order</title>
+</head>
+<body>
+<form action="/add-order" method="post">
+  <form action="/add-customer" method="post">
+    <label>Customer name: <input type="text" name="name"></label> <br>
+    <label>Customer number: <input type="number" name="phoneNo"></label> <br>
+    <label>Customer email: <input type="email" name="emailAddress"></label> <br>
+  </form>
+  <label>Handle by:
+    <select name="handleBy">
+      <option th:each="emp : ${employees}" th:value="${emp.firstname} + ${emp.lastname}"
+              th:text="${emp.firstname} + ${emp.lastname}" name="handleBy"></option>
+    </select>
+  </label> <br>
+  <form action="/add-employee-bill" method="post">
+    <label>Service: <input type="text" name="service"></label> <br>
+    <label>Booking date: <input type="date" name="bookingDate"></label> <br>
+    <label>Dimensions: <input type="text" name="dimensions"></label> <br>
+    <label>No of sheets: <input type="number" name="noOfSheets"></label> <br>
+    <label>Printing chargers: <input type="number" name="printingChargers"></label> <br>
+  </form>
+  <label>Total amount: <input type="number" name="totalAmount"></label> <br>
+  <label>Amount paid: <input type="number" name="amountPaid"></label> <br>
+  <input type="submit">
+  <a href="/employees">Back</a>
+</form>
+</body>
+</html>
