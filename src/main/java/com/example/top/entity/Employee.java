@@ -27,8 +27,7 @@ public class Employee {
     private String firstname;
     private String lastname;
     @OneToOne(
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            fetch = FetchType.EAGER
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
     @JoinColumn(name = "role_id")
     private Role role;
