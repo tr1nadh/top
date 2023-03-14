@@ -21,7 +21,7 @@ public class Role {
             strategy = GenerationType.SEQUENCE,
             generator = "role_seq"
     )
-    private Long id;
+    private Long roleId;
     @Column(unique = true)
     private String name;
 }
