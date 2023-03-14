@@ -26,7 +26,10 @@ public class Employee {
     @Column(unique = true)
     private String firstname;
     private String lastname;
-    @OneToOne
+    @OneToOne(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.EAGER
+    )
     @JoinColumn(name = "role_id")
     private Role role;
     @Column(unique = true)
