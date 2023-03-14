@@ -3,6 +3,7 @@ package com.example.top.entity.order;
 import com.example.top.entity.Employee;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
@@ -11,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@DynamicUpdate
 @Table(name = "OrgOrder")
 public class Order {
 
