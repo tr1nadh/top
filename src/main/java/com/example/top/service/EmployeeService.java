@@ -21,17 +21,16 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository repository;
 
-    public boolean addEmployee(Employee employee) {
+    public void saveEmployee(Employee employee) {
         if (employee == null) {
             log.severe("Cannot add null as an employee");
-            return false;
+            return;
         }
 
         repository.save(employee);
 
         var name = employee.getFirstname() + " " + employee.getLastname();
         log.info("Employee with name '" + name + "' has been added" );
-        return true;
     }
 
     public List<Employee> findAllEmployees() {
@@ -49,20 +48,11 @@ public class EmployeeService {
         return employee;
     }
 
-    public boolean updateEmployee(Employee employee) {
-        var result = repository.updateEmployeeById(
-                employee.getFirstname(), employee.getLastname(), employee.getRole(),
-                employee.getPhoneNo(), employee.getEmailAddress(), employee.getGender(),
-                employee.getEmployeeId());
+    public void updateEmployee(Employee employee) {
+        repository.save(employee);
 
         var name = employee.getFirstname() + " " + employee.getLastname();
-        if (result == 0) {
-            log.info("Employee with the name '" + name + "' has been successfully updated");
-            return true;
-        }
-
-        log.info("Employee with the name '" + name + "' has not updated");
-        return false;
+        log.info("Employee with the name '" + name + "' has been updated");
     }
 
     public void deleteEmployee(Long id) {
