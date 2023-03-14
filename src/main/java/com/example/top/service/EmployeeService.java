@@ -56,7 +56,7 @@ public class EmployeeService {
         var result = employeeRepository.updateEmployeeById(
                 employee.getFirstname(), employee.getLastname(), employee.getRole(),
                 employee.getPhoneNo(), employee.getEmailAddress(), employee.getGender(),
-                employee.getId());
+                employee.getEmployeeId());
 
         var name = employee.getFirstname() + " " + employee.getLastname();
         if (result == 0) {
