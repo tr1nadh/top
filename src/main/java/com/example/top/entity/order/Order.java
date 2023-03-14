@@ -1,5 +1,6 @@
-package com.example.top.entity;
+package com.example.top.entity.order;
 
+import com.example.top.entity.Employee;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,10 +24,14 @@ public class Order {
             strategy = GenerationType.SEQUENCE,
             generator = "order_seq"
     )
-    private Long id;
-    private String customer;
-    private String handleBy;
-    private String work;
+    private Long orderId;
+    @Embedded
+    private Customer customer;
+    @OneToOne
+    @JoinColumn(name = "employee_id")
+    private Employee handleBy;
+    @Embedded
+    private Service service;
     private int totalAmount;
     private int amountPaid;
 }
