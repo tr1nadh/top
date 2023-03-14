@@ -22,11 +22,13 @@ public class Employee {
             strategy = GenerationType.SEQUENCE,
             generator = "employee_seq"
     )
-    private Long id;
+    private Long employeeId;
     @Column(unique = true)
     private String firstname;
     private String lastname;
-    private String role;
+    @OneToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
     @Column(unique = true)
     private Long phoneNo;
     @Column(unique = true)
