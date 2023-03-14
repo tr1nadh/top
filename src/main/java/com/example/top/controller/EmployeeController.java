@@ -32,7 +32,7 @@ public class EmployeeController {
 
     @PostMapping("/add-emp")
     public RedirectView addEmployee(Employee employee) {
-        empService.addEmployee(employee);
+        empService.saveEmployee(employee);
 
         return new RedirectView("employees");
     }
