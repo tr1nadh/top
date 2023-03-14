@@ -23,7 +23,7 @@ public class RoleController {
 
     @PostMapping("/add-role")
     public RedirectView addRole(Role role) {
-        service.addRole(role);
+        service.saveRole(role);
 
         return new RedirectView("add-employee");
     }
