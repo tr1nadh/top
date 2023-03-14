@@ -1,4 +1,4 @@
-package com.example.top.entity;
+package com.example.top.entity.order;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,7 +22,7 @@ public class Dimensions {
             strategy = GenerationType.SEQUENCE,
             generator = "dimensions_seq"
     )
-    private Long id;
+    private Long dimensionsId;
     @Column(unique = true)
     private String name;
 }
