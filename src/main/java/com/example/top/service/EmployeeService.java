@@ -2,7 +2,6 @@ package com.example.top.service;
 
 import com.example.top.entity.Employee;
 import com.example.top.repository.EmployeeRepository;
-import com.example.top.repository.RoleRepository;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 import lombok.extern.java.Log;
@@ -20,9 +19,7 @@ import java.util.List;
 public class EmployeeService {
 
     @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private RoleRepository roleRepository;
+    private EmployeeRepository repository;
 
     public boolean addEmployee(Employee employee) {
         if (employee == null) {
@@ -30,7 +27,7 @@ public class EmployeeService {
             return false;
         }
 
-        employeeRepository.save(employee);
+        repository.save(employee);
 
         var name = employee.getFirstname() + " " + employee.getLastname();
         log.info("Employee with name '" + name + "' has been added" );
@@ -38,14 +35,14 @@ public class EmployeeService {
     }
 
     public List<Employee> findAllEmployees() {
-        var employees = employeeRepository.findAll();
+        var employees = repository.findAll();
 
         log.info("Successfully retrieved all employees");
         return employees;
     }
 
     public Employee getEmployee(Long id) {
-        var employee = employeeRepository.getReferenceById(id);
+        var employee = repository.getReferenceById(id);
 
         var name = employee.getFirstname() + " " + employee.getLastname();
         log.info("Employee with name '" + name + "' has been retrieved");
@@ -53,7 +50,7 @@ public class EmployeeService {
     }
 
     public boolean updateEmployee(Employee employee) {
-        var result = employeeRepository.updateEmployeeById(
+        var result = repository.updateEmployeeById(
                 employee.getFirstname(), employee.getLastname(), employee.getRole(),
                 employee.getPhoneNo(), employee.getEmailAddress(), employee.getGender(),
                 employee.getEmployeeId());
@@ -69,8 +66,8 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(Long id) {
-        var employee = employeeRepository.getReferenceById(id);
-        employeeRepository.deleteById(id);
+        var employee = repository.getReferenceById(id);
+        repository.deleteById(id);
 
         var name = employee.getFirstname() + " " + employee.getLastname();
         log.info("Employee with name '" + name + "' has been deleted");
