@@ -15,16 +15,15 @@ public class RoleService {
     @Autowired
     private RoleRepository repository;
 
-    public boolean addRole(Role role) {
+    public void saveRole(Role role) {
         if (role == null) {
             log.severe("Cannot add null as a role");
-            return false;
+            return;
         }
 
         repository.save(role);
 
         log.info("New role '" + role.getName() + "' is added");
-        return true;
     }
 
     public List<Role> findAllRoles() {
