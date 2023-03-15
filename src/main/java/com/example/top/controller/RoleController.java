@@ -40,4 +40,29 @@ public class RoleController {
 
         return mv;
     }
+
+    @GetMapping("/edit-role")
+    public ModelAndView editRole(Long id) {
+        var roles = service.findAllRoles();
+
+        var mv = new ModelAndView();
+        mv.addObject("roles", roles);
+        mv.setViewName("employee/role/update-role");
+
+        return mv;
+    }
+
+    @PostMapping("/update-role")
+    public RedirectView updateRole(Role role) {
+        // Update role
+
+        return new RedirectView("roles");
+    }
+
+    @GetMapping("/delete-role")
+    public RedirectView deleteRole(Long id) {
+        // Delete role
+
+        return new RedirectView("roles");
+    }
 }
