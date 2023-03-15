@@ -19,8 +19,12 @@ public class RoleController {
     private RoleService service;
 
     @GetMapping("/add-role")
-    public String addRole() {
-        return "employee/role/add-role";
+    public ModelAndView addRole() {
+        var mv = new ModelAndView();
+        mv.addObject("role", new Role());
+        mv.setViewName("employee/role/add-role");
+
+        return mv;
     }
 
     @PostMapping("/save-role")
