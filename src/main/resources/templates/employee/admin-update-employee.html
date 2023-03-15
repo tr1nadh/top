@@ -5,7 +5,7 @@
     <title>Update employee</title>
 </head>
 <body>
-<form action="#" th:action="@{/update-emp}" th:object="${employee}" method="post">
+<form action="#" th:action="@{/update-employee}" th:object="${employee}" method="post">
   <input type="hidden" th:field="*{employeeId}">
   <label>Firstname: <input type="text" th:field="*{firstname}"></label> <br>
   <label>Lastname: <input type="text" th:field="*{lastname}"></label> <br>
