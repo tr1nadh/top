@@ -5,16 +5,24 @@
     <title>Update employee</title>
 </head>
 <body>
-<form action="#" th:action="@{/update-emp}" method="post" th:object="${employee}">
-  <label style="display:none">Id: <input type="text" th:field="*{id}" name="id"></label> <br>
-  <label>Firstname: <input type="text" th:field="*{firstname}" name="firstname"></label> <br>
-  <label>Lastname: <input type="text" th:field="*{lastname}" name="lastname"></label> <br>
-  <label>Role: <input type="text" th:field="*{role}" name="role"></label> <br>
-  <label>PhoneNo: <input type="number" th:field="*{phoneNo}" name="phoneNo"></label> <br>
-  <label>Email address: <input type="text" th:field="*{emailAddress}" name="emailAddress"></label> <br>
+<form action="#" th:action="@{/update-emp}" th:object="${employee}" method="post">
+  <input type="hidden" th:field="*{employeeId}">
+  <label>Firstname: <input type="text" th:field="*{firstname}"></label> <br>
+  <label>Lastname: <input type="text" th:field="*{lastname}"></label> <br>
+  <label>Role:
+      <select th:field="*{role}">
+        <option th:each="role : ${roles}"
+                th:value="${role.roleId}"
+                th:text="${role.name}"
+        ></option>
+      </select>
+  </label>
+    <br>
+  <label>PhoneNo: <input type="number" th:field="*{phoneNo}"></label> <br>
+  <label>Email address: <input type="text" th:field="*{emailAddress}"></label> <br>
   <label>Gender:
-    <label><input type="radio" th:field="*{gender}" name="gender" value="Male">Male</label>
-    <label><input type="radio" th:field="*{gender}" name="gender" value="Female">Female</label>
+    <label><input type="radio" th:field="*{gender}" th:value="Male">Male</label>
+    <label><input type="radio" th:field="*{gender}" th:value="Female">Female</label>
   </label> <br>
   <input type="submit" value="update">
   <a href="/employees">Back</a>
