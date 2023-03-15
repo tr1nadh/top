@@ -40,10 +40,10 @@ public class RoleService {
         return role;
     }
 
-    public void updateRoleName(Role role, String name) {
-        repository.updateNameByName(role.getName(), name);
+    public void updateRole(Role role) {
+        repository.save(role);
 
-        log.info("Successfully updated the role '" + role.getName() + "' to '" + name + "'");
+        log.info("Role with the id '" + role.getRoleId() + "' has been updated");
     }
 
     public void deleteRole(Role role) {
