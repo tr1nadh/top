@@ -1,6 +1,5 @@
 package com.example.top.entity.order;
 
-import com.example.top.entity.ServiceType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;

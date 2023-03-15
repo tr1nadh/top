@@ -1,6 +1,6 @@
 package com.example.top.service;
 
-import com.example.top.entity.Employee;
+import com.example.top.entity.employee.Employee;
 import com.example.top.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import lombok.ToString;

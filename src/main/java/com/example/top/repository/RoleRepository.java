@@ -1,6 +1,6 @@
 package com.example.top.repository;
 
-import com.example.top.entity.Role;
+import com.example.top.entity.employee.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

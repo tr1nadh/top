@@ -1,4 +1,4 @@
-package com.example.top.entity;
+package com.example.top.entity.order;
 
 import jakarta.persistence.*;
 import lombok.*;

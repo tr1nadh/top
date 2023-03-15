@@ -1,6 +1,6 @@
 package com.example.top.controller;
 
-import com.example.top.entity.Employee;
+import com.example.top.entity.employee.Employee;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;

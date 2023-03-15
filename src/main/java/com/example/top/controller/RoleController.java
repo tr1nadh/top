@@ -1,6 +1,6 @@
 package com.example.top.controller;
 
-import com.example.top.entity.Role;
+import com.example.top.entity.employee.Role;
 import com.example.top.service.RoleService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;

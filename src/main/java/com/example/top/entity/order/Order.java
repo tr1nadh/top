@@ -1,6 +1,6 @@
 package com.example.top.entity.order;
 
-import com.example.top.entity.Employee;
+import com.example.top.entity.employee.Employee;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
