@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
@@ -17,14 +19,25 @@ public class RoleController {
     private RoleService service;
 
     @GetMapping("/add-role")
-    public String showAddRole() {
-        return "admin-add-role";
+    public String addRole() {
+        return "employee/admin-add-role";
     }
 
-    @PostMapping("/add-role")
-    public RedirectView addRole(Role role) {
+    @PostMapping("/save-role")
+    public RedirectView showRole(Role role) {
         service.saveRole(role);
 
-        return new RedirectView("add-employee");
+        return new RedirectView("roles");
+    }
+
+    @RequestMapping("/roles")
+    public ModelAndView getRoles() {
+        var roles = service.findAllRoles();
+
+        var mv = new ModelAndView();
+        mv.addObject("roles", roles);
+        mv.setViewName("employee/admin-employee-roles");
+
+        return mv;
     }
 }
