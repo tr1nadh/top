@@ -25,7 +25,7 @@ public class EmployeeController {
 
         var mv = new ModelAndView();
         mv.addObject("roles", roles);
-        mv.setViewName("admin-add-employee");
+        mv.setViewName("employee/admin-add-employee");
 
         return mv;
     }
@@ -34,14 +34,14 @@ public class EmployeeController {
     public RedirectView addEmployee(Employee employee) {
         empService.saveEmployee(employee);
 
-        return new RedirectView("employees");
+        return new RedirectView("add-employee");
     }
 
     @RequestMapping("/employees")
     public ModelAndView getEmployees() {
         var mv = new ModelAndView();
         mv.addObject("employees", empService.findAllEmployees());
-        mv.setViewName("admin-employee");
+        mv.setViewName("employee/admin-employee");
 
         return mv;
     }
@@ -52,7 +52,7 @@ public class EmployeeController {
 
         var mv = new ModelAndView();
         mv.addObject("employee", employee);
-        mv.setViewName("admin-update-employee");
+        mv.setViewName("employee/admin-update-employee");
 
         return mv;
     }
