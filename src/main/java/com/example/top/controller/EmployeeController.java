@@ -20,7 +20,7 @@ public class EmployeeController {
     private RoleService roleService;
 
     @GetMapping("/add-employee")
-    public ModelAndView showAddEmployee() {
+    public ModelAndView addEmployee() {
         var roles = roleService.findAllRoles();
 
         var mv = new ModelAndView();
@@ -31,8 +31,8 @@ public class EmployeeController {
         return mv;
     }
 
-    @PostMapping("/add-emp")
-    public RedirectView addEmployee(Employee employee) {
+    @PostMapping("/save-employee")
+    public RedirectView saveEmployee(Employee employee) {
         empService.saveEmployee(employee);
 
         return new RedirectView("add-employee");
@@ -60,14 +60,14 @@ public class EmployeeController {
         return mv;
     }
 
-    @PostMapping("/update-emp")
+    @PostMapping("/update-employee")
     public RedirectView updateEmployee(Employee employee) {
         empService.updateEmployee(employee);
 
         return new RedirectView("employees");
     }
 
-    @GetMapping("/delete-emp")
+    @GetMapping("/delete-employee")
     public RedirectView deleteEmployee(Long id) {
         empService.deleteEmployee(id);
 
