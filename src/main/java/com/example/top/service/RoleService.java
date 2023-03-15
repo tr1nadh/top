@@ -46,10 +46,9 @@ public class RoleService {
         log.info("Role with the id '" + role.getRoleId() + "' has been updated");
     }
 
-    public void deleteRole(Role role) {
-        var result = repository.deleteRoleByName(role.getName());
+    public void deleteRole(Long id) {
+        repository.deleteById(id);
 
-        if (result == 0) log.info("Role with the name '" + role.getName() + "' cannot be deleted");
-        log.info("Successfully deleted the role '" + role.getName() + "'") ;
+        log.info("Employee with the id '" + id + "' has been deleted");
     }
 }
