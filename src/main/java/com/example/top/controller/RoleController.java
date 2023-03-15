@@ -43,10 +43,10 @@ public class RoleController {
 
     @GetMapping("/edit-role")
     public ModelAndView editRole(Long id) {
-        var roles = service.findAllRoles();
+        var role = service.getRole(id);
 
         var mv = new ModelAndView();
-        mv.addObject("roles", roles);
+        mv.addObject("role", role);
         mv.setViewName("employee/role/update-role");
 
         return mv;
