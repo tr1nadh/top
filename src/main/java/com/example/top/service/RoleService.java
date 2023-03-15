@@ -33,6 +33,13 @@ public class RoleService {
         return roles;
     }
 
+    public Role getRole(Long id) {
+        var role = repository.getReferenceById(id);
+
+        log.info("Role with the name '" + role.getName() + "' has been retrieved");
+        return role;
+    }
+
     public void updateRoleName(Role role, String name) {
         repository.updateNameByName(role.getName(), name);
 
