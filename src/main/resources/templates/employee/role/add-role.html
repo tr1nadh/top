@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Add role</title>
 </head>
 <body>
-<form action="/save-role" method="post">
-    <label>Name: <input type="text" name="name"></label> <br>
+<form action="#" th:action="@{/save-role}" th:object="${role}" method="post">
+    <label>Name: <input type="text" th:field="*{name}"></label> <br>
   <input type="submit" value="save">
 </form>
 </body>
