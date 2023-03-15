@@ -25,6 +25,7 @@ public class EmployeeController {
 
         var mv = new ModelAndView();
         mv.addObject("roles", roles);
+        mv.addObject("employee", new Employee());
         mv.setViewName("employee/admin-add-employee");
 
         return mv;
