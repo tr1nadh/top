@@ -24,7 +24,7 @@ public class RoleController {
     }
 
     @PostMapping("/save-role")
-    public RedirectView showRole(Role role) {
+    public RedirectView saveRole(Role role) {
         service.saveRole(role);
 
         return new RedirectView("roles");
