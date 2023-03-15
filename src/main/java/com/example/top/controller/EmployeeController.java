@@ -50,9 +50,11 @@ public class EmployeeController {
     @GetMapping("/edit-employee")
     public ModelAndView editEmployee(Long id) {
         var employee = empService.getEmployee(id);
+        var roles = roleService.findAllRoles();
 
         var mv = new ModelAndView();
         mv.addObject("employee", employee);
+        mv.addObject("roles", roles);
         mv.setViewName("employee/admin-update-employee");
 
         return mv;
