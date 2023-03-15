@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add order</title>
+</head>
+<body>
+<form action="#" th:action="@{/add-order}" th:object="${order}" method="post">
+  <label>
+    Customer name: <input type="text" th:field="*{customer.name}">
+  </label>
+  <label>
+    Customer phoneNo: <input type="number" th:field="*{customer.phoneNo}">
+  </label>
+  <label>
+    Customer email address: <input type="email" th:field="*{customer.emailAddress}">
+  </label>
+  <input type="submit">
+  <a href="/employees">Back</a>
+</form>
+</body>
+</html>
