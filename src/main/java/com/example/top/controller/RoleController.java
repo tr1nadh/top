@@ -51,7 +51,7 @@ public class RoleController {
 
         var mv = new ModelAndView();
         mv.addObject("role", role);
-        mv.setViewName("employee/role/update-role");
+        mv.setViewName("employee/role/edit-role");
 
         return mv;
     }
