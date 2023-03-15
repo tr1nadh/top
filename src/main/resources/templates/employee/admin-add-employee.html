@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add employee</title>
+</head>
+<body>
+<form action="#" th:action="@{/add-emp}" th:object="${employee}" method="post">
+  <label>Firstname: <input type="text" th:field="*{firstname}"></label> <br>
+  <label>Lastname: <input type="text" th:field="*{lastname}"></label> <br>
+  <label>Role:
+    <select th:field="*{role}">
+      <option th:each="role : ${roles}"
+              th:value="${role.roleId}"
+              th:text="${role.name}"
+      ></option>
+    </select>
+    <a href="/add-role">Add new role</a>
+  </label> <br>
+  <label>PhoneNo: <input type="number" th:field="*{phoneNo}"></label> <br>
+  <label>Email address: <input type="email" th:field="*{emailAddress}"></label> <br>
+  <label>Gender:
+    <input type="radio" th:field="*{gender}" th:value="Male"> Male
+    <input type="radio" th:field="*{gender}" th:value="Female"> Female
+  </label> <br>
+  <input type="submit">
+  <a href="/employees">Back</a>
+</form>
+</body>
+</html>
