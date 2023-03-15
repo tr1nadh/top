@@ -7,6 +7,7 @@
 <body>
 <div th:insert="~{admin-fragments.html :: navbar}"></div>
 <a href="/add-employee">Add employee</a>
+<a href="/roles">Roles</a>
 <table>
     <thead>
         <tr>
@@ -23,13 +24,13 @@
         <tr th:each="emp : ${employees}">
             <td th:text="${emp.firstname}"></td>
             <td th:text="${emp.lastname}"></td>
-            <td th:text="${emp.role}"></td>
+            <td th:text="${emp.role.name}"></td>
             <td th:text="${emp.phoneNo}"></td>
             <td th:text="${emp.emailAddress}"></td>
             <td th:text="${emp.gender}"></td>
             <td>
-                <a th:href="@{/edit-employee?id={id}(id=${emp.id})}">Update</a>
-                <a th:href="@{/delete-emp?id={id}(id=${emp.id})}">Delete</a>
+                <a th:href="@{/edit-employee?id={id}(id=${emp.employeeId})}">Update</a>
+                <a th:href="@{/delete-emp?id={id}(id=${emp.employeeId})}">Delete</a>
             </td>
         </tr>
     </tbody>
