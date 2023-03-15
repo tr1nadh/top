@@ -26,7 +26,7 @@ public class EmployeeController {
         var mv = new ModelAndView();
         mv.addObject("employee", new Employee());
         mv.addObject("roles", roles);
-        mv.setViewName("employee/admin-add-employee");
+        mv.setViewName("employee/add-employee");
 
         return mv;
     }
@@ -42,7 +42,7 @@ public class EmployeeController {
     public ModelAndView getEmployees() {
         var mv = new ModelAndView();
         mv.addObject("employees", empService.findAllEmployees());
-        mv.setViewName("employee/admin-employee");
+        mv.setViewName("employee/employee");
 
         return mv;
     }
@@ -55,7 +55,7 @@ public class EmployeeController {
         var mv = new ModelAndView();
         mv.addObject("employee", employee);
         mv.addObject("roles", roles);
-        mv.setViewName("employee/admin-update-employee");
+        mv.setViewName("employee/update-employee");
 
         return mv;
     }

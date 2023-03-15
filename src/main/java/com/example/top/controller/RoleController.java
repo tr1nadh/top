@@ -20,7 +20,7 @@ public class RoleController {
 
     @GetMapping("/add-role")
     public String addRole() {
-        return "employee/admin-add-role";
+        return "employee/role/add-role";
     }
 
     @PostMapping("/save-role")
@@ -36,7 +36,7 @@ public class RoleController {
 
         var mv = new ModelAndView();
         mv.addObject("roles", roles);
-        mv.setViewName("employee/admin-employee-roles");
+        mv.setViewName("employee/role/role");
 
         return mv;
     }
