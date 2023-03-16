@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Service types</title>
+</head>
+<body>
+<a href="/add-service-type">Add service type</a>
+<table>
+  <thead>
+  <tr>
+    <th>Service type</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="serviceType : ${serviceTypes}">
+    <td th:text="${serviceType.name}"></td>
+    <td>
+      <a th:href="@{/edit-service-type?id={id}(id=${serviceType.serviceTypeId})}">Edit</a>
+      <a th:href="@{/delete-service-type?id={id}(id=${serviceType.serviceTypeId})}">Delete</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

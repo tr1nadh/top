@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Save service type</title>
+</head>
+<body>
+<form action="#" th:action="@{/save-service-type}" th:object="${serviceType}" method="post">
+  <input type="hidden" th:field="*{serviceTypeId}">
+  <label>Name: <input type="text" th:field="*{name}"></label> <br>
+  <input type="submit" value="save">
+</form>
+</body>
+</html>
