@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class OrderController {
 
     @Autowired
-    private OrderService service;
+    private OrderService orderService;
     @Autowired
     private EmployeeService employeeService;
 
@@ -33,7 +33,7 @@ public class OrderController {
 
     @PostMapping("/save-order")
     public RedirectView saveOrder(Order order) {
-        service.saveOrder(order);
+        orderService.saveOrder(order);
 
         return new RedirectView("add-order");
     }
@@ -41,7 +41,7 @@ public class OrderController {
     @RequestMapping("/orders")
     public ModelAndView getOrders() {
         var mv = new ModelAndView();
-        mv.addObject("orders", service.findAllOrders());
+        mv.addObject("orders", orderService.findAllOrders());
         mv.setViewName("order/order");
 
         return mv;
@@ -49,7 +49,7 @@ public class OrderController {
 
     @GetMapping("/edit-order")
     public ModelAndView editOrder(Long id) {
-        var order = service.getOrder(id);
+        var order = orderService.getOrder(id);
 
         var mv = new ModelAndView();
         mv.addObject("order", order);
@@ -60,14 +60,14 @@ public class OrderController {
 
     @PostMapping("/update-order")
     public RedirectView updateOrder(Order order) {
-        service.updateOrder(order);
+        orderService.updateOrder(order);
 
         return new RedirectView("orders");
     }
 
     @GetMapping("/delete-order")
     public RedirectView deleteOrder(Long id) {
-        service.deleteOrder(id);
+        orderService.deleteOrder(id);
 
         return new RedirectView("orders");
     }
