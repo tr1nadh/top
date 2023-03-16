@@ -25,8 +25,8 @@ public class OrderController {
         return mv;
     }
 
-    @PostMapping("/save-employee")
-    public RedirectView saveEmployee(Order order) {
+    @PostMapping("/save-order")
+    public RedirectView saveOrder(Order order) {
         service.saveOrder(order);
 
         return new RedirectView("add-order");
