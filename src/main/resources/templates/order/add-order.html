@@ -29,7 +29,7 @@
   <label>Dimensions:
     <select th:field="*{service.dimensions}">
       <option th:each="dimension : ${dimensions}"
-              th:value="${dimension.dimensionId}"
+              th:value="${dimension.dimensionsId}"
               th:text="${dimension.name}"
       ></option>
     </select>
