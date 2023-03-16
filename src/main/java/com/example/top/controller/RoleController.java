@@ -51,13 +51,6 @@ public class RoleController {
         return mv;
     }
 
-    @PostMapping("/update-role")
-    public RedirectView updateRole(Role role) {
-        service.updateRole(role);
-
-        return new RedirectView("roles");
-    }
-
     @GetMapping("/delete-role")
     public RedirectView deleteRole(Long id) {
         service.deleteRole(id);
