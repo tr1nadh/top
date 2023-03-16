@@ -1,6 +1,7 @@
 package com.example.top.controller;
 
 import com.example.top.entity.order.Order;
+import com.example.top.service.DimensionsService;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.OrderService;
 import com.example.top.service.ServiceTypeService;
@@ -21,16 +22,20 @@ public class OrderController {
     private EmployeeService employeeService;
     @Autowired
     private ServiceTypeService serviceTypeService;
+    @Autowired
+    private DimensionsService dimensionsService;
 
     @GetMapping("/add-order")
     public ModelAndView addOrder() {
         var employees = employeeService.findAllEmployees();
         var serviceTypes = serviceTypeService.findAllServiceTypes();
+        var dimensions = dimensionsService.findAllDimensions();
 
         var mv = new ModelAndView();
         mv.addObject("order", new Order());
         mv.addObject("employees", employees);
         mv.addObject("serviceTypes", serviceTypes);
+        mv.addObject("dimensions", dimensions);
         mv.setViewName("order/add-order");
 
         return mv;
