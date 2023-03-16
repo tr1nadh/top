@@ -19,14 +19,17 @@ public class EmployeeController {
     @Autowired
     private RoleService roleService;
 
-    @GetMapping("/add-employee")
-    public ModelAndView addEmployee() {
+    @GetMapping({"/add-employee", "/edit-employee"})
+    public ModelAndView addEmployee(Long id) {
+        var employee = (id == null) ? new Employee() : empService.getEmployee(id);
         var roles = roleService.findAllRoles();
 
         var mv = new ModelAndView();
-        mv.addObject("employee", new Employee());
+        mv.addObject("employee", employee);
         mv.addObject("roles", roles);
         mv.setViewName("employee/add-employee");
+
+        if (id != null) mv.setViewName("employee/edit-employee");
 
         return mv;
     }
@@ -43,19 +46,6 @@ public class EmployeeController {
         var mv = new ModelAndView();
         mv.addObject("employees", empService.findAllEmployees());
         mv.setViewName("employee/employee");
-
-        return mv;
-    }
-
-    @GetMapping("/edit-employee")
-    public ModelAndView editEmployee(Long id) {
-        var employee = empService.getEmployee(id);
-        var roles = roleService.findAllRoles();
-
-        var mv = new ModelAndView();
-        mv.addObject("employee", employee);
-        mv.addObject("roles", roles);
-        mv.setViewName("employee/edit-employee");
 
         return mv;
     }
