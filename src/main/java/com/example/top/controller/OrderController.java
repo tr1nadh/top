@@ -52,14 +52,14 @@ public class OrderController {
         return mv;
     }
 
-    @PostMapping("/update-employee")
+    @PostMapping("/update-order")
     public RedirectView updateOrder(Order order) {
         service.updateOrder(order);
 
         return new RedirectView("orders");
     }
 
-    @GetMapping("/delete-employee")
+    @GetMapping("/delete-order")
     public RedirectView deleteOrder(Long id) {
         service.deleteOrder(id);
 
