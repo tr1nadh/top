@@ -25,7 +25,7 @@ public class OrderController {
     @Autowired
     private DimensionsService dimensionsService;
 
-    @GetMapping({"/add-order", "/update-order"})
+    @GetMapping({"/add-order", "/edit-order"})
     public ModelAndView renderOrder(Long id) {
         var order = (id == null) ? new Order() : orderService.getOrder(id);
         var employees = employeeService.findAllEmployees();
