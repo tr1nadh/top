@@ -35,7 +35,7 @@ public class RoleController {
 
         if (role.getRoleId() != null) return new RedirectView("roles");
 
-        return new RedirectView("employee/role/add-role");
+        return new RedirectView("employee/role/save-role");
     }
 
     @RequestMapping("/roles")
