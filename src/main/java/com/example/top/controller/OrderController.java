@@ -37,9 +37,7 @@ public class OrderController {
         mv.addObject("employees", employees);
         mv.addObject("serviceTypes", serviceTypes);
         mv.addObject("dimensions", dimensions);
-        mv.setViewName("order/add-order");
-
-        if (id != null) mv.setViewName("order/edit-order");
+        mv.setViewName("order/save-order");
 
         return mv;
     }
