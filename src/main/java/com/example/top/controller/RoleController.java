@@ -24,9 +24,7 @@ public class RoleController {
 
         var mv = new ModelAndView();
         mv.addObject("role", role);
-        mv.setViewName("employee/role/add-role");
-
-        if (id != null) mv.setViewName("employee/role/edit-role");
+        mv.setViewName("employee/role/save-role");
 
         return mv;
     }
@@ -42,10 +40,8 @@ public class RoleController {
 
     @RequestMapping("/roles")
     public ModelAndView getRoles() {
-        var roles = service.findAllRoles();
-
         var mv = new ModelAndView();
-        mv.addObject("roles", roles);
+        mv.addObject("roles", service.findAllRoles());
         mv.setViewName("employee/role/role");
 
         return mv;
