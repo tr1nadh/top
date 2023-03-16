@@ -23,7 +23,7 @@ public class DimensionsService {
 
         repository.save(dimensions);
 
-        log.info("New dimensions '" + dimensions.getName() + "' is added");
+        log.info("New dimensions '" + dimensions.getName() + "' is saved");
     }
 
     public List<Dimensions> findAllDimensions() {
@@ -44,12 +44,6 @@ public class DimensionsService {
         var dimensions = optDimensions.get();
         log.info("Dimensions with the name '" + dimensions.getName() + "' has been retrieved");
         return dimensions;
-    }
-
-    public void updateDimensions(Dimensions dimensions) {
-        repository.save(dimensions);
-
-        log.info("Dimensions with the name '" + dimensions.getName() + "' has been updated");
     }
 
     public void deleteDimensions(Long id) {
