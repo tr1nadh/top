@@ -18,11 +18,15 @@ public class RoleController {
     @Autowired
     private RoleService service;
 
-    @GetMapping("/add-role")
-    public ModelAndView addRole() {
+    @GetMapping({"/add-role", "/edit-role"})
+    public ModelAndView renderRole(Long id) {
+        var role = (id == null) ? new Role() : service.getRole(id);
+
         var mv = new ModelAndView();
-        mv.addObject("role", new Role());
+        mv.addObject("role", role);
         mv.setViewName("employee/role/add-role");
+
+        if (id != null) mv.setViewName("employee/role/edit-role");
 
         return mv;
     }
@@ -41,17 +45,6 @@ public class RoleController {
         var mv = new ModelAndView();
         mv.addObject("roles", roles);
         mv.setViewName("employee/role/role");
-
-        return mv;
-    }
-
-    @GetMapping("/edit-role")
-    public ModelAndView editRole(Long id) {
-        var role = service.getRole(id);
-
-        var mv = new ModelAndView();
-        mv.addObject("role", role);
-        mv.setViewName("employee/role/edit-role");
 
         return mv;
     }
