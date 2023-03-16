@@ -48,13 +48,6 @@ public class EmployeeService {
         return employee;
     }
 
-    public void updateEmployee(Employee employee) {
-        repository.save(employee);
-
-        var name = employee.getFirstname() + " " + employee.getLastname();
-        log.info("Employee with the name '" + name + "' has been updated");
-    }
-
     public void deleteEmployee(Long id) {
         var employee = repository.getReferenceById(id);
         repository.deleteById(id);
