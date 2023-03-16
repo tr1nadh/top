@@ -16,18 +16,22 @@ public class ServiceTypeController {
     @Autowired
     private ServiceTypeService service;
 
-    @GetMapping("/add-service-type")
-    public ModelAndView addServiceType() {
+    @GetMapping({"/add-service-type", "/edit-service-type"})
+    public ModelAndView renderServiceType(Long id) {
+        var serviceType = (id == null) ? new ServiceType() : service.getServiceType(id);
+
         var mv = new ModelAndView();
-        mv.addObject("serviceType", new ServiceType());
-        mv.setViewName("");
+        mv.addObject("serviceType", serviceType);
+        mv.setViewName("order/service-type/save-service-type");
 
         return mv;
     }
 
-    @PostMapping("/save-service-type")
+    @PostMapping({"/save-service-type", "/update-service-type"})
     public RedirectView saveServiceType(ServiceType type) {
         service.saveServiceType(type);
+
+        if (type.getServiceTypeId() != null) return new RedirectView("service-types");
 
         return new RedirectView("add-service-type");
     }
@@ -36,27 +40,9 @@ public class ServiceTypeController {
     public ModelAndView getServiceTypes() {
         var mv = new ModelAndView();
         mv.addObject("serviceTypes", service.findAllServiceTypes());
-        mv.setViewName("");
+        mv.setViewName("order/service-type/service-type");
 
         return mv;
-    }
-
-    @GetMapping("/edit-service-type")
-    public ModelAndView editServiceType(Long id) {
-        var serviceType = service.getServiceType(id);
-
-        var mv = new ModelAndView();
-        mv.addObject("serviceType", serviceType);
-        mv.setViewName("");
-
-        return mv;
-    }
-
-    @PostMapping("/update-service-type")
-    public RedirectView updateServiceType(ServiceType type) {
-        service.updateServiceType(type);
-
-        return new RedirectView("service-types");
     }
 
     @GetMapping("/delete-service-type")
