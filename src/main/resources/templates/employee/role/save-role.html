@@ -7,8 +7,9 @@
 <body>
 <form action="#" th:action="@{/save-role}" th:object="${role}" method="post">
     <input type="hidden" th:field="*{roleId}">
-    <label>Name: <input type="text" th:field="*{name}"></label> <br>
+    <label>Role: <input type="text" th:field="*{name}"></label> <br>
   <input type="submit" value="save">
+    <a href="/roles">Back</a>
 </form>
 </body>
 </html>
