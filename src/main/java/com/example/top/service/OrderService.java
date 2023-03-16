@@ -2,20 +2,14 @@ package com.example.top.service;
 
 import com.example.top.entity.order.Order;
 import com.example.top.repository.OrderRepository;
-import lombok.AllArgsConstructor;
-import lombok.ToString;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@ToString
-@AllArgsConstructor
 @Log
-@Transactional
 public class OrderService {
 
     @Autowired
