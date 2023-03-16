@@ -1,6 +1,7 @@
 package com.example.top.controller;
 
 import com.example.top.entity.order.Order;
+import com.example.top.service.EmployeeService;
 import com.example.top.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,11 +16,16 @@ public class OrderController {
 
     @Autowired
     private OrderService service;
+    @Autowired
+    private EmployeeService employeeService;
 
     @GetMapping("/add-order")
     public ModelAndView addOrder() {
+        var employees = employeeService.findAllEmployees();
+
         var mv = new ModelAndView();
         mv.addObject("order", new Order());
+        mv.addObject("employees", employees);
         mv.setViewName("order/add-order");
 
         return mv;
