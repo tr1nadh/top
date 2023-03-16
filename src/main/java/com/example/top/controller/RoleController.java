@@ -31,11 +31,13 @@ public class RoleController {
         return mv;
     }
 
-    @PostMapping("/save-role")
+    @PostMapping({"/save-role", "/update-role"})
     public RedirectView saveRole(Role role) {
         service.saveRole(role);
 
-        return new RedirectView("roles");
+        if (role.getRoleId() != null) return new RedirectView("roles");
+
+        return new RedirectView("employee/role/add-role");
     }
 
     @RequestMapping("/roles")
