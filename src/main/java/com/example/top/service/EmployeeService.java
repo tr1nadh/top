@@ -41,8 +41,14 @@ public class EmployeeService {
     }
 
     public Employee getEmployee(Long id) {
-        var employee = repository.getReferenceById(id);
+        var optEmployee = repository.findById(id);
 
+        if (optEmployee.isEmpty()) {
+             log.severe("No employee found with the id '" + id + "'");
+             return new Employee();
+        }
+
+        var employee = optEmployee.get();
         var name = employee.getFirstname() + " " + employee.getLastname();
         log.info("Employee with name '" + name + "' has been retrieved");
         return employee;

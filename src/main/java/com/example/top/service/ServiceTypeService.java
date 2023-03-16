@@ -34,8 +34,14 @@ public class ServiceTypeService {
     }
 
     public ServiceType getServiceType(Long id) {
-        var serviceType = repository.getReferenceById(id);
+        var optServiceType = repository.findById(id);
 
+        if (optServiceType.isEmpty()) {
+            log.severe("No service type found with the id '" + id + "'");
+            return new ServiceType();
+        }
+
+        var serviceType = optServiceType.get();
         log.info("Service type with the name '" + serviceType.getName() + "' has been retrieved");
         return serviceType;
     }

@@ -34,8 +34,14 @@ public class RoleService {
     }
 
     public Role getRole(Long id) {
-        var role = repository.getReferenceById(id);
+        var optRole = repository.findById(id);
 
+        if (optRole.isEmpty()) {
+            log.severe("No role found with the id '" + id + "'");
+            return new Role();
+        }
+
+        var role = optRole.get();
         log.info("Role with the name '" + role.getName() + "' has been retrieved");
         return role;
     }

@@ -34,8 +34,14 @@ public class DimensionsService {
     }
 
     public Dimensions getDimensions(Long id) {
-        var dimensions = repository.getReferenceById(id);
+        var optDimensions = repository.findById(id);
 
+        if (optDimensions.isEmpty()) {
+            log.severe("No dimensions found with the id '" + id + "'");
+            return new Dimensions();
+        }
+
+        var dimensions = optDimensions.get();
         log.info("Dimensions with the name '" + dimensions.getName() + "' has been retrieved");
         return dimensions;
     }
