@@ -24,7 +24,7 @@ public class EmployeeService {
         repository.save(employee);
 
         var name = employee.getFirstname() + " " + employee.getLastname();
-        log.info("Employee with name '" + name + "' has been saved" );
+        log.info("Employee with the name '" + name + "' has been saved" );
     }
 
     public List<Employee> findAllEmployees() {
