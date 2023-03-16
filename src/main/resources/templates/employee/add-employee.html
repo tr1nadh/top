@@ -6,6 +6,7 @@
 </head>
 <body>
 <form action="#" th:action="@{/save-employee}" th:object="${employee}" method="post">
+  <input type="hidden" th:field="*{employeeId}">
   <label>Firstname: <input type="text" th:field="*{firstname}"></label> <br>
   <label>Lastname: <input type="text" th:field="*{lastname}"></label> <br>
   <label>Role:
@@ -23,7 +24,7 @@
     <input type="radio" th:field="*{gender}" th:value="Male"> Male
     <input type="radio" th:field="*{gender}" th:value="Female"> Female
   </label> <br>
-  <input type="submit">
+  <input type="submit" value="save">
   <a href="/employees">Back</a>
 </form>
 </body>
