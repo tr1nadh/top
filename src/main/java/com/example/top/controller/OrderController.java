@@ -44,9 +44,11 @@ public class OrderController {
         return mv;
     }
 
-    @PostMapping("/save-order")
+    @PostMapping({"/save-order", "/update-order"})
     public RedirectView saveOrder(Order order) {
         orderService.saveOrder(order);
+
+        if (order.getOrderId() != null) return new RedirectView("orders");
 
         return new RedirectView("add-order");
     }
@@ -58,13 +60,6 @@ public class OrderController {
         mv.setViewName("order/order");
 
         return mv;
-    }
-
-    @PostMapping("/update-order")
-    public RedirectView updateOrder(Order order) {
-        orderService.updateOrder(order);
-
-        return new RedirectView("orders");
     }
 
     @GetMapping("/delete-order")
