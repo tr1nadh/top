@@ -22,11 +22,10 @@ public class EmployeeController {
     @GetMapping({"/add-employee", "/edit-employee"})
     public ModelAndView renderEmployee(Long id) {
         var employee = (id == null) ? new Employee() : empService.getEmployee(id);
-        var roles = roleService.findAllRoles();
 
         var mv = new ModelAndView();
         mv.addObject("employee", employee);
-        mv.addObject("roles", roles);
+        mv.addObject("roles", roleService.findAllRoles());
         mv.setViewName("employee/save-employee");
 
         return mv;

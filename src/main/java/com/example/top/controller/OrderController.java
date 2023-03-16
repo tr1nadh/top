@@ -28,15 +28,12 @@ public class OrderController {
     @GetMapping({"/add-order", "/edit-order"})
     public ModelAndView renderOrder(Long id) {
         var order = (id == null) ? new Order() : orderService.getOrder(id);
-        var employees = employeeService.findAllEmployees();
-        var serviceTypes = serviceTypeService.findAllServiceTypes();
-        var dimensions = dimensionsService.findAllDimensions();
 
         var mv = new ModelAndView();
         mv.addObject("order", order);
-        mv.addObject("employees", employees);
-        mv.addObject("serviceTypes", serviceTypes);
-        mv.addObject("dimensions", dimensions);
+        mv.addObject("employees", employeeService.findAllEmployees());
+        mv.addObject("serviceTypes", serviceTypeService.findAllServiceTypes());
+        mv.addObject("dimensions", dimensionsService.findAllDimensions());
         mv.setViewName("order/save-order");
 
         return mv;
