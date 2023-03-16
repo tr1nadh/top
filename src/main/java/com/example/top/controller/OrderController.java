@@ -3,6 +3,7 @@ package com.example.top.controller;
 import com.example.top.entity.order.Order;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.OrderService;
+import com.example.top.service.ServiceTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +19,18 @@ public class OrderController {
     private OrderService orderService;
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private ServiceTypeService serviceTypeService;
 
     @GetMapping("/add-order")
     public ModelAndView addOrder() {
         var employees = employeeService.findAllEmployees();
+        var serviceTypes = serviceTypeService.findAllServiceTypes();
 
         var mv = new ModelAndView();
         mv.addObject("order", new Order());
         mv.addObject("employees", employees);
+        mv.addObject("serviceTypes", serviceTypes);
         mv.setViewName("order/add-order");
 
         return mv;
