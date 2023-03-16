@@ -34,9 +34,11 @@ public class EmployeeController {
         return mv;
     }
 
-    @PostMapping("/save-employee")
+    @PostMapping({"/save-employee", "/update-employee"})
     public RedirectView saveEmployee(Employee employee) {
         empService.saveEmployee(employee);
+
+        if (employee.getEmployeeId() != null) return new RedirectView("employees");
 
         return new RedirectView("add-employee");
     }
@@ -48,13 +50,6 @@ public class EmployeeController {
         mv.setViewName("employee/employee");
 
         return mv;
-    }
-
-    @PostMapping("/update-employee")
-    public RedirectView updateEmployee(Employee employee) {
-        empService.updateEmployee(employee);
-
-        return new RedirectView("employees");
     }
 
     @GetMapping("/delete-employee")
