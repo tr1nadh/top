@@ -60,9 +60,15 @@ public class OrderController {
     @GetMapping("/edit-order")
     public ModelAndView editOrder(Long id) {
         var order = orderService.getOrder(id);
+        var employees = employeeService.findAllEmployees();
+        var serviceTypes = serviceTypeService.findAllServiceTypes();
+        var dimensions = dimensionsService.findAllDimensions();
 
         var mv = new ModelAndView();
         mv.addObject("order", order);
+        mv.addObject("employees", employees);
+        mv.addObject("serviceTypes", serviceTypes);
+        mv.addObject("dimensions", dimensions);
         mv.setViewName("order/edit-order");
 
         return mv;
