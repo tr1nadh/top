@@ -29,8 +29,6 @@ public class EmployeeController {
         mv.addObject("roles", roles);
         mv.setViewName("employee/add-employee");
 
-        if (id != null) mv.setViewName("employee/edit-employee");
-
         return mv;
     }
 
