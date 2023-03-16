@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Save dimensions</title>
+</head>
+<body>
+<form action="#" th:action="@{/save-dimensions}" th:object="${dimensions}" method="post">
+    <input type="hidden" th:field="*{dimensionsId}">
+    <label>Dimensions: <input type="text" th:field="*{name}"></label> <br>
+    <input type="submit" value="save">
+</form>
+</body>
+</html>

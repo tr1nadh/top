@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dimensions</title>
+</head>
+<body>
+<a href="/add-dimensions">Add dimensions</a>
+<table>
+    <thead>
+    <tr>
+        <th>Dimensions</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="dimension : ${dimensions}">
+        <td th:text="${dimension.name}"></td>
+        <td>
+            <a th:href="@{/edit-dimensions?id={id}(id=${dimension.dimensionsId})}">Edit</a>
+            <a th:href="@{/delete-dimensions?id={id}(id=${dimension.dimensionsId})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
