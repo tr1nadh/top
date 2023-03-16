@@ -25,18 +25,21 @@ public class OrderController {
     @Autowired
     private DimensionsService dimensionsService;
 
-    @GetMapping("/add-order")
-    public ModelAndView addOrder() {
+    @GetMapping({"/add-order", "/update-order"})
+    public ModelAndView renderOrder(Long id) {
+        var order = (id == null) ? new Order() : orderService.getOrder(id);
         var employees = employeeService.findAllEmployees();
         var serviceTypes = serviceTypeService.findAllServiceTypes();
         var dimensions = dimensionsService.findAllDimensions();
 
         var mv = new ModelAndView();
-        mv.addObject("order", new Order());
+        mv.addObject("order", order);
         mv.addObject("employees", employees);
         mv.addObject("serviceTypes", serviceTypes);
         mv.addObject("dimensions", dimensions);
         mv.setViewName("order/add-order");
+
+        if (id != null) mv.setViewName("order/edit-order");
 
         return mv;
     }
@@ -53,23 +56,6 @@ public class OrderController {
         var mv = new ModelAndView();
         mv.addObject("orders", orderService.findAllOrders());
         mv.setViewName("order/order");
-
-        return mv;
-    }
-
-    @GetMapping("/edit-order")
-    public ModelAndView editOrder(Long id) {
-        var order = orderService.getOrder(id);
-        var employees = employeeService.findAllEmployees();
-        var serviceTypes = serviceTypeService.findAllServiceTypes();
-        var dimensions = dimensionsService.findAllDimensions();
-
-        var mv = new ModelAndView();
-        mv.addObject("order", order);
-        mv.addObject("employees", employees);
-        mv.addObject("serviceTypes", serviceTypes);
-        mv.addObject("dimensions", dimensions);
-        mv.setViewName("order/edit-order");
 
         return mv;
     }
