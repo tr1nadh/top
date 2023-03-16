@@ -20,7 +20,7 @@ public class EmployeeController {
     private RoleService roleService;
 
     @GetMapping({"/add-employee", "/edit-employee"})
-    public ModelAndView addEmployee(Long id) {
+    public ModelAndView renderEmployee(Long id) {
         var employee = (id == null) ? new Employee() : empService.getEmployee(id);
         var roles = roleService.findAllRoles();
 
