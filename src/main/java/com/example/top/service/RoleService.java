@@ -49,6 +49,6 @@ public class RoleService {
     public void deleteRole(Long id) {
         repository.deleteById(id);
 
-        log.info("Employee with the id '" + id + "' has been deleted");
+        log.info("Role with the id '" + id + "' has been deleted");
     }
 }
