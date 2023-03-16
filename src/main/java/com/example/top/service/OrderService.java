@@ -23,7 +23,7 @@ public class OrderService {
 
         repository.save(order);
 
-        log.info("Order with the id '" + order.getOrderId() + "' has been added" );
+        log.info("Order with the id '" + order.getOrderId() + "' has been saved" );
     }
 
     public List<Order> findAllOrders() {
@@ -43,12 +43,6 @@ public class OrderService {
 
         log.info("Order with the id '" + id + "' has been retrieved");
         return optionalOrder.get();
-    }
-
-    public void updateOrder(Order order) {
-        repository.save(order);
-
-        log.info("Order with the id '" + order.getOrderId() + "' has been updated");
     }
 
     public void deleteOrder(Long id) {
