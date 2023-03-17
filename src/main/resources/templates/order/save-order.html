@@ -5,6 +5,7 @@
     <title>Save order</title>
 </head>
 <body>
+<div th:insert="~{general.html :: navbar}"></div>
 <form action="#" th:action="@{/save-order}" th:object="${order}" method="post">
   <input type="hidden" th:field="*{orderId}">
   <label>Customer name: <input type="text" th:field="*{customer.name}"></label> <br>

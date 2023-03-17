@@ -5,6 +5,7 @@
     <title>Save employee</title>
 </head>
 <body>
+<div th:insert="~{general.html :: navbar}"></div>
 <form action="#" th:action="@{/save-employee}" th:object="${employee}" method="post">
   <input type="hidden" th:field="*{employeeId}">
   <label>Firstname: <input type="text" th:field="*{firstname}"></label> <br>
