@@ -26,6 +26,7 @@
               th:text="${serviceType.name}"
       ></option>
     </select>
+    <a href="/service-types">Service types</a>
   </label> <br>
   <label>Booking date: <input type="text" th:field="*{service.bookingDate}"></label> <br>
   <label>Dimensions:
@@ -35,6 +36,7 @@
               th:text="${dimension.name}"
       ></option>
     </select>
+    <a href="/dimensions">Dimensions</a>
   </label> <br>
   <label>Quantity: <input type="number" th:field="*{service.quantity}"></label> <br>
   <label>Printing charges: <input type="number" th:field="*{service.printingCharges}"></label> <br>
