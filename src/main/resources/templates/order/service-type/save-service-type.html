@@ -10,7 +10,7 @@
   <input type="hidden" th:field="*{serviceTypeId}">
   <label>Service type: <input type="text" th:field="*{name}"></label> <br>
   <input type="submit" value="save">
-    <a href="/service-types">Back</a>
 </form>
+<div th:replace="~{general.html :: back}"></div>
 </body>
 </html>
