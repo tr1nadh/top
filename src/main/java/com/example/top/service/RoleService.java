@@ -23,7 +23,7 @@ public class RoleService {
 
         repository.save(role);
 
-        log.info("New role '" + role.getName() + "' is added");
+        log.info("Role with the name '" + role.getName() + "' is saved");
     }
 
     public List<Role> findAllRoles() {
