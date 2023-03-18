@@ -46,6 +46,12 @@ public class OrderService {
     }
 
     public void deleteOrder(Long id) {
+        var order = getOrder(id);
+        if (order == null) {
+            log.severe("Cannot delete the order with the id '" + id + "' which doesn't exists");
+            return;
+        }
+
         repository.deleteById(id);
 
         log.info("Order with the id '" + id + "' has been deleted");
