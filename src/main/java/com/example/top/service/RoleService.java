@@ -49,7 +49,7 @@ public class RoleService {
     public void deleteRole(Long id) {
         var role = getRole(id);
         if (role == null) {
-            log.severe("Cannot delete the role with the id '" + role.getName() + "' which doesn't exists");
+            log.severe("Cannot delete the role with the id '" + id + "' which doesn't exists");
             return;
         }
 
