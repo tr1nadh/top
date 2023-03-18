@@ -38,7 +38,7 @@ public class ServiceTypeService {
 
         if (optServiceType.isEmpty()) {
             log.severe("No service type found with the id '" + id + "'");
-            return new ServiceType();
+            return null;
         }
 
         var serviceType = optServiceType.get();

@@ -39,7 +39,7 @@ public class EmployeeService {
 
         if (optEmployee.isEmpty()) {
              log.severe("No employee found with the id '" + id + "'");
-             return new Employee();
+             return null;
         }
 
         var employee = optEmployee.get();

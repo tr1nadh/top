@@ -38,7 +38,7 @@ public class OrderService {
 
         if (optionalOrder.isEmpty()) {
             log.severe("No order found with the id '" + id + "'");
-            return new Order();
+            return null;
         }
 
         log.info("Order with the id '" + id + "' has been retrieved");

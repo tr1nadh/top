@@ -38,7 +38,7 @@ public class RoleService {
 
         if (optRole.isEmpty()) {
             log.severe("No role found with the id '" + id + "'");
-            return new Role();
+            return null;
         }
 
         var role = optRole.get();

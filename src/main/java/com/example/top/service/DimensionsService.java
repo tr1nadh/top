@@ -38,7 +38,7 @@ public class DimensionsService {
 
         if (optDimensions.isEmpty()) {
             log.severe("No dimensions found with the id '" + id + "'");
-            return new Dimensions();
+            return null;
         }
 
         var dimensions = optDimensions.get();
