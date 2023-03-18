@@ -53,8 +53,14 @@ public class RoleService {
     }
 
     public void deleteRole(Long id) {
+        var role = getRole(id);
+        if (role == null) {
+            log.severe("Cannot delete the role with the id '" + role.getName() + "' which doesn't exists");
+            return;
+        }
+
         repository.deleteById(id);
 
-        log.info("Role with the id '" + id + "' has been deleted");
+        log.info("Role with the name '" + role.getName() + "' has been deleted");
     }
 }
