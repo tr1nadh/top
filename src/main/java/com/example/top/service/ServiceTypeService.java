@@ -47,8 +47,14 @@ public class ServiceTypeService {
     }
 
     public void deleteServiceType(Long id) {
+        var serviceType = getServiceType(id);
+        if (serviceType == null) {
+            log.severe("Cannot delete the service type with the id '" + id + "' which doesn't exists");
+            return;
+        }
+
         repository.deleteById(id);
 
-        log.info("Service type with the id '" + id + "' has been deleted");
+        log.info("Service type with the name '" + serviceType.getName() + "' has been deleted");
     }
 }
