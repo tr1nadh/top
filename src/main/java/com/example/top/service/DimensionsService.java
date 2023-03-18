@@ -47,8 +47,14 @@ public class DimensionsService {
     }
 
     public void deleteDimensions(Long id) {
+        var dimensions = getDimensions(id);
+        if (dimensions == null) {
+            log.severe("Cannot delete the dimensions with the id '" + id + "' which doesn't exists");
+            return;
+        }
+
         repository.deleteById(id);
 
-        log.info("Dimensions with the id '" + id + "' has been deleted");
+        log.info("Dimensions with the name '" + dimensions.getName() + "' has been deleted");
     }
 }
