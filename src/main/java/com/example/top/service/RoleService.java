@@ -46,12 +46,6 @@ public class RoleService {
         return role;
     }
 
-    public void updateRole(Role role) {
-        repository.save(role);
-
-        log.info("Role with the id '" + role.getRoleId() + "' has been updated");
-    }
-
     public void deleteRole(Long id) {
         var role = getRole(id);
         if (role == null) {
