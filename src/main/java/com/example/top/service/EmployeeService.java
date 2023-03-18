@@ -49,7 +49,12 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(Long id) {
-        var employee = repository.getReferenceById(id);
+        var employee = getEmployee(id);
+        if (employee == null) {
+            log.severe("Cannot delete the employee with the id '" + id + "' which doesn't exists");
+            return;
+        }
+
         repository.deleteById(id);
 
         var name = employee.getFirstname() + " " + employee.getLastname();
