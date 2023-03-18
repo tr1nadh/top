@@ -23,7 +23,7 @@ public class ServiceTypeService {
 
         repository.save(type);
 
-        log.info("New service type '" + type.getName() + "' is added");
+        log.info("Service type with the name '" + type.getName() + "' is saved");
     }
 
     public List<ServiceType> findAllServiceTypes() {
