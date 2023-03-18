@@ -23,7 +23,7 @@ public class DimensionsService {
 
         repository.save(dimensions);
 
-        log.info("New dimensions '" + dimensions.getName() + "' is saved");
+        log.info("Dimensions with the name '" + dimensions.getName() + "' is saved");
     }
 
     public List<Dimensions> findAllDimensions() {
