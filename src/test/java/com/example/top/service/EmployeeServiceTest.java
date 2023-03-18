@@ -1,6 +1,6 @@
 package com.example.top.service;
 
-import com.example.top.entity.Employee;
+import com.example.top.entity.employee.Employee;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +19,7 @@ class EmployeeServiceTest {
                     .gender("male").emailAddress("manisharme" + i + "@musictpp.com")
                     .phoneNo(8648785L + i).build();
 
-            service.addEmployee(emp);
+            service.saveEmployee(emp);
         }
     }
 
