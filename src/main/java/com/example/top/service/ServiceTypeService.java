@@ -46,12 +46,6 @@ public class ServiceTypeService {
         return serviceType;
     }
 
-    public void updateServiceType(ServiceType type) {
-        repository.save(type);
-
-        log.info("Service type with the name '" + type.getName() + "' has been updated");
-    }
-
     public void deleteServiceType(Long id) {
         repository.deleteById(id);
 
