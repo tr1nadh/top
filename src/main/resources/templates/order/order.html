@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Orders</title>
+    <style>
+        .toggle {display: none;}
+    </style>
 </head>
 <body>
 <div th:insert="~{general.html :: navbar}"></div>
@@ -22,9 +25,31 @@
     </thead>
     <tbody>
     <tr th:each="order : ${orders}">
-        <td th:text="${order.customer.name}"></td>
-        <td th:text="${order.handleBy.firstname} + ${order.handleBy.lastname}"></td>
-        <td th:text="${order.service.serviceType.name}"></td>
+        <td>
+            <p th:text="${order.customer.name}"></p>
+            <div class="toggle">
+                <p th:text="${order.customer.phoneNo}"></p>
+                <p th:text="${order.customer.emailAddress}"></p>
+            </div>
+        </td>
+        <td>
+            <p th:text="${order.handleBy.firstname} + ${order.handleBy.lastname}"></p>
+            <div class="toggle">
+                <p th:text="${order.handleBy.gender}"></p>
+                <p th:text="${order.handleBy.role.name}"></p>
+                <p th:text="${order.handleBy.phoneNo}"></p>
+                <p th:text="${order.handleBy.emailAddress}"></p>
+            </div>
+        </td>
+        <td>
+            <p th:text="${order.service.serviceType.name}"></p>
+            <div class="toggle">
+                <p th:text="${order.service.bookingDate}"></p>
+                <p th:text="${order.service.dimensions.name}"></p>
+                <p th:text="${order.service.quantity}"></p>
+                <p th:text="${order.service.printingCharges}"></p>
+            </div>
+        </td>
         <td th:text="${order.totalAmount}"></td>
         <td th:text="${order.amountPaid}"></td>
         <td>
