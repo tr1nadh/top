@@ -1,6 +1,7 @@
 package com.example.top.entity.order;
 
 import com.example.top.entity.employee.Employee;
+import com.example.top.enums.ServiceStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -37,7 +38,7 @@ public class Order {
     @Column(
             columnDefinition = "varchar(225) default 'Pending'"
     )
-    private String serviceStatus;
+    private ServiceStatus serviceStatus;
     private int totalAmount;
     private int amountPaid;
 }
