@@ -63,4 +63,15 @@ public class OrderController {
 
         return new RedirectView("orders");
     }
+
+    @GetMapping("/orders")
+    public ModelAndView searchOrders(String search) {
+        if (search == null || search.isEmpty() || search.isBlank()) return getOrders();
+
+        var mv = new ModelAndView();
+        mv.addObject("orders", orderService.findOrdersByCustomerNameContaining(search));
+        mv.setViewName("order/order");
+
+        return mv;
+    }
 }
