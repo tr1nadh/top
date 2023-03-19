@@ -34,6 +34,10 @@ public class Order {
     private Employee handleBy;
     @Embedded
     private Service service;
+    @Column(
+            columnDefinition = "varchar(225) default 'Pending'"
+    )
+    private String serviceStatus;
     private int totalAmount;
     private int amountPaid;
 }
