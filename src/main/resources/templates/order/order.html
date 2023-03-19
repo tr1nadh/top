@@ -19,6 +19,7 @@
         <th>Customer</th>
         <th>Handle by</th>
         <th>Service</th>
+        <th>Service status</th>
         <th>Total amount</th>
         <th>Amount paid</th>
         <th>Action</th>
@@ -58,6 +59,7 @@
                 <p th:text="${order.service.printingCharges}"></p>
             </div>
         </td>
+        <td th:text="${order.serviceStatus}"></td>
         <td th:text="${order.totalAmount}"></td>
         <td th:text="${order.amountPaid}"></td>
         <td>
