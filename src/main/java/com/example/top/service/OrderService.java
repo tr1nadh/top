@@ -56,4 +56,11 @@ public class OrderService {
 
         log.info("Order with the id '" + id + "' has been deleted");
     }
+
+    public List<Order> findOrdersByCustomerNameContaining(String name) {
+        var orders = repository.findOrdersByCustomerNameContaining(name);
+
+        log.info("Successfully retrieved orders by customer name containing '" + name + "'");
+        return orders;
+    }
 }
