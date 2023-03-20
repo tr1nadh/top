@@ -63,4 +63,11 @@ public class OrderService {
         log.info("Successfully retrieved orders by customer name containing '" + name + "'");
         return orders;
     }
+
+    public List<Order> findOrdersByServiceStatus(String status) {
+        var orders = repository.findOrdersByServiceStatus(status);
+
+        log.info("Successfully retrieved orders by service status '" + status + "'");
+        return orders;
+    }
 }
