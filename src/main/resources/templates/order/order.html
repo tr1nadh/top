@@ -12,6 +12,13 @@
 <a href="/add-order">Add order</a>
 <a href="/service-types">Service types</a>
 <a href="/dimensions">Dimensions</a>
+<form action="/orders">
+    <input type="text" name="search">
+    <input type="submit" value="search"> <br>
+    <input type="submit" name="serviceStatus" value="Pending">
+    <input type="submit" name="serviceStatus" value="Completed">
+    <input type="submit" name="serviceStatus" value="Cancelled">
+</form>
 <table>
     <thead>
     <tr>
@@ -26,13 +33,6 @@
         <th>Action</th>
     </tr>
     </thead>
-    <form action="/orders">
-        <input type="text" name="search">
-        <input type="submit" value="search"> <br>
-        <input type="submit" name="serviceStatus" value="Pending">
-        <input type="submit" name="serviceStatus" value="Completed">
-        <input type="submit" name="serviceStatus" value="Cancelled">
-    </form>
     <tbody>
     <tr th:each="order : ${orders}">
         <td th:text="${order.orderId}"></td>
