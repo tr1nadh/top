@@ -33,16 +33,9 @@
         </form>
     </div>
     <form action="/orders">
-        <input type="hidden" name="serviceStatus" value="pending">
-        <input type="submit" value="Pending">
-    </form>
-    <form action="/orders">
-        <input type="hidden" name="serviceStatus" value="completed">
-        <input type="submit" value="Completed">
-    </form>
-    <form action="/orders">
-        <input type="hidden" name="serviceStatus" value="cancelled">
-        <input type="submit" value="Cancelled">
+        <input type="submit" name="serviceStatus" value="Pending">
+        <input type="submit" name="serviceStatus" value="Completed">
+        <input type="submit" name="serviceStatus" value="Cancelled">
     </form>
     <tbody>
     <tr th:each="order : ${orders}">
