@@ -30,6 +30,7 @@
         <th>Total amount</th>
         <th>Amount paid</th>
         <th>Payment status</th>
+        <th>Order status</th>
         <th>Action</th>
     </tr>
     </thead>
@@ -65,6 +66,7 @@
         <td th:text="${order.payment.totalAmount}"></td>
         <td th:text="${order.payment.amountPaid}"></td>
         <td th:text="${order.payment.paymentStatus}"></td>
+        <td th:text="${order.orderStatus}"></td>
         <td>
             <a th:href="@{/edit-order?id={id}(id=${order.orderId})}">Edit</a>
             <a th:href="@{/delete-order?id={id}(id=${order.orderId})}">Delete</a>
