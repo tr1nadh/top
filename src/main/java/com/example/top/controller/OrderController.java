@@ -1,6 +1,7 @@
 package com.example.top.controller;
 
 import com.example.top.entity.order.Order;
+import com.example.top.enums.ServiceStatus;
 import com.example.top.service.DimensionsService;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.OrderService;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.Arrays;
 
 @Controller
 public class OrderController {
@@ -33,6 +36,7 @@ public class OrderController {
         mv.addObject("order", order);
         mv.addObject("employees", employeeService.findAllEmployees());
         mv.addObject("serviceTypes", serviceTypeService.findAllServiceTypes());
+        mv.addObject("serviceStatus", Arrays.stream(ServiceStatus.values()).toList());
         mv.addObject("dimensions", dimensionsService.findAllDimensions());
         mv.setViewName("order/save-order");
 
