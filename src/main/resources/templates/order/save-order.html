@@ -50,7 +50,14 @@
   </label> <br>
   <label>Total amount: <input type="number" th:field="*{payment.totalAmount}"></label> <br>
   <label>Amount paid: <input type="number" th:field="*{payment.amountPaid}"></label> <br>
-  <label>Payment status: <input type="text" th:field="*{payment.paymentStatus}"></label> <br>
+  <label>Payment status:
+    <select th:field="*{payment.paymentStatus}">
+      <option th:each="status : ${paymentStatus}"
+              th:value="${status}"
+              th:text="${status}"
+      ></option>
+    </select>
+  </label> <br>
   <input type="submit" value="save">
 </form>
 <div th:replace="~{general.html :: back}"></div>
