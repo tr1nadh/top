@@ -28,7 +28,6 @@
     </select>
     <a href="/service-types">Service types</a>
   </label> <br>
-  <label>Service status: <input type="text" th:field="*{service.serviceStatus}"></label> <br>
   <label>Booking date: <input type="text" th:field="*{service.bookingDate}"></label> <br>
   <label>Dimensions:
     <select th:field="*{service.dimensions}">
@@ -41,6 +40,14 @@
   </label> <br>
   <label>Quantity: <input type="number" th:field="*{service.quantity}"></label> <br>
   <label>Printing charges: <input type="number" th:field="*{service.printingCharges}"></label> <br>
+  <label>Service status:
+    <select th:field="*{service.serviceStatus}">
+      <option th:each="status : ${serviceStatus}"
+              th:value="${status}"
+              th:text="${status}"
+      ></option>
+    </select>
+  </label> <br>
   <label>Total amount: <input type="number" th:field="*{payment.totalAmount}"></label> <br>
   <label>Amount paid: <input type="number" th:field="*{payment.amountPaid}"></label> <br>
   <label>Payment status: <input type="text" th:field="*{payment.paymentStatus}"></label> <br>
