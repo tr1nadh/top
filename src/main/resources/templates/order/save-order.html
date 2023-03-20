@@ -58,6 +58,14 @@
       ></option>
     </select>
   </label> <br>
+  <label>Order status:
+    <select th:field="*{orderStatus}">
+      <option th:each="status : ${orderStatus}"
+              th:value="${status}"
+              th:text="${status}"
+      ></option>
+    </select>
+  </label> <br>
   <input type="submit" value="save">
 </form>
 <div th:replace="~{general.html :: back}"></div>
