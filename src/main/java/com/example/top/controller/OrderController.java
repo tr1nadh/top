@@ -1,6 +1,7 @@
 package com.example.top.controller;
 
 import com.example.top.entity.order.Order;
+import com.example.top.enums.OrderStatus;
 import com.example.top.enums.PaymentStatus;
 import com.example.top.enums.ServiceStatus;
 import com.example.top.service.DimensionsService;
@@ -40,6 +41,7 @@ public class OrderController {
         mv.addObject("dimensions", dimensionsService.findAllDimensions());
         mv.addObject("serviceStatus", Arrays.stream(ServiceStatus.values()).toList());
         mv.addObject("paymentStatus", Arrays.stream(PaymentStatus.values()).toList());
+        mv.addObject("orderStatus", Arrays.stream(OrderStatus.values()).toList());
         mv.setViewName("order/save-order");
 
         return mv;
@@ -54,7 +56,7 @@ public class OrderController {
         return new RedirectView("add-order");
     }
 
-    @RequestMapping("/orders")
+    @RequestMapping({"/", "/orders"})
     public ModelAndView getOrders() {
         var mv = new ModelAndView();
         mv.addObject("orders", orderService.findAllOrders());
