@@ -28,4 +28,5 @@ public class Service {
     private Dimensions dimensions;
     private int quantity;
     private int printingCharges;
+    private String serviceStatus;
 }
