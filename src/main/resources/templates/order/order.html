@@ -72,10 +72,10 @@
                 <p th:text="${order.service.printingCharges}"></p>
             </div>
         </td>
-        <td th:text="${order.serviceStatus}"></td>
-        <td th:text="${order.totalAmount}"></td>
-        <td th:text="${order.amountPaid}"></td>
-        <td th:text="${order.paymentStatus}"></td>
+        <td th:text="${order.service.serviceStatus}"></td>
+        <td th:text="${order.payment.totalAmount}"></td>
+        <td th:text="${order.payment.amountPaid}"></td>
+        <td th:text="${order.payment.paymentStatus}"></td>
         <td>
             <a th:href="@{/edit-order?id={id}(id=${order.orderId})}">Edit</a>
             <a th:href="@{/delete-order?id={id}(id=${order.orderId})}">Delete</a>
