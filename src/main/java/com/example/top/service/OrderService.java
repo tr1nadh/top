@@ -65,7 +65,7 @@ public class OrderService {
     }
 
     public List<Order> findOrdersByServiceStatus(String status) {
-        var orders = repository.findOrdersByServiceStatus(status);
+        var orders = repository.findOrdersByServiceServiceStatus(status);
 
         log.info("Successfully retrieved orders by service status '" + status + "'");
         return orders;
