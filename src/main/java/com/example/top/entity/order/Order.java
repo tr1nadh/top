@@ -36,4 +36,5 @@ public class Order {
     private Service service;
     @Embedded
     private Payment payment;
+    private String orderStatus;
 }
