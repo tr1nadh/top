@@ -26,13 +26,9 @@
         <th>Action</th>
     </tr>
     </thead>
-    <div>
-        <form action="/orders" method="get">
-            <input type="text" name="search">
-            <input type="submit" value="search">
-        </form>
-    </div>
     <form action="/orders">
+        <input type="text" name="search">
+        <input type="submit" value="search"> <br>
         <input type="submit" name="serviceStatus" value="Pending">
         <input type="submit" name="serviceStatus" value="Completed">
         <input type="submit" name="serviceStatus" value="Cancelled">
