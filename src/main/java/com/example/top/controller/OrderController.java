@@ -8,11 +8,11 @@ import com.example.top.service.DimensionsService;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.OrderService;
 import com.example.top.service.ServiceTypeService;
+import com.example.top.util.GeneralUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -56,15 +56,6 @@ public class OrderController {
         return new RedirectView("add-order");
     }
 
-    @RequestMapping({"/", "/orders"})
-    public ModelAndView getOrders() {
-        var mv = new ModelAndView();
-        mv.addObject("orders", orderService.findAllOrders());
-        mv.setViewName("order/order");
-
-        return mv;
-    }
-
     @GetMapping("/delete-order")
     public RedirectView deleteOrder(Long id) {
         orderService.deleteOrder(id);
@@ -72,12 +63,32 @@ public class OrderController {
         return new RedirectView("orders");
     }
 
-    @GetMapping("/orders")
-    public ModelAndView searchOrders(String search) {
-        if (search == null || search.isEmpty() || search.isBlank()) return getOrders();
+    @GetMapping({"/", "/orders"})
+    public ModelAndView searchOrders(String search, String orderStatus) {
+        if (GeneralUtil.isQualifiedString(orderStatus)) return getOrdersBySearchAndOrderStatus(search, orderStatus);
+
+        if (!GeneralUtil.isQualifiedString(search)) return getOrdersByOrderStatus("Pending");
 
         var mv = new ModelAndView();
         mv.addObject("orders", orderService.findOrdersByCustomerNameContaining(search));
+        mv.setViewName("order/order");
+
+        return mv;
+    }
+
+    public ModelAndView getOrdersBySearchAndOrderStatus(String search, String orderStatus) {
+        if (!GeneralUtil.isQualifiedString(search)) return getOrdersByOrderStatus(orderStatus);
+
+        var mv = new ModelAndView();
+        mv.addObject("orders", orderService.findOrdersByOrderStatusAndCustomerNameContaining(orderStatus, search));
+        mv.setViewName("order/order");
+
+        return mv;
+    }
+
+    public ModelAndView getOrdersByOrderStatus(String orderStatus) {
+        var mv = new ModelAndView();
+        mv.addObject("orders", orderService.findOrdersByOrderStatus(orderStatus));
         mv.setViewName("order/order");
 
         return mv;
