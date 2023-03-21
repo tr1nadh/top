@@ -64,10 +64,17 @@ public class OrderService {
         return orders;
     }
 
-    public List<Order> findOrdersByServiceStatus(String status) {
-        var orders = repository.findOrdersByServiceServiceStatus(status);
+    public List<Order> findOrdersByOrderStatus(String status) {
+        var orders = repository.findOrdersByOrderStatus(status);
 
         log.info("Successfully retrieved orders by service status '" + status + "'");
+        return orders;
+    }
+
+    public List<Order> findOrdersByOrderStatusAndCustomerNameContaining(String status, String name) {
+        var orders = repository.findOrdersByOrderStatusAndCustomerNameContaining(status, name);
+
+        log.info("Successfully retrieved orders by order status '" + status + "' and customer name containing '" + name + "'");
         return orders;
     }
 }
