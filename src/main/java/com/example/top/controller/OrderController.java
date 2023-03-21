@@ -64,7 +64,7 @@ public class OrderController {
     }
 
     @GetMapping({"/", "/orders"})
-    public ModelAndView searchOrders(String search, String orderStatus) {
+    public ModelAndView getOrders(String search, String orderStatus) {
         if (GeneralUtil.isQualifiedString(orderStatus)) return getOrdersBySearchAndOrderStatus(search, orderStatus);
 
         if (!GeneralUtil.isQualifiedString(search)) return getOrdersByOrderStatus("Pending");
