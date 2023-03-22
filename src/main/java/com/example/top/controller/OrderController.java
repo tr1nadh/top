@@ -66,16 +66,20 @@ public class OrderController {
 
     @GetMapping({"/", "/orders"})
     public ModelAndView getOrders(String search, String orderStatus) {
+        var mv = new ModelAndView();
+        mv.addObject("orders", getOrdersByParams(search, orderStatus));
+        mv.setViewName("order/order");
+
+        return mv;
+    }
+
+    public List<Order> getOrdersByParams(String search, String orderStatus) {
         List<Order> orders;
         if (GeneralUtil.isQualifiedString(orderStatus)) orders = getOrdersBySearchAndOrderStatus(search, orderStatus);
         else if (!GeneralUtil.isQualifiedString(search)) orders = orderService.findOrdersByOrderStatus("Pending");
         else orders = orderService.findOrdersByCustomerNameContaining(search);
 
-        var mv = new ModelAndView();
-        mv.addObject("orders", orders);
-        mv.setViewName("order/order");
-
-        return mv;
+        return orders;
     }
 
     public List<Order> getOrdersBySearchAndOrderStatus(String search, String orderStatus) {
