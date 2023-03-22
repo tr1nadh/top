@@ -64,16 +64,7 @@
         </td>
         <td th:text="${order.service.serviceStatus}"></td>
         <td th:text="${order.payment.totalAmount}"></td>
-        <td>
-            <p th:text="${order.payment.amountPaid}"></p>
-            <form action="/modify-order" method="post">
-                <input type="hidden" name="orderId" th:value="${order.orderId}">
-                <input id="form-am-action" type="hidden" name="action">
-                <input type="number" name="amount">
-                <input onclick="payFun('add')" type="submit" value="Add">
-                <input onclick="payFun('rm')" type="submit" value="Remove">
-            </form>
-        </td>
+        <td th:text="${order.payment.amountPaid}"></td>
         <td th:text="${order.payment.paymentStatus}"></td>
         <td th:text="${order.orderStatus}"></td>
         <td>
@@ -83,10 +74,5 @@
     </tr>
     </tbody>
 </table>
-<script>
-    function payFun(action) {
-    document.getElementById('form-am-action').value = action;
-    }
-</script>
 </body>
 </html>
