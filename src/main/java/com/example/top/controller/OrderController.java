@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class OrderController {
@@ -65,32 +66,27 @@ public class OrderController {
 
     @GetMapping({"/", "/orders"})
     public ModelAndView getOrders(String search, String orderStatus) {
-        if (GeneralUtil.isQualifiedString(orderStatus)) return getOrdersBySearchAndOrderStatus(search, orderStatus);
-
-        if (!GeneralUtil.isQualifiedString(search)) return getOrdersByOrderStatus("Pending");
+        List<Order> orders;
+        if (GeneralUtil.isQualifiedString(orderStatus)) orders = getOrdersBySearchAndOrderStatus(search, orderStatus);
+        else if (!GeneralUtil.isQualifiedString(search)) orders = getOrdersByOrderStatus("Pending");
+        else orders = orderService.findOrdersByCustomerNameContaining(search);
 
         var mv = new ModelAndView();
-        mv.addObject("orders", orderService.findOrdersByCustomerNameContaining(search));
+        mv.addObject("orders", orders);
         mv.setViewName("order/order");
 
         return mv;
     }
 
-    public ModelAndView getOrdersBySearchAndOrderStatus(String search, String orderStatus) {
-        if (!GeneralUtil.isQualifiedString(search)) return getOrdersByOrderStatus(orderStatus);
+    public List<Order> getOrdersBySearchAndOrderStatus(String search, String orderStatus) {
+        List<Order> orders;
+        if (!GeneralUtil.isQualifiedString(search)) orders = getOrdersByOrderStatus(orderStatus);
+        else orders = orderService.findOrdersByOrderStatusAndCustomerNameContaining(orderStatus, search);
 
-        var mv = new ModelAndView();
-        mv.addObject("orders", orderService.findOrdersByOrderStatusAndCustomerNameContaining(orderStatus, search));
-        mv.setViewName("order/order");
-
-        return mv;
+        return orders;
     }
 
-    public ModelAndView getOrdersByOrderStatus(String orderStatus) {
-        var mv = new ModelAndView();
-        mv.addObject("orders", orderService.findOrdersByOrderStatus(orderStatus));
-        mv.setViewName("order/order");
-
-        return mv;
+    public List<Order> getOrdersByOrderStatus(String orderStatus) {
+        return orderService.findOrdersByOrderStatus(orderStatus);
     }
 }
