@@ -1,6 +1,7 @@
 package com.example.top.entity.employee;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -23,5 +24,6 @@ public class Role {
     )
     private Long roleId;
     @Column(unique = true)
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
 }
