@@ -68,7 +68,7 @@ public class OrderController {
     public ModelAndView getOrders(String search, String orderStatus) {
         List<Order> orders;
         if (GeneralUtil.isQualifiedString(orderStatus)) orders = getOrdersBySearchAndOrderStatus(search, orderStatus);
-        else if (!GeneralUtil.isQualifiedString(search)) orders = getOrdersByOrderStatus("Pending");
+        else if (!GeneralUtil.isQualifiedString(search)) orders = orderService.findOrdersByOrderStatus("Pending");
         else orders = orderService.findOrdersByCustomerNameContaining(search);
 
         var mv = new ModelAndView();
@@ -80,13 +80,9 @@ public class OrderController {
 
     public List<Order> getOrdersBySearchAndOrderStatus(String search, String orderStatus) {
         List<Order> orders;
-        if (!GeneralUtil.isQualifiedString(search)) orders = getOrdersByOrderStatus(orderStatus);
+        if (!GeneralUtil.isQualifiedString(search)) orders = orderService.findOrdersByOrderStatus(orderStatus);
         else orders = orderService.findOrdersByOrderStatusAndCustomerNameContaining(orderStatus, search);
 
         return orders;
-    }
-
-    public List<Order> getOrdersByOrderStatus(String orderStatus) {
-        return orderService.findOrdersByOrderStatus(orderStatus);
     }
 }
