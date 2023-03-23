@@ -3,6 +3,7 @@ package com.example.top.controller;
 import com.example.top.entity.employee.Employee;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.RoleService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,7 @@ public class EmployeeController {
     }
 
     @PostMapping({"/save-employee", "/update-employee"})
-    public RedirectView saveEmployee(Employee employee) {
+    public RedirectView saveEmployee(@Valid Employee employee) {
         empService.saveEmployee(employee);
 
         if (employee.getEmployeeId() != null) return new RedirectView("employees");
