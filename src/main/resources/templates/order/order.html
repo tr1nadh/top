@@ -42,15 +42,19 @@
     <tr th:each="order : ${orders}">
         <td th:text="${order.orderId}"></td>
         <td>
-            <p class="toggleHead" onclick="toggleData('customer-data')" th:text="${order.customer.name}"></p>
-            <div id="customer-data" class="toggle">
+            <p class="toggleHead"
+               th:attr="onclick=|toggleData('customer-data${order.orderId}')|"
+               th:text="${order.customer.name}"></p>
+            <div th:id="customer-data + ${order.orderId}" class="toggle">
                 Phone no: <p th:text="${order.customer.phoneNo}"></p>
                 Email: <p th:text="${order.customer.emailAddress}"></p>
             </div>
         </td>
         <td>
-            <p class="toggleHead" onclick="toggleData('employee-data')" th:text="${order.handleBy.firstname} + ${order.handleBy.lastname}"></p>
-            <div id="employee-data" class="toggle">
+            <p class="toggleHead"
+               th:attr="onclick=|toggleData('employee-data${order.orderId}')|"
+               th:text="${order.handleBy.firstname} + ${order.handleBy.lastname}"></p>
+            <div th:id="employee-data + ${order.orderId}" class="toggle">
                 Gender: <p th:text="${order.handleBy.gender}"></p>
                 Role: <p th:text="${order.handleBy.role.name}"></p>
                 Phone no: <p th:text="${order.handleBy.phoneNo}"></p>
@@ -58,8 +62,10 @@
             </div>
         </td>
         <td>
-            <p class="toggleHead" onclick="toggleData('service-data')" th:text="${order.service.serviceType.name}"></p>
-            <div id="service-data" class="toggle">
+            <p class="toggleHead"
+               th:attr="onclick=|toggleData('service-data${order.orderId}')|"
+               th:text="${order.service.serviceType.name}"></p>
+            <div th:id="service-data + ${order.orderId}" class="toggle">
                 Booking date: <p th:text="${order.service.bookingDate}"></p>
                 Dimensions: <p th:text="${order.service.dimensions.name}"></p>
                 Quantity: <p th:text="${order.service.quantity}"></p>
