@@ -5,6 +5,10 @@
     <title>Orders</title>
     <style>
         .toggle {display: none;}
+        .toggleHead {
+            color: blue;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -38,28 +42,28 @@
     <tr th:each="order : ${orders}">
         <td th:text="${order.orderId}"></td>
         <td>
-            <p th:text="${order.customer.name}"></p>
-            <div class="toggle">
-                <p th:text="${order.customer.phoneNo}"></p>
-                <p th:text="${order.customer.emailAddress}"></p>
+            <p class="toggleHead" onclick="toggleData('customer-data')" th:text="${order.customer.name}"></p>
+            <div id="customer-data" class="toggle">
+                Phone no: <p th:text="${order.customer.phoneNo}"></p>
+                Email: <p th:text="${order.customer.emailAddress}"></p>
             </div>
         </td>
         <td>
-            <p th:text="${order.handleBy.firstname} + ${order.handleBy.lastname}"></p>
-            <div class="toggle">
-                <p th:text="${order.handleBy.gender}"></p>
-                <p th:text="${order.handleBy.role.name}"></p>
-                <p th:text="${order.handleBy.phoneNo}"></p>
-                <p th:text="${order.handleBy.emailAddress}"></p>
+            <p class="toggleHead" onclick="toggleData('employee-data')" th:text="${order.handleBy.firstname} + ${order.handleBy.lastname}"></p>
+            <div id="employee-data" class="toggle">
+                Gender: <p th:text="${order.handleBy.gender}"></p>
+                Role: <p th:text="${order.handleBy.role.name}"></p>
+                Phone no: <p th:text="${order.handleBy.phoneNo}"></p>
+                Email: <p th:text="${order.handleBy.emailAddress}"></p>
             </div>
         </td>
         <td>
-            <p th:text="${order.service.serviceType.name}"></p>
-            <div class="toggle">
-                <p th:text="${order.service.bookingDate}"></p>
-                <p th:text="${order.service.dimensions.name}"></p>
-                <p th:text="${order.service.quantity}"></p>
-                <p th:text="${order.service.printingCharges}"></p>
+            <p class="toggleHead" onclick="toggleData('service-data')" th:text="${order.service.serviceType.name}"></p>
+            <div id="service-data" class="toggle">
+                Booking date: <p th:text="${order.service.bookingDate}"></p>
+                Dimensions: <p th:text="${order.service.dimensions.name}"></p>
+                Quantity: <p th:text="${order.service.quantity}"></p>
+                Printing charges: <p th:text="${order.service.printingCharges}"></p>
             </div>
         </td>
         <td th:text="${order.service.serviceStatus}"></td>
@@ -74,5 +78,15 @@
     </tr>
     </tbody>
 </table>
+<script>
+    function toggleData(id) {
+        let displayData = document.getElementById(id).style.display;
+        if (displayData === 'block') {
+            document.getElementById(id).style.display = 'none';
+        } else {
+            document.getElementById(id).style.display = 'block';
+        }
+    }
+</script>
 </body>
 </html>
