@@ -9,6 +9,7 @@
 <form action="#" th:action="@{/save-employee}" th:object="${employee}" method="post">
   <input type="hidden" th:field="*{employeeId}">
   <label>Firstname: <input type="text" th:field="*{firstname}"></label> <br>
+  <p th:if="${#fields.hasErrors('firstname')}">Invalid firstname</p>
   <label>Lastname: <input type="text" th:field="*{lastname}"></label> <br>
   <label>Role:
     <select th:field="*{role}">
