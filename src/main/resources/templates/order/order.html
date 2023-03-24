@@ -106,7 +106,22 @@
                 </select>
             </form>
         </td>
-        <td th:text="${order.orderStatus}"></td>
+        <td>
+            <p class="toggleHead"
+               th:attr="onclick=|toggleData('osForm${order.orderId}')|"
+               th:text="${order.orderStatus}"></p>
+
+            <form th:id="osForm + ${order.orderId}" class="toggle" th:action="@{/modify-order}" th:object="${order}" method="post">
+                <input type="hidden" name="orderId" th:value="${order.orderId}">
+                <select th:field="*{orderStatus}" onchange="this.form.submit()">
+                    <option selected value="Select">Select</option>
+                    <option th:each="status : ${orderStatus}"
+                            th:value="${status}"
+                            th:text="${status}"
+                    ></option>
+                </select>
+            </form>
+        </td>
         <td>
             <a th:href="@{/edit-order?id={id}(id=${order.orderId})}">Edit</a>
             <a th:href="@{/delete-order?id={id}(id=${order.orderId})}">Delete</a>
