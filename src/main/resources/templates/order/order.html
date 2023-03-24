@@ -40,6 +40,8 @@
     </thead>
     <tbody>
     <tr th:each="order : ${orders}">
+        <form th:action="@{/modify-order}" th:object="${order}" method="post">
+            <input type="hidden" name="orderId" th:value="${order.orderId}">
         <td th:text="${order.orderId}"></td>
         <td>
             <p class="toggleHead"
@@ -74,58 +76,52 @@
         </td>
         <td>
             <p class="toggleHead"
-               th:attr="onclick=|toggleData('ssForm${order.orderId}')|"
+               th:attr="onclick=|toggleData('ssSelect${order.orderId}')|"
                th:text="${order.service.serviceStatus}"></p>
 
-            <form th:id="ssForm + ${order.orderId}" class="toggle" th:action="@{/modify-order}" th:object="${order}" method="post">
-                <input type="hidden" name="orderId" th:value="${order.orderId}">
-                <select th:field="*{service.serviceStatus}" onchange="this.form.submit()">
+                <select th:id="ssSelect + ${order.orderId}" class="toggle" name="service.serviceStatus"
+                        onchange="this.form.submit()">
                     <option selected value="Select">Select</option>
                     <option th:each="status : ${serviceStatus}"
                             th:value="${status}"
                             th:text="${status}"
                     ></option>
                 </select>
-            </form>
         </td>
         <td th:text="${order.payment.totalAmount}"></td>
         <td th:text="${order.payment.amountPaid}"></td>
         <td>
             <p class="toggleHead"
-               th:attr="onclick=|toggleData('psForm${order.orderId}')|"
+               th:attr="onclick=|toggleData('psSelect${order.orderId}')|"
                th:text="${order.payment.paymentStatus}"></p>
 
-            <form th:id="psForm + ${order.orderId}" class="toggle" th:action="@{/modify-order}" th:object="${order}" method="post">
-                <input type="hidden" name="orderId" th:value="${order.orderId}">
-                <select th:field="*{payment.paymentStatus}" onchange="this.form.submit()">
+                <select th:id="psSelect + ${order.orderId}" class="toggle" name="payment.paymentStatus"
+                         onchange="this.form.submit()">
                     <option selected value="Select">Select</option>
                     <option th:each="status : ${paymentStatus}"
                             th:value="${status}"
                             th:text="${status}"
                     ></option>
                 </select>
-            </form>
         </td>
         <td>
             <p class="toggleHead"
-               th:attr="onclick=|toggleData('osForm${order.orderId}')|"
+               th:attr="onclick=|toggleData('osSelect${order.orderId}')|"
                th:text="${order.orderStatus}"></p>
 
-            <form th:id="osForm + ${order.orderId}" class="toggle" th:action="@{/modify-order}" th:object="${order}" method="post">
-                <input type="hidden" name="orderId" th:value="${order.orderId}">
-                <select th:field="*{orderStatus}" onchange="this.form.submit()">
+                <select th:id="osSelect + ${order.orderId}" class="toggle" name="orderStatus" onchange="this.form.submit()">
                     <option selected value="Select">Select</option>
                     <option th:each="status : ${orderStatus}"
                             th:value="${status}"
                             th:text="${status}"
                     ></option>
                 </select>
-            </form>
         </td>
         <td>
             <a th:href="@{/edit-order?id={id}(id=${order.orderId})}">Edit</a>
             <a th:href="@{/delete-order?id={id}(id=${order.orderId})}">Delete</a>
         </td>
+        </form>
     </tr>
     </tbody>
 </table>
