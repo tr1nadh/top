@@ -78,6 +78,7 @@
                th:text="${order.service.serviceStatus}"></p>
 
             <form th:id="ssForm + ${order.orderId}" class="toggle" th:action="@{/modify-order}" th:object="${order}" method="post">
+                <input type="hidden" name="orderId" th:value="${order.orderId}">
                 <select th:field="*{service.serviceStatus}" onchange="this.form.submit()">
                     <option selected value="Select">Select</option>
                     <option th:each="status : ${serviceStatus}"
