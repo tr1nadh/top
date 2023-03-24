@@ -68,6 +68,8 @@ public class OrderController {
     public ModelAndView getOrders(String search, String orderStatus) {
         var mv = new ModelAndView();
         mv.addObject("orders", getOrdersByParams(search, orderStatus));
+        mv.addObject("order", new Order());
+        mv.addObject("serviceStatus", Arrays.stream(ServiceStatus.values()).toList());
         mv.setViewName("order/order");
 
         return mv;
@@ -88,5 +90,14 @@ public class OrderController {
         else orders = orderService.findOrdersByOrderStatusAndCustomerNameContaining(orderStatus, search);
 
         return orders;
+    }
+
+    @PostMapping("/modify-order")
+    public RedirectView modifyOrder(Order order) {
+        var dbOrder = orderService.getOrder(order.getOrderId());
+
+        dbOrder.getService().setServiceStatus(order.getService().getServiceStatus());
+
+        return saveOrder(dbOrder);
     }
 }
