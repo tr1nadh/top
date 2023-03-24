@@ -71,6 +71,7 @@ public class OrderController {
         mv.addObject("order", new Order());
         mv.addObject("serviceStatus", Arrays.stream(ServiceStatus.values()).toList());
         mv.addObject("paymentStatus", Arrays.stream(PaymentStatus.values()).toList());
+        mv.addObject("orderStatus", Arrays.stream(OrderStatus.values()).toList());
         mv.setViewName("order/order");
 
         return mv;
@@ -102,6 +103,9 @@ public class OrderController {
 
         if (order.getPayment() != null)
             dbOrder.getPayment().setPaymentStatus(order.getPayment().getPaymentStatus());
+
+        if (order.getOrderStatus() != null)
+            dbOrder.setOrderStatus(order.getOrderStatus());
 
         return saveOrder(dbOrder);
     }
