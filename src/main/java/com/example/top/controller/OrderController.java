@@ -70,6 +70,7 @@ public class OrderController {
         mv.addObject("orders", getOrdersByParams(search, orderStatus));
         mv.addObject("order", new Order());
         mv.addObject("serviceStatus", Arrays.stream(ServiceStatus.values()).toList());
+        mv.addObject("paymentStatus", Arrays.stream(PaymentStatus.values()).toList());
         mv.setViewName("order/order");
 
         return mv;
@@ -96,7 +97,11 @@ public class OrderController {
     public RedirectView modifyOrder(Order order) {
         var dbOrder = orderService.getOrder(order.getOrderId());
 
-        dbOrder.getService().setServiceStatus(order.getService().getServiceStatus());
+        if (order.getService() != null)
+            dbOrder.getService().setServiceStatus(order.getService().getServiceStatus());
+
+        if (order.getPayment() != null)
+            dbOrder.getPayment().setPaymentStatus(order.getPayment().getPaymentStatus());
 
         return saveOrder(dbOrder);
     }
