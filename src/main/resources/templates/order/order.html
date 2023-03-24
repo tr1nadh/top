@@ -77,7 +77,7 @@
                th:attr="onclick=|toggleData('ssForm${order.orderId}')|"
                th:text="${order.service.serviceStatus}"></p>
 
-            <form th:id="ssForm + ${order.orderId}" class="toggle" th:action="@{/modify-order}" th:object="${order}" method="get">
+            <form th:id="ssForm + ${order.orderId}" class="toggle" th:action="@{/modify-order}" th:object="${order}" method="post">
                 <select th:field="*{service.serviceStatus}" onchange="this.form.submit()">
                     <option selected value="Select">Select</option>
                     <option th:each="status : ${serviceStatus}"
