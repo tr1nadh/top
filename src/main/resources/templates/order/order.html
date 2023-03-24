@@ -90,7 +90,22 @@
         </td>
         <td th:text="${order.payment.totalAmount}"></td>
         <td th:text="${order.payment.amountPaid}"></td>
-        <td th:text="${order.payment.paymentStatus}"></td>
+        <td>
+            <p class="toggleHead"
+               th:attr="onclick=|toggleData('psForm${order.orderId}')|"
+               th:text="${order.payment.paymentStatus}"></p>
+
+            <form th:id="psForm + ${order.orderId}" class="toggle" th:action="@{/modify-order}" th:object="${order}" method="post">
+                <input type="hidden" name="orderId" th:value="${order.orderId}">
+                <select th:field="*{payment.paymentStatus}" onchange="this.form.submit()">
+                    <option selected value="Select">Select</option>
+                    <option th:each="status : ${paymentStatus}"
+                            th:value="${status}"
+                            th:text="${status}"
+                    ></option>
+                </select>
+            </form>
+        </td>
         <td th:text="${order.orderStatus}"></td>
         <td>
             <a th:href="@{/edit-order?id={id}(id=${order.orderId})}">Edit</a>
