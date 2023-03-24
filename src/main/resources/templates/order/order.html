@@ -72,7 +72,21 @@
                 Printing charges: <p th:text="${order.service.printingCharges}"></p>
             </div>
         </td>
-        <td th:text="${order.service.serviceStatus}"></td>
+        <td>
+            <p class="toggleHead"
+               th:attr="onclick=|toggleData('ssForm${order.orderId}')|"
+               th:text="${order.service.serviceStatus}"></p>
+
+            <form th:id="ssForm + ${order.orderId}" class="toggle" th:action="@{/modify-order}" th:object="${order}" method="get">
+                <select th:field="*{service.serviceStatus}" onchange="this.form.submit()">
+                    <option selected value="Select">Select</option>
+                    <option th:each="status : ${serviceStatus}"
+                            th:value="${status}"
+                            th:text="${status}"
+                    ></option>
+                </select>
+            </form>
+        </td>
         <td th:text="${order.payment.totalAmount}"></td>
         <td th:text="${order.payment.amountPaid}"></td>
         <td th:text="${order.payment.paymentStatus}"></td>
