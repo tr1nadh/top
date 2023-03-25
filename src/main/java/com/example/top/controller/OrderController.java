@@ -95,7 +95,7 @@ public class OrderController {
     }
 
     @PostMapping("/modify-order")
-    public RedirectView modifyOrder(Order order) {
+    public RedirectView modifyOrder(Order order, int addAm, int rmAm) {
         var dbOrder = orderService.getOrder(order.getOrderId());
 
         if (order.getService() != null)
@@ -106,6 +106,10 @@ public class OrderController {
 
         if (order.getOrderStatus() != null)
             dbOrder.setOrderStatus(order.getOrderStatus());
+
+        var prevAm = dbOrder.getPayment().getAmountPaid();
+        if (addAm != 0) dbOrder.getPayment().setAmountPaid(prevAm + addAm);
+        else if (rmAm != 0) dbOrder.getPayment().setAmountPaid(prevAm - rmAm);
 
         return saveOrder(dbOrder);
     }
