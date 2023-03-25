@@ -81,7 +81,7 @@
 
                 <select th:id="ssSelect + ${order.orderId}" class="toggle" name="service.serviceStatus"
                         onchange="this.form.submit()">
-                    <option selected value="Select">Select</option>
+                    <option selected disabled value="Select">Select</option>
                     <option th:each="status : ${serviceStatus}"
                             th:value="${status}"
                             th:text="${status}"
@@ -97,7 +97,7 @@
 
                 <select th:id="psSelect + ${order.orderId}" class="toggle" name="payment.paymentStatus"
                          onchange="this.form.submit()">
-                    <option selected value="Select">Select</option>
+                    <option selected disabled value="Select">Select</option>
                     <option th:each="status : ${paymentStatus}"
                             th:value="${status}"
                             th:text="${status}"
@@ -110,7 +110,7 @@
                th:text="${order.orderStatus}"></p>
 
                 <select th:id="osSelect + ${order.orderId}" class="toggle" name="orderStatus" onchange="this.form.submit()">
-                    <option selected value="Select">Select</option>
+                    <option selected disabled value="Select">Select</option>
                     <option th:each="status : ${orderStatus}"
                             th:value="${status}"
                             th:text="${status}"
