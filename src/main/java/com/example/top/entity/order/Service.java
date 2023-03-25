@@ -32,5 +32,5 @@ public class Service {
     private int quantity;
     @NotEmpty(message = "Printing charges cannot be empty")
     private int printingCharges;
-    private String serviceStatus;
+    private String serviceStatus = "PENDING";
 }
