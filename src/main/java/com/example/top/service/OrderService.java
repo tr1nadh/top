@@ -31,6 +31,7 @@ public class OrderService {
 
     public Order applyStatus(Order order) {
         var serviceStatus = order.getService().getServiceStatus();
+        if (serviceStatus == null) return order;
         var paymentStatus = order.getPayment().getPaymentStatus();
         var orderStatus = order.getOrderStatus();
 
