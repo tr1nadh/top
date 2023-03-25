@@ -17,5 +17,5 @@ public class Payment {
     private int totalAmount;
     @NotEmpty(message = "Amount paid cannot be empty")
     private int amountPaid;
-    private String paymentStatus;
+    private String paymentStatus = "UNPAID";
 }
