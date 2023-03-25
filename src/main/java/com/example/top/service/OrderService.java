@@ -1,6 +1,9 @@
 package com.example.top.service;
 
 import com.example.top.entity.order.Order;
+import com.example.top.enums.OrderStatus;
+import com.example.top.enums.PaymentStatus;
+import com.example.top.enums.ServiceStatus;
 import com.example.top.repository.OrderRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +24,23 @@ public class OrderService {
             return;
         }
 
-        repository.save(order);
+        repository.save(applyStatus(order));
 
         log.info("Order with the id '" + order.getOrderId() + "' has been saved" );
+    }
+
+    public Order applyStatus(Order order) {
+        var serviceStatus = order.getService().getServiceStatus();
+        var paymentStatus = order.getPayment().getPaymentStatus();
+        var orderStatus = order.getOrderStatus();
+
+        if (serviceStatus.equals(ServiceStatus.COMPLETED.toString()) && paymentStatus.equals(PaymentStatus.PAID.toString())) {
+            order.setOrderStatus(OrderStatus.COMPLETED.toString());
+        } else if (!orderStatus.equals(OrderStatus.PENDING.toString())) {
+            order.setOrderStatus(OrderStatus.PENDING.toString());
+        }
+
+        return order;
     }
 
     public List<Order> findAllOrders() {
