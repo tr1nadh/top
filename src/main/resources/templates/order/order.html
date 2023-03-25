@@ -104,19 +104,7 @@
                     ></option>
                 </select>
         </td>
-        <td>
-            <p class="toggleHead"
-               th:attr="onclick=|toggleData('osSelect${order.orderId}')|"
-               th:text="${order.orderStatus}"></p>
-
-                <select th:id="osSelect + ${order.orderId}" class="toggle" name="orderStatus" onchange="this.form.submit()">
-                    <option selected disabled value="Select">Select</option>
-                    <option th:each="status : ${orderStatus}"
-                            th:value="${status}"
-                            th:text="${status}"
-                    ></option>
-                </select>
-        </td>
+        <td th:text="${order.orderStatus}"></td>
         <td>
             <a th:href="@{/edit-order?id={id}(id=${order.orderId})}">Edit</a>
             <a th:href="@{/delete-order?id={id}(id=${order.orderId})}">Delete</a>
