@@ -40,32 +40,8 @@
   </label> <br>
   <label>Quantity: <input type="number" th:field="*{service.quantity}"></label> <br>
   <label>Printing charges: <input type="number" th:field="*{service.printingCharges}"></label> <br>
-  <label>Service status:
-    <select th:field="*{service.serviceStatus}">
-      <option th:each="status : ${serviceStatus}"
-              th:value="${status}"
-              th:text="${status}"
-      ></option>
-    </select>
-  </label> <br>
   <label>Total amount: <input type="number" th:field="*{payment.totalAmount}"></label> <br>
   <label>Amount paid: <input type="number" th:field="*{payment.amountPaid}"></label> <br>
-  <label>Payment status:
-    <select th:field="*{payment.paymentStatus}">
-      <option th:each="status : ${paymentStatus}"
-              th:value="${status}"
-              th:text="${status}"
-      ></option>
-    </select>
-  </label> <br>
-  <label>Order status:
-    <select th:field="*{orderStatus}">
-      <option th:each="status : ${orderStatus}"
-              th:value="${status}"
-              th:text="${status}"
-      ></option>
-    </select>
-  </label> <br>
   <input type="submit" value="save">
 </form>
 <div th:replace="~{general.html :: back}"></div>
