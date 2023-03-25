@@ -40,6 +40,12 @@ public class OrderService {
             order.setOrderStatus(OrderStatus.PENDING.toString());
         }
 
+        if (order.getPayment().getAmountPaid() == order.getPayment().getTotalAmount()) {
+            order.getPayment().setPaymentStatus(PaymentStatus.PAID.toString());
+        } else if (!paymentStatus.equals(PaymentStatus.UNPAID.toString())) {
+            order.getPayment().setPaymentStatus(PaymentStatus.UNPAID.toString());
+        }
+
         return order;
     }
 
