@@ -89,7 +89,27 @@
                 </select>
         </td>
         <td th:text="${order.payment.totalAmount}"></td>
-        <td th:text="${order.payment.amountPaid}"></td>
+        <td>
+            <p th:text="${order.payment.amountPaid}"></p>
+
+            <a class="toggleHead"
+               th:attr="onclick=|toggleData('apAdd${order.orderId}')|"
+               href="#">+</a>
+
+            <div th:id="apAdd + ${order.orderId}" class="toggle">
+                <input type="number" name="addAm" value="0">
+                <input type="submit" value="Add">
+            </div>
+
+            <a class="toggleHead"
+               th:attr="onclick=|toggleData('apRm${order.orderId}')|"
+               href="#">-</a>
+
+            <div th:id="apRm + ${order.orderId}" class="toggle">
+                <input type="number" name="rmAm" value="0">
+                <input type="submit" value="Remove">
+            </div>
+        </td>
         <td>
             <p class="toggleHead"
                th:attr="onclick=|toggleData('psSelect${order.orderId}')|"
