@@ -70,16 +70,9 @@ public class OrderController {
 
     @PostMapping("/update-order")
     public RedirectView updateOrder(Order order, int addAm, int rmAm) {
-        var dbOrder = orderService.getOrder(order.getOrderId());
+        orderService.updateOrder(order, addAm, rmAm);
 
-        if (order.getService() != null)
-            dbOrder.getService().setServiceStatus(order.getService().getServiceStatus());
-
-        var prevAm = dbOrder.getPayment().getAmountPaid();
-        if (addAm != 0) dbOrder.getPayment().setAmountPaid(prevAm + addAm);
-        else if (rmAm != 0) dbOrder.getPayment().setAmountPaid(prevAm - rmAm);
-
-        return saveOrder(dbOrder);
+        return new RedirectView("orders");
     }
 
     @GetMapping("/delete-order")
