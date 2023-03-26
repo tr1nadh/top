@@ -101,6 +101,19 @@ public class OrderService {
         return orders;
     }
 
+    public void updateOrder(Order order, int addAmount, int removeAmount) {
+        var dbOrder = getOrder(order.getOrderId());
+
+        if (order.getService() != null)
+            dbOrder.getService().setServiceStatus(order.getService().getServiceStatus());
+
+        var prevAm = dbOrder.getPayment().getAmountPaid();
+        if (addAmount != 0) dbOrder.getPayment().setAmountPaid(prevAm + addAmount);
+        else if (removeAmount != 0) dbOrder.getPayment().setAmountPaid(prevAm - removeAmount);
+
+        saveOrder(order);
+    }
+
     public void deleteOrder(Long id) {
         var order = getOrder(id);
         if (order == null) {
