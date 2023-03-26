@@ -25,30 +25,9 @@ public class OrderService {
             return;
         }
 
-        repository.save(applyStatus(order));
+        repository.save(order);
 
         log.info("Order with the id '" + order.getOrderId() + "' has been saved" );
-    }
-
-    private Order applyStatus(Order order) {
-        if (order.getService() == null) return order;
-        var serviceStatus = order.getService().getServiceStatus();
-        var paymentStatus = order.getPayment().getPaymentStatus();
-        var orderStatus = order.getOrderStatus();
-
-        if (serviceStatus.equals(ServiceStatus.COMPLETED.toString()) && paymentStatus.equals(PaymentStatus.PAID.toString())) {
-            order.setOrderStatus(OrderStatus.COMPLETED.toString());
-        } else if (!orderStatus.equals(OrderStatus.PENDING.toString())) {
-            order.setOrderStatus(OrderStatus.PENDING.toString());
-        }
-
-        if (order.getPayment().getAmountPaid() == order.getPayment().getTotalAmount()) {
-            order.getPayment().setPaymentStatus(PaymentStatus.PAID.toString());
-        } else if (!paymentStatus.equals(PaymentStatus.UNPAID.toString())) {
-            order.getPayment().setPaymentStatus(PaymentStatus.UNPAID.toString());
-        }
-
-        return order;
     }
 
     public Order getOrder(Long id) {
@@ -104,14 +83,58 @@ public class OrderService {
     public void updateOrder(Order order, int addAmount, int removeAmount) {
         var dbOrder = getOrder(order.getOrderId());
 
-        if (order.getService() != null)
-            dbOrder.getService().setServiceStatus(order.getService().getServiceStatus());
-
-        var prevAm = dbOrder.getPayment().getAmountPaid();
-        if (addAmount != 0) dbOrder.getPayment().setAmountPaid(prevAm + addAmount);
-        else if (removeAmount != 0) dbOrder.getPayment().setAmountPaid(prevAm - removeAmount);
+        updateServiceStatus(order, dbOrder);
+        updateAmount(dbOrder, addAmount, removeAmount);
 
         saveOrder(dbOrder);
+    }
+
+    private static void updateAmount(Order dbOrder, int addAmount, int removeAmount) {
+        var prevAm = dbOrder.getPayment().getAmountPaid();
+        if (addAmount != 0) {
+            if ((prevAm + addAmount) > dbOrder.getPayment().getTotalAmount()) {
+                log.severe("Cannot add more then enough amount");
+                return;
+            }
+            dbOrder.getPayment().setAmountPaid(prevAm + addAmount);
+        }
+        else if (removeAmount != 0) {
+            if ((prevAm - removeAmount) < 0) {
+                log.severe("Cannot remove the amount");
+                return;
+            }
+            dbOrder.getPayment().setAmountPaid(prevAm - removeAmount);
+        }
+
+        updateAmountStatus(dbOrder);
+    }
+
+    private static void updateAmountStatus(Order dbOrder) {
+        if (dbOrder.getPayment().getAmountPaid() == dbOrder.getPayment().getTotalAmount()) {
+            dbOrder.getPayment().setPaymentStatus(PaymentStatus.PAID.toString());
+            updateOrderStatus(dbOrder);
+        } else if (!dbOrder.getPayment().getPaymentStatus().equals(PaymentStatus.UNPAID.toString())) {
+            dbOrder.getPayment().setPaymentStatus(PaymentStatus.UNPAID.toString());
+            updateOrderStatus(dbOrder);
+        }
+    }
+
+    private static void updateServiceStatus(Order order, Order dbOrder) {
+        if (order.getService() != null) {
+            dbOrder.getService().setServiceStatus(order.getService().getServiceStatus());
+            updateOrderStatus(dbOrder);
+        }
+    }
+
+    private static void updateOrderStatus(Order dbOrder) {
+        var serviceStatus = dbOrder.getService().getServiceStatus();
+        var paymentStatus = dbOrder.getPayment().getPaymentStatus();
+
+        if (serviceStatus.equals(ServiceStatus.COMPLETED.toString()) && paymentStatus.equals(PaymentStatus.PAID.toString())) {
+            dbOrder.setOrderStatus(OrderStatus.COMPLETED.toString());
+        } else if (!dbOrder.getOrderStatus().equals(OrderStatus.PENDING.toString())) {
+            dbOrder.setOrderStatus(OrderStatus.PENDING.toString());
+        }
     }
 
     public void deleteOrder(Long id) {
