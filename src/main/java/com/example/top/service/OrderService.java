@@ -72,7 +72,7 @@ public class OrderService {
         return orders;
     }
 
-    public List<Order> getOrdersBySearchAndOrderStatus(String search, String orderStatus) {
+    private List<Order> getOrdersBySearchAndOrderStatus(String search, String orderStatus) {
         List<Order> orders;
         if (!GeneralUtil.isQualifiedString(search)) orders = findOrdersByOrderStatus(orderStatus);
         else orders = findOrdersByOrderStatusAndCustomerNameContaining(orderStatus, search);
