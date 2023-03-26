@@ -57,13 +57,6 @@ public class OrderController {
         return new RedirectView("add-order");
     }
 
-    @GetMapping("/delete-order")
-    public RedirectView deleteOrder(Long id) {
-        orderService.deleteOrder(id);
-
-        return new RedirectView("orders");
-    }
-
     @GetMapping({"/", "/orders"})
     public ModelAndView getOrders(String search, String orderStatus) {
         var mv = new ModelAndView();
@@ -75,6 +68,27 @@ public class OrderController {
         mv.setViewName("order/order");
 
         return mv;
+    }
+
+    @PostMapping("/update-order")
+    public RedirectView updateOrder(Order order, int addAm, int rmAm) {
+        var dbOrder = orderService.getOrder(order.getOrderId());
+
+        if (order.getService() != null)
+            dbOrder.getService().setServiceStatus(order.getService().getServiceStatus());
+
+        var prevAm = dbOrder.getPayment().getAmountPaid();
+        if (addAm != 0) dbOrder.getPayment().setAmountPaid(prevAm + addAm);
+        else if (rmAm != 0) dbOrder.getPayment().setAmountPaid(prevAm - rmAm);
+
+        return saveOrder(dbOrder);
+    }
+
+    @GetMapping("/delete-order")
+    public RedirectView deleteOrder(Long id) {
+        orderService.deleteOrder(id);
+
+        return new RedirectView("orders");
     }
 
     public List<Order> getOrdersByParams(String search, String orderStatus) {
@@ -92,19 +106,5 @@ public class OrderController {
         else orders = orderService.findOrdersByOrderStatusAndCustomerNameContaining(orderStatus, search);
 
         return orders;
-    }
-
-    @PostMapping("/update-order")
-    public RedirectView updateOrder(Order order, int addAm, int rmAm) {
-        var dbOrder = orderService.getOrder(order.getOrderId());
-
-        if (order.getService() != null)
-            dbOrder.getService().setServiceStatus(order.getService().getServiceStatus());
-
-        var prevAm = dbOrder.getPayment().getAmountPaid();
-        if (addAm != 0) dbOrder.getPayment().setAmountPaid(prevAm + addAm);
-        else if (rmAm != 0) dbOrder.getPayment().setAmountPaid(prevAm - rmAm);
-
-        return saveOrder(dbOrder);
     }
 }
