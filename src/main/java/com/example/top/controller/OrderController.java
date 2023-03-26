@@ -94,8 +94,8 @@ public class OrderController {
         return orders;
     }
 
-    @PostMapping("/modify-order")
-    public RedirectView modifyOrder(Order order, int addAm, int rmAm) {
+    @PostMapping("/update-order")
+    public RedirectView updateOrder(Order order, int addAm, int rmAm) {
         var dbOrder = orderService.getOrder(order.getOrderId());
 
         if (order.getService() != null)
