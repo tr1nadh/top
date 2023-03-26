@@ -137,6 +137,15 @@ public class OrderService {
         }
     }
 
+    public void cancelOrder(Long id) {
+        var dbOrder = getOrder(id);
+        dbOrder.setOrderStatus(OrderStatus.CANCELLED.toString());
+        dbOrder.getPayment().setAmountPaid(0);
+        saveOrder(dbOrder);
+
+        log.info("Order with the id '" + id + "' has been cancelled");
+    }
+
     public void deleteOrder(Long id) {
         var order = getOrder(id);
         if (order == null) {

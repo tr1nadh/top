@@ -75,6 +75,13 @@ public class OrderController {
         return new RedirectView("orders");
     }
 
+    @GetMapping("/cancel-order")
+    public RedirectView cancelOrder(Long id) {
+        orderService.cancelOrder(id);
+
+        return new RedirectView("orders");
+    }
+
     @GetMapping("/delete-order")
     public RedirectView deleteOrder(Long id) {
         orderService.deleteOrder(id);
