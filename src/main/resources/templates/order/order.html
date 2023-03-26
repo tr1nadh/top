@@ -40,7 +40,7 @@
     </thead>
     <tbody>
     <tr th:each="order : ${orders}">
-        <form th:action="@{/modify-order}" th:object="${order}" method="post">
+        <form th:action="@{/update-order}" th:object="${order}" method="post">
             <input type="hidden" name="orderId" th:value="${order.orderId}">
         <td th:text="${order.orderId}"></td>
         <td>
