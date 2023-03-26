@@ -5,6 +5,7 @@ import com.example.top.enums.OrderStatus;
 import com.example.top.enums.PaymentStatus;
 import com.example.top.enums.ServiceStatus;
 import com.example.top.repository.OrderRepository;
+import com.example.top.util.GeneralUtil;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -99,6 +100,23 @@ public class OrderService {
         var orders = repository.findOrdersByOrderStatusAndCustomerNameContaining(status, name);
 
         log.info("Successfully retrieved orders by order status '" + status + "' and customer name containing '" + name + "'");
+        return orders;
+    }
+
+    public List<Order> getOrdersByParams(String search, String orderStatus) {
+        List<Order> orders;
+        if (GeneralUtil.isQualifiedString(orderStatus)) orders = getOrdersBySearchAndOrderStatus(search, orderStatus);
+        else if (!GeneralUtil.isQualifiedString(search)) orders = findOrdersByOrderStatus("Pending");
+        else orders = findOrdersByCustomerNameContaining(search);
+
+        return orders;
+    }
+
+    public List<Order> getOrdersBySearchAndOrderStatus(String search, String orderStatus) {
+        List<Order> orders;
+        if (!GeneralUtil.isQualifiedString(search)) orders = findOrdersByOrderStatus(orderStatus);
+        else orders = findOrdersByOrderStatusAndCustomerNameContaining(orderStatus, search);
+
         return orders;
     }
 }
