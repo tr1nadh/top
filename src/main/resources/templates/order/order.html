@@ -93,10 +93,12 @@
             <p th:text="${order.payment.amountPaid}"></p>
 
             <a class="toggleHead"
+               th:if="${order.orderStatus == 'PENDING'}"
                th:attr="onclick=|toggleData('apAdd${order.orderId}')|"
                href="#">+</a>
 
             <a class="toggleHead"
+               th:if="${order.orderStatus == 'PENDING'}"
                th:attr="onclick=|toggleData('apRm${order.orderId}')|"
                href="#">-</a>
 
@@ -114,7 +116,8 @@
         <td th:text="${order.orderStatus}"></td>
         <td>
             <a th:href="@{/edit-order?id={id}(id=${order.orderId})}">Edit</a>
-            <a th:href="@{/delete-order?id={id}(id=${order.orderId})}">Delete</a>
+            <a th:if="${order.orderStatus == 'PENDING'}" th:href="@{/cancel-order?id={id}(id=${order.orderId})}">Cancel</a>
+            <a th:if="${order.orderStatus == 'CANCELLED'}" th:href="@{/delete-order?id={id}(id=${order.orderId})}">Delete</a>
         </td>
         </form>
     </tr>
