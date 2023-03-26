@@ -48,7 +48,7 @@ public class OrderController {
         return mv;
     }
 
-    @PostMapping({"/save-order", "/update-order"})
+    @PostMapping("/save-order")
     public RedirectView saveOrder(Order order) {
         orderService.saveOrder(order);
 
