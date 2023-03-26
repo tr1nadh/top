@@ -31,8 +31,8 @@ public class OrderService {
     }
 
     private Order applyStatus(Order order) {
+        if (order.getService() == null) return order;
         var serviceStatus = order.getService().getServiceStatus();
-        if (serviceStatus == null) return order;
         var paymentStatus = order.getPayment().getPaymentStatus();
         var orderStatus = order.getOrderStatus();
 
@@ -111,7 +111,7 @@ public class OrderService {
         if (addAmount != 0) dbOrder.getPayment().setAmountPaid(prevAm + addAmount);
         else if (removeAmount != 0) dbOrder.getPayment().setAmountPaid(prevAm - removeAmount);
 
-        saveOrder(order);
+        saveOrder(dbOrder);
     }
 
     public void deleteOrder(Long id) {
