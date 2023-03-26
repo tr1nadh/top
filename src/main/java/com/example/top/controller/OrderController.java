@@ -101,12 +101,6 @@ public class OrderController {
         if (order.getService() != null)
             dbOrder.getService().setServiceStatus(order.getService().getServiceStatus());
 
-        if (order.getPayment() != null)
-            dbOrder.getPayment().setPaymentStatus(order.getPayment().getPaymentStatus());
-
-        if (order.getOrderStatus() != null)
-            dbOrder.setOrderStatus(order.getOrderStatus());
-
         var prevAm = dbOrder.getPayment().getAmountPaid();
         if (addAm != 0) dbOrder.getPayment().setAmountPaid(prevAm + addAm);
         else if (rmAm != 0) dbOrder.getPayment().setAmountPaid(prevAm - rmAm);
