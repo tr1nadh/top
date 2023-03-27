@@ -6,6 +6,8 @@ import com.example.top.service.RoleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,12 +35,16 @@ public class EmployeeController {
     }
 
     @PostMapping({"/save-employee", "/update-employee"})
-    public RedirectView saveEmployee(@Valid Employee employee) {
+    public ModelAndView saveEmployee(@Valid Employee employee, BindingResult bindingResult, ModelMap model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("employee", employee);
+            model.addAttribute("roles", roleService.findAllRoles());
+            return new ModelAndView("employee/save-employee", model);
+        }
+
         empService.saveEmployee(employee);
 
-        if (employee.getEmployeeId() != null) return new RedirectView("employees");
-
-        return new RedirectView("add-employee");
+        return new ModelAndView("redirect:/employees");
     }
 
     @RequestMapping("/employees")
