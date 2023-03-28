@@ -33,7 +33,7 @@ public class RoleController {
         return mv;
     }
 
-    @PostMapping({"/save-role", "/update-role"})
+    @PostMapping("/save-role")
     public ModelAndView saveRole(@Valid @ModelAttribute("role") RoleDto role,
                                  BindingResult bindingResult, ModelMap model) {
         if (bindingResult.hasErrors()) {
