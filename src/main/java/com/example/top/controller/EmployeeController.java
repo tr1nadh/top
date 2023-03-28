@@ -37,7 +37,7 @@ public class EmployeeController {
         return mv;
     }
 
-    @PostMapping({"/save-employee", "/update-employee"})
+    @PostMapping("/save-employee")
     public ModelAndView saveEmployee(@Valid @ModelAttribute("employee") EmployeeDto employee, BindingResult bindingResult, ModelMap model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("employee", employee);
