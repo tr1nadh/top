@@ -27,7 +27,7 @@ public class ServiceTypeController {
         return mv;
     }
 
-    @PostMapping({"/save-service-type", "/update-service-type"})
+    @PostMapping("/save-service-type")
     public RedirectView saveServiceType(ServiceType type) {
         service.saveServiceType(type);
 

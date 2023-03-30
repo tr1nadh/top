@@ -27,7 +27,7 @@ public class DimensionsController {
         return mv;
     }
 
-    @PostMapping({"/save-dimensions", "/update-dimensions"})
+    @PostMapping("/save-dimensions")
     public RedirectView saveDimensions(Dimensions dimensions) {
         service.saveDimensions(dimensions);
 
