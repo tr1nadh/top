@@ -44,9 +44,6 @@ public class OrderController {
         mv.addObject("employees", employeeService.findAllEmployees());
         mv.addObject("serviceTypes", serviceTypeService.findAllServiceTypes());
         mv.addObject("dimensions", dimensionsService.findAllDimensions());
-        mv.addObject("serviceStatus", Arrays.stream(ServiceStatus.values()).toList());
-        mv.addObject("paymentStatus", Arrays.stream(PaymentStatus.values()).toList());
-        mv.addObject("orderStatus", Arrays.stream(OrderStatus.values()).toList());
         mv.setViewName("order/save-order");
 
         return mv;
