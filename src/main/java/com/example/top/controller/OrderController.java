@@ -1,5 +1,6 @@
 package com.example.top.controller;
 
+import com.example.top.dto.OrderDto;
 import com.example.top.entity.order.Order;
 import com.example.top.enums.OrderStatus;
 import com.example.top.enums.PaymentStatus;
@@ -8,9 +9,14 @@ import com.example.top.service.DimensionsService;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.OrderService;
 import com.example.top.service.ServiceTypeService;
+import com.example.top.util.Mapper;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -47,12 +53,19 @@ public class OrderController {
     }
 
     @PostMapping("/save-order")
-    public RedirectView saveOrder(Order order) {
-        orderService.saveOrder(order);
+    public ModelAndView saveOrder(@Valid @ModelAttribute("order") OrderDto order,
+                                  BindingResult bindingResult, ModelMap model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("order", order);
+            model.addAttribute("employees", employeeService.findAllEmployees());
+            model.addAttribute("serviceTypes", serviceTypeService.findAllServiceTypes());
+            model.addAttribute("dimensions", dimensionsService.findAllDimensions());
+            return new ModelAndView("order/save-order", model);
+        }
 
-        if (order.getOrderId() != null) return new RedirectView("orders");
+        orderService.saveOrder(Mapper.map(order, new Order()));
 
-        return new RedirectView("add-order");
+        return new ModelAndView("redirect:/orders");
     }
 
     @GetMapping({"/", "/orders"})
