@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Save order</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
 <div th:insert="~{general.html :: navbar}"></div>
 <form action="#" th:action="@{/save-order}" th:object="${order}" method="post">
   <input type="hidden" th:field="*{orderId}">
   <label>Customer name: <input type="text" th:field="*{customer.name}"></label> <br>
+  <p th:if="${#fields.hasErrors('customer.name')}" th:errorclass="error" th:errors="*{customer.name}"></p>
   <label>Customer phoneNo: <input type="number" th:field="*{customer.phoneNo}"></label> <br>
+  <p th:if="${#fields.hasErrors('customer.phoneNo')}" th:errorclass="error" th:errors="*{customer.phoneNo}"></p>
   <label>Customer email address: <input type="email" th:field="*{customer.emailAddress}"></label> <br>
+  <p th:if="${#fields.hasErrors('customer.emailAddress')}" th:errorclass="error" th:errors="*{customer.emailAddress}"></p>
   <label>Handle by:
   <select th:field="*{handleBy}">
     <option th:each="employee : ${employees}"
@@ -29,6 +37,7 @@
     <a href="/service-types">Service types</a>
   </label> <br>
   <label>Booking date: <input type="text" th:field="*{service.bookingDate}"></label> <br>
+  <p th:if="${#fields.hasErrors('service.bookingDate')}" th:errorclass="error" th:errors="*{service.bookingDate}"></p>
   <label>Dimensions:
     <select th:field="*{service.dimensions}">
       <option th:each="dimension : ${dimensions}"
@@ -39,9 +48,13 @@
     <a href="/dimensions">Dimensions</a>
   </label> <br>
   <label>Quantity: <input type="number" th:field="*{service.quantity}"></label> <br>
+  <p th:if="${#fields.hasErrors('service.quantity')}" th:errorclass="error" th:errors="*{service.quantity}"></p>
   <label>Printing charges: <input type="number" th:field="*{service.printingCharges}"></label> <br>
+  <p th:if="${#fields.hasErrors('service.printingCharges')}" th:errorclass="error" th:errors="*{service.printingCharges}"></p>
   <label>Total amount: <input type="number" th:field="*{payment.totalAmount}"></label> <br>
+  <p th:if="${#fields.hasErrors('payment.totalAmount')}" th:errorclass="error" th:errors="*{payment.totalAmount}"></p>
   <label>Amount paid: <input type="number" th:field="*{payment.amountPaid}"></label> <br>
+  <p th:if="${#fields.hasErrors('payment.amountPaid')}" th:errorclass="error" th:errors="*{payment.amountPaid}"></p>
   <input type="submit" value="save">
 </form>
 <div th:replace="~{general.html :: back}"></div>
