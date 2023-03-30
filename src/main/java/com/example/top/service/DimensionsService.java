@@ -1,7 +1,9 @@
 package com.example.top.service;
 
+import com.example.top.dto.DimensionsDto;
 import com.example.top.entity.order.Dimensions;
 import com.example.top.repository.DimensionsRepository;
+import com.example.top.util.Mapper;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,8 @@ public class DimensionsService {
 
     public List<Dimensions> findAllDimensions() {
         var dimensions = repository.findAll();
+
+        Mapper.mapList(dimensions, new DimensionsDto());
 
         log.info("Successfully retrieved all dimensions");
         return dimensions;
