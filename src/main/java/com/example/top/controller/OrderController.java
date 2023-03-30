@@ -9,7 +9,7 @@ import com.example.top.service.DimensionsService;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.OrderService;
 import com.example.top.service.ServiceTypeService;
-import com.example.top.util.Mapper;
+import com.example.top.util.OrderMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,7 +63,7 @@ public class OrderController {
             return new ModelAndView("order/save-order", model);
         }
 
-        orderService.saveOrder(Mapper.map(order, new Order()));
+        orderService.saveOrder(OrderMapper.map(order));
 
         return new ModelAndView("redirect:/orders");
     }
