@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 public class EmployeeDto {
 
     private Long employeeId;
-
     @NotEmpty(message = "First name cannot be empty")
     private String firstname;
 
