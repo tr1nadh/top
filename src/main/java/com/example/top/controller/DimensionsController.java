@@ -23,26 +23,23 @@ public class DimensionsController {
 
     @GetMapping({"/add-dimensions", "/edit-dimensions"})
     public ModelAndView renderDimensions(Long id) {
-        var dimensions = (id == null) ? new Dimensions() : service.getDimensions(id);
-
-        var mv = new ModelAndView();
-        mv.addObject("dimensions", dimensions);
-        mv.setViewName("order/dimensions/save-dimensions");
-
-        return mv;
+        return getRenderView((id == null) ? new Dimensions() : service.getDimensions(id));
     }
 
     @PostMapping("/save-dimensions")
     public ModelAndView saveDimensions(@Valid @ModelAttribute("dimensions") DimensionsDto dimensions, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            var mv = new ModelAndView("order/dimensions/save-dimensions");
-            mv.addObject("dimensions", dimensions);
-            return mv;
-        }
+        if (bindingResult.hasErrors()) return getRenderView(dimensions);
 
         service.saveDimensions(Mapper.map(dimensions, new Dimensions()));
 
         return new ModelAndView("redirect:/dimensions");
+    }
+
+    private ModelAndView getRenderView(Object dimensions) {
+        var mv = new ModelAndView();
+        mv.addObject("dimensions", dimensions);
+        mv.setViewName("order/dimensions/save-dimensions");
+        return mv;
     }
 
     @RequestMapping("/dimensions")
