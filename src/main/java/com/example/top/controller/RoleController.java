@@ -33,8 +33,7 @@ public class RoleController {
     }
 
     @PostMapping("/save-role")
-    public ModelAndView saveRole(@Valid @ModelAttribute("role") RoleDto role,
-                                 BindingResult bindingResult) {
+    public ModelAndView saveRole(@Valid @ModelAttribute("role") RoleDto role, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             var mv = new ModelAndView("employee/role/save-role");
             mv.addObject("role", role);

@@ -49,8 +49,7 @@ public class OrderController {
     }
 
     @PostMapping("/save-order")
-    public ModelAndView saveOrder(@Valid @ModelAttribute("order") OrderDto order,
-                                  BindingResult bindingResult) {
+    public ModelAndView saveOrder(@Valid @ModelAttribute("order") OrderDto order, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             var mv = new ModelAndView("order/save-order");
             mv.addObject("order", order);
