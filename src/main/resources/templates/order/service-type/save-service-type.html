@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Save service type</title>
+    <style>
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
 <div th:insert="~{general.html :: navbar}"></div>
 <form action="#" th:action="@{/save-service-type}" th:object="${serviceType}" method="post">
   <input type="hidden" th:field="*{serviceTypeId}">
   <label>Service type: <input type="text" th:field="*{name}"></label> <br>
+    <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
   <input type="submit" value="save">
 </form>
 <div th:replace="~{general.html :: back}"></div>

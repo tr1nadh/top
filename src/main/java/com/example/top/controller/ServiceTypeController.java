@@ -1,10 +1,15 @@
 package com.example.top.controller;
 
+import com.example.top.dto.ServiceTypeDto;
 import com.example.top.entity.order.ServiceType;
 import com.example.top.service.ServiceTypeService;
+import com.example.top.util.Mapper;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,12 +33,16 @@ public class ServiceTypeController {
     }
 
     @PostMapping("/save-service-type")
-    public RedirectView saveServiceType(ServiceType type) {
-        service.saveServiceType(type);
+    public ModelAndView saveServiceType(@Valid @ModelAttribute("serviceType") ServiceTypeDto type, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            var mv = new ModelAndView("order/service-type/save-service-type");
+            mv.addObject("serviceType", type);
+            return mv;
+        }
 
-        if (type.getServiceTypeId() != null) return new RedirectView("service-types");
+        service.saveServiceType(Mapper.map(type, new ServiceType()));
 
-        return new RedirectView("add-service-type");
+        return new ModelAndView("redirect:/service-types");
     }
 
     @RequestMapping("/service-types")
