@@ -1,9 +1,7 @@
 package com.example.top.service;
 
-import com.example.top.dto.ServiceTypeDto;
 import com.example.top.entity.order.ServiceType;
 import com.example.top.repository.ServiceTypeRepository;
-import com.example.top.util.Mapper;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +28,6 @@ public class ServiceTypeService {
 
     public List<ServiceType> findAllServiceTypes() {
         var serviceTypes = repository.findAll();
-
-        Mapper.mapList(serviceTypes, new ServiceTypeDto());
 
         log.info("Successfully retrieved all service types");
         return serviceTypes;

@@ -1,9 +1,7 @@
 package com.example.top.service;
 
-import com.example.top.dto.EmployeeDto;
 import com.example.top.entity.employee.Employee;
 import com.example.top.repository.EmployeeRepository;
-import com.example.top.util.Mapper;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +29,6 @@ public class EmployeeService {
 
     public List<Employee> findAllEmployees() {
         var employees = repository.findAll();
-
-        Mapper.mapList(employees, new EmployeeDto());
 
         log.info("Successfully retrieved all employees");
         return employees;
