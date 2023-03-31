@@ -1,10 +1,15 @@
 package com.example.top.controller;
 
+import com.example.top.dto.DimensionsDto;
 import com.example.top.entity.order.Dimensions;
 import com.example.top.service.DimensionsService;
+import com.example.top.util.Mapper;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,12 +33,16 @@ public class DimensionsController {
     }
 
     @PostMapping("/save-dimensions")
-    public RedirectView saveDimensions(Dimensions dimensions) {
-        service.saveDimensions(dimensions);
+    public ModelAndView saveDimensions(@Valid @ModelAttribute("dimensions") DimensionsDto dimensions, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            var mv = new ModelAndView("order/dimensions/save-dimensions");
+            mv.addObject("dimensions", dimensions);
+            return mv;
+        }
 
-        if (dimensions.getDimensionsId() != null) return new RedirectView("dimensions");
+        service.saveDimensions(Mapper.map(dimensions, new Dimensions()));
 
-        return new RedirectView("order/dimensions/save-dimensions");
+        return new ModelAndView("redirect:/dimensions");
     }
 
     @RequestMapping("/dimensions")
