@@ -7,7 +7,6 @@ import com.example.top.util.Mapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,10 +34,11 @@ public class RoleController {
 
     @PostMapping("/save-role")
     public ModelAndView saveRole(@Valid @ModelAttribute("role") RoleDto role,
-                                 BindingResult bindingResult, ModelMap model) {
+                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("role", role);
-            return new ModelAndView("employee/role/save-role");
+            var mv = new ModelAndView("employee/role/save-role");
+            mv.addObject("role", role);
+            return mv;
         }
 
         service.saveRole(Mapper.map(role, new Role()));

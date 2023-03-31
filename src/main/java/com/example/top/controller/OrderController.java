@@ -13,7 +13,6 @@ import com.example.top.util.OrderMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -51,13 +50,14 @@ public class OrderController {
 
     @PostMapping("/save-order")
     public ModelAndView saveOrder(@Valid @ModelAttribute("order") OrderDto order,
-                                  BindingResult bindingResult, ModelMap model) {
+                                  BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("order", order);
-            model.addAttribute("employees", employeeService.findAllEmployees());
-            model.addAttribute("serviceTypes", serviceTypeService.findAllServiceTypes());
-            model.addAttribute("dimensions", dimensionsService.findAllDimensions());
-            return new ModelAndView("order/save-order", model);
+            var mv = new ModelAndView("order/save-order");
+            mv.addObject("order", order);
+            mv.addObject("employees", employeeService.findAllEmployees());
+            mv.addObject("serviceTypes", serviceTypeService.findAllServiceTypes());
+            mv.addObject("dimensions", dimensionsService.findAllDimensions());
+            return mv;
         }
 
         orderService.saveOrder(OrderMapper.map(order));

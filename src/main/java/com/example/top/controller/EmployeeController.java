@@ -8,7 +8,6 @@ import com.example.top.util.Mapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -38,11 +37,12 @@ public class EmployeeController {
     }
 
     @PostMapping("/save-employee")
-    public ModelAndView saveEmployee(@Valid @ModelAttribute("employee") EmployeeDto employee, BindingResult bindingResult, ModelMap model) {
+    public ModelAndView saveEmployee(@Valid @ModelAttribute("employee") EmployeeDto employee, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("employee", employee);
-            model.addAttribute("roles", roleService.findAllRoles());
-            return new ModelAndView("employee/save-employee", model);
+            var mv = new ModelAndView("employee/save-employee");
+            mv.addObject("employee", employee);
+            mv.addObject("roles", roleService.findAllRoles());
+            return mv;
         }
 
         empService.saveEmployee(Mapper.map(employee, new Employee()));
