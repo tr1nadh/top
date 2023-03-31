@@ -26,28 +26,24 @@ public class EmployeeController {
 
     @GetMapping({"/add-employee", "/edit-employee"})
     public ModelAndView renderEmployee(Long id) {
-        var employee = (id == null) ? new Employee() : empService.getEmployee(id);
-
-        var mv = new ModelAndView();
-        mv.addObject("employee", employee);
-        mv.addObject("roles", roleService.findAllRoles());
-        mv.setViewName("employee/save-employee");
-
-        return mv;
+        return getRenderView((id == null) ? new Employee() : empService.getEmployee(id));
     }
 
     @PostMapping("/save-employee")
     public ModelAndView saveEmployee(@Valid @ModelAttribute("employee") EmployeeDto employee, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            var mv = new ModelAndView("employee/save-employee");
-            mv.addObject("employee", employee);
-            mv.addObject("roles", roleService.findAllRoles());
-            return mv;
-        }
+        if (bindingResult.hasErrors()) return getRenderView(employee);
 
         empService.saveEmployee(Mapper.map(employee, new Employee()));
 
         return new ModelAndView("redirect:/employees");
+    }
+
+    private ModelAndView getRenderView(Object employee) {
+        var mv = new ModelAndView();
+        mv.addObject("employee", employee);
+        mv.addObject("roles", roleService.findAllRoles());
+        mv.setViewName("employee/save-employee");
+        return mv;
     }
 
     @RequestMapping("/employees")

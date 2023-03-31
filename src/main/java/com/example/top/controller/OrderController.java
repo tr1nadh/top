@@ -36,32 +36,26 @@ public class OrderController {
 
     @GetMapping({"/add-order", "/edit-order"})
     public ModelAndView renderOrder(Long id) {
-        var order = (id == null) ? new Order() : orderService.getOrder(id);
+        return getRenderView((id == null) ? new Order() : orderService.getOrder(id));
+    }
 
+    @PostMapping("/save-order")
+    public ModelAndView saveOrder(@Valid @ModelAttribute("order") OrderDto order, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) return getRenderView(order);
+
+        orderService.saveOrder(OrderMapper.map(order));
+
+        return new ModelAndView("redirect:/orders");
+    }
+
+    private ModelAndView getRenderView(Object order) {
         var mv = new ModelAndView();
         mv.addObject("order", order);
         mv.addObject("employees", employeeService.findAllEmployees());
         mv.addObject("serviceTypes", serviceTypeService.findAllServiceTypes());
         mv.addObject("dimensions", dimensionsService.findAllDimensions());
         mv.setViewName("order/save-order");
-
         return mv;
-    }
-
-    @PostMapping("/save-order")
-    public ModelAndView saveOrder(@Valid @ModelAttribute("order") OrderDto order, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            var mv = new ModelAndView("order/save-order");
-            mv.addObject("order", order);
-            mv.addObject("employees", employeeService.findAllEmployees());
-            mv.addObject("serviceTypes", serviceTypeService.findAllServiceTypes());
-            mv.addObject("dimensions", dimensionsService.findAllDimensions());
-            return mv;
-        }
-
-        orderService.saveOrder(OrderMapper.map(order));
-
-        return new ModelAndView("redirect:/orders");
     }
 
     @GetMapping({"/", "/orders"})

@@ -23,26 +23,24 @@ public class ServiceTypeController {
 
     @GetMapping({"/add-service-type", "/edit-service-type"})
     public ModelAndView renderServiceType(Long id) {
-        var serviceType = (id == null) ? new ServiceType() : service.getServiceType(id);
-
-        var mv = new ModelAndView();
-        mv.addObject("serviceType", serviceType);
-        mv.setViewName("order/service-type/save-service-type");
-
-        return mv;
+        return getRenderView((id == null) ? new ServiceType() : service.getServiceType(id));
     }
 
     @PostMapping("/save-service-type")
     public ModelAndView saveServiceType(@Valid @ModelAttribute("serviceType") ServiceTypeDto type, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            var mv = new ModelAndView("order/service-type/save-service-type");
-            mv.addObject("serviceType", type);
-            return mv;
-        }
+        if (bindingResult.hasErrors()) return getRenderView(type);
 
         service.saveServiceType(Mapper.map(type, new ServiceType()));
 
         return new ModelAndView("redirect:/service-types");
+    }
+
+    private static ModelAndView getRenderView(Object type) {
+        var mv = new ModelAndView();
+        mv.addObject("serviceType", type);
+        mv.setViewName("order/service-type/save-service-type");
+
+        return mv;
     }
 
     @RequestMapping("/service-types")

@@ -23,26 +23,24 @@ public class RoleController {
 
     @GetMapping({"/add-role", "/edit-role"})
     public ModelAndView renderRole(Long id) {
-        var role = (id == null) ? new Role() : service.getRole(id);
+        return getRenderView((id == null) ? new Role() : service.getRole(id));
+    }
 
+    @PostMapping("/save-role")
+    public ModelAndView saveRole(@Valid @ModelAttribute("role") RoleDto role, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) return getRenderView(role);
+
+        service.saveRole(Mapper.map(role, new Role()));
+
+        return new ModelAndView("redirect:/roles");
+    }
+
+    private ModelAndView getRenderView(Object role) {
         var mv = new ModelAndView();
         mv.addObject("role", role);
         mv.setViewName("employee/role/save-role");
 
         return mv;
-    }
-
-    @PostMapping("/save-role")
-    public ModelAndView saveRole(@Valid @ModelAttribute("role") RoleDto role, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            var mv = new ModelAndView("employee/role/save-role");
-            mv.addObject("role", role);
-            return mv;
-        }
-
-        service.saveRole(Mapper.map(role, new Role()));
-
-        return new ModelAndView("redirect:/roles");
     }
 
     @RequestMapping("/roles")
