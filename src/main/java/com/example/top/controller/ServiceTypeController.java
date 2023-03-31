@@ -35,7 +35,7 @@ public class ServiceTypeController {
         return new ModelAndView("redirect:/service-types");
     }
 
-    private static ModelAndView getRenderView(Object type) {
+    private ModelAndView getRenderView(Object type) {
         var mv = new ModelAndView();
         mv.addObject("serviceType", type);
         mv.setViewName("order/service-type/save-service-type");
