@@ -2,6 +2,7 @@ package com.example.top.util;
 
 import org.springframework.beans.BeanUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Mapper {
@@ -11,7 +12,13 @@ public class Mapper {
         return toObj;
     }
 
-    public static<F, T> void mapList(List<F> listOfFromObj, T toObj) {
-        BeanUtils.copyProperties(listOfFromObj, toObj);
+    public static<F, T> ArrayList<T> mapList(List<F> listOfFromObj, T toObj) {
+        var list = new ArrayList<T>();
+        for (var obj : listOfFromObj) {
+            var mappedObj = map(obj, toObj);
+            list.add(mappedObj);
+        }
+
+        return list;
     }
 }
