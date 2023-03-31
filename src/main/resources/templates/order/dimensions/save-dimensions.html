@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Save dimensions</title>
+    <style>
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
 <div th:insert="~{general.html :: navbar}"></div>
 <form action="#" th:action="@{/save-dimensions}" th:object="${dimensions}" method="post">
     <input type="hidden" th:field="*{dimensionsId}">
     <label>Dimensions: <input type="text" th:field="*{name}"></label> <br>
+    <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
     <input type="submit" value="save">
 </form>
 <div th:replace="~{general.html :: back}"></div>
