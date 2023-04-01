@@ -12,7 +12,7 @@ public class Mapper {
         return toObj;
     }
 
-    public static<F, T> ArrayList<T> mapList(List<F> listOfFromObj, T toObj) {
+    public static<F, T> List<T> mapList(List<F> listOfFromObj, T toObj) {
         var list = new ArrayList<T>();
         for (var obj : listOfFromObj) {
             var mappedObj = map(obj, toObj);
