@@ -3,7 +3,7 @@ package com.example.top.controller;
 import com.example.top.dto.RoleDto;
 import com.example.top.entity.employee.Role;
 import com.example.top.service.RoleService;
-import com.example.top.util.Mapper;
+import com.example.top.util.mapper.Mapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

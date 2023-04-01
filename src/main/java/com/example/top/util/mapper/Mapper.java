@@ -1,4 +1,4 @@
-package com.example.top.util;
+package com.example.top.util.mapper;
 
 import org.springframework.beans.BeanUtils;
 

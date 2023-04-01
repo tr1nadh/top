@@ -4,7 +4,7 @@ import com.example.top.dto.EmployeeDto;
 import com.example.top.entity.employee.Employee;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.RoleService;
-import com.example.top.util.Mapper;
+import com.example.top.util.mapper.Mapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
