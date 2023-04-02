@@ -102,16 +102,6 @@ public class OrderService {
         saveOrder(dbOrder);
     }
 
-    private static void updateAmountStatus(Order dbOrder) {
-        if (dbOrder.getPayment().getAmountPaid() == dbOrder.getPayment().getTotalAmount()) {
-            dbOrder.getPayment().setPaymentStatus(PaymentStatus.PAID.toString());
-            updateOrderStatus(dbOrder);
-        } else if (!dbOrder.getPayment().getPaymentStatus().equals(PaymentStatus.UNPAID.toString())) {
-            dbOrder.getPayment().setPaymentStatus(PaymentStatus.UNPAID.toString());
-            updateOrderStatus(dbOrder);
-        }
-    }
-
     public void updateServiceStatus(Long orderId, String serviceStatus) {
         var dbOrder = getOrder(orderId);
         if (serviceStatus != null) {
@@ -121,7 +111,17 @@ public class OrderService {
         saveOrder(dbOrder);
     }
 
-    private static void updateOrderStatus(Order dbOrder) {
+    private void updateAmountStatus(Order dbOrder) {
+        if (dbOrder.getPayment().getAmountPaid() == dbOrder.getPayment().getTotalAmount()) {
+            dbOrder.getPayment().setPaymentStatus(PaymentStatus.PAID.toString());
+            updateOrderStatus(dbOrder);
+        } else if (!dbOrder.getPayment().getPaymentStatus().equals(PaymentStatus.UNPAID.toString())) {
+            dbOrder.getPayment().setPaymentStatus(PaymentStatus.UNPAID.toString());
+            updateOrderStatus(dbOrder);
+        }
+    }
+
+    private void updateOrderStatus(Order dbOrder) {
         var serviceStatus = dbOrder.getService().getServiceStatus();
         var paymentStatus = dbOrder.getPayment().getPaymentStatus();
 
