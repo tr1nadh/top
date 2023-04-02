@@ -9,9 +9,9 @@ import java.util.List;
 
 public class EmployeeMapper {
 
-    public static Employee map(EmployeeDto employee) {
-        var mappedEmp = Mapper.map(employee, new Employee());
-        var mappedRole = Mapper.map(employee.getRole(), new Role());
+    public static Employee map(EmployeeDto employeeDto) {
+        var mappedEmp = Mapper.map(employeeDto, new Employee());
+        var mappedRole = Mapper.map(employeeDto.getRole(), new Role());
         mappedEmp.setRole(mappedRole);
 
         return mappedEmp;
