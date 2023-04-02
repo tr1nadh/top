@@ -1,6 +1,7 @@
 package com.example.top.controller;
 
 import com.example.top.dto.OrderDto;
+import com.example.top.dto.OrderUpdateDto;
 import com.example.top.entity.order.Order;
 import com.example.top.enums.OrderStatus;
 import com.example.top.enums.PaymentStatus;
@@ -72,8 +73,9 @@ public class OrderController {
     }
 
     @PostMapping("/update-order")
-    public RedirectView updateOrder(Order order, int addAm, int rmAm) {
-        orderService.updateOrder(order, addAm, rmAm);
+    public RedirectView updateOrder(@ModelAttribute("order") OrderUpdateDto order) {
+        orderService.updateServiceStatus(order.getOrderId(), order.getServiceStatus());
+        orderService.updateAmount(order.getOrderId(), order.getAddAmount(), order.getRemoveAmount());
 
         return new RedirectView("orders");
     }
