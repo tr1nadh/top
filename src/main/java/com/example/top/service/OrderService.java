@@ -80,16 +80,8 @@ public class OrderService {
         return orders;
     }
 
-    public void updateOrder(Order order, int addAmount, int removeAmount) {
-        var dbOrder = getOrder(order.getOrderId());
-
-        updateServiceStatus(order, dbOrder);
-        updateAmount(dbOrder, addAmount, removeAmount);
-
-        saveOrder(dbOrder);
-    }
-
-    private static void updateAmount(Order dbOrder, int addAmount, int removeAmount) {
+    public void updateAmount(Long orderId, int addAmount, int removeAmount) {
+        var dbOrder = getOrder(orderId);
         var prevAm = dbOrder.getPayment().getAmountPaid();
         if (addAmount != 0) {
             if ((prevAm + addAmount) > dbOrder.getPayment().getTotalAmount()) {
@@ -107,6 +99,7 @@ public class OrderService {
         }
 
         updateAmountStatus(dbOrder);
+        saveOrder(dbOrder);
     }
 
     private static void updateAmountStatus(Order dbOrder) {
@@ -119,11 +112,13 @@ public class OrderService {
         }
     }
 
-    private static void updateServiceStatus(Order order, Order dbOrder) {
-        if (order.getService() != null) {
-            dbOrder.getService().setServiceStatus(order.getService().getServiceStatus());
+    public void updateServiceStatus(Long orderId, String serviceStatus) {
+        var dbOrder = getOrder(orderId);
+        if (serviceStatus != null) {
+            dbOrder.getService().setServiceStatus(serviceStatus);
             updateOrderStatus(dbOrder);
         }
+        saveOrder(dbOrder);
     }
 
     private static void updateOrderStatus(Order dbOrder) {
