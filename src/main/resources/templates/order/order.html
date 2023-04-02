@@ -79,7 +79,7 @@
                th:attr="onclick=|toggleData('ssSelect${order.orderId}')|"
                th:text="${order.service.serviceStatus}"></p>
 
-                <select th:id="ssSelect + ${order.orderId}" class="toggle" name="service.serviceStatus"
+                <select th:id="ssSelect + ${order.orderId}" class="toggle" name="serviceStatus"
                         onchange="this.form.submit()">
                     <option selected disabled value="Select">Select</option>
                     <option th:each="status : ${serviceStatus}"
@@ -103,12 +103,12 @@
                href="#">-</a>
 
             <div th:id="apAdd + ${order.orderId}" class="toggle">
-                <input type="number" name="addAm" value="0">
+                <input type="number" name="addAmount" value="0">
                 <input type="submit" value="Add">
             </div>
 
             <div th:id="apRm + ${order.orderId}" class="toggle">
-                <input type="number" name="rmAm" value="0">
+                <input type="number" name="removeAmount" value="0">
                 <input type="submit" value="Remove">
             </div>
         </td>
