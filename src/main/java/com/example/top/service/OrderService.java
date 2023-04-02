@@ -1,4 +1,4 @@
-package com.example.top.service.order;
+package com.example.top.service;
 
 import com.example.top.entity.order.Order;
 import com.example.top.enums.OrderStatus;
