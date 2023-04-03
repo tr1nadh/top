@@ -13,12 +13,15 @@ public class OrderCRUDService {
     @Autowired
     private OrderRepository repository;
 
-    public Order saveOrder(Order order) {
-        if (order == null) return null;
+    public void saveOrder(Order order) {
+        if (order == null) {
+            log.severe("Cannot add null as an order");
+            return;
+        }
 
         repository.save(order);
 
-        return order;
+        log.info("Order with the id '" + order.getOrderId() + "' has been saved" );
     }
 
     public Order getOrder(Long id) {
