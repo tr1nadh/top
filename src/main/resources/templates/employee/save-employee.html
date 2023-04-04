@@ -17,10 +17,14 @@
   <p th:if="${#fields.hasErrors('firstname')}" th:errorclass="error" th:errors="*{firstname}"></p>
   <label>Lastname: <input type="text" th:field="*{lastname}"></label> <br>
   <p th:if="${#fields.hasErrors('lastname')}" th:errorclass="error" th:errors="*{lastname}"></p>
+  <label>Username: <input type="text" th:field="*{username}"></label> <br>
+  <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"></p>
   <label>PhoneNo: <input type="number" th:field="*{phoneNo}"></label> <br>
   <p th:if="${#fields.hasErrors('phoneNo')}" th:errorclass="error" th:errors="*{phoneNo}"></p>
   <label>Email address: <input type="email" th:field="*{emailAddress}"></label> <br>
   <p th:if="${#fields.hasErrors('emailAddress')}" th:errorclass="error" th:errors="*{emailAddress}"></p>
+  <label>Password: <input type="password" th:field="*{password}"></label> <br>
+  <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>
   <label>Role:
     <select th:field="*{role}">
       <option th:each="role : ${roles}"
