@@ -41,9 +41,7 @@ public class Employee {
     @Column(unique = true)
     private String password;
 
-    @OneToOne(
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
+    @OneToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
