@@ -1,8 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://thymeleaf.org">
+<html lang="en" xmlns:th="https://thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8">
     <title>Employees</title>
+    <style>
+        .toggle {display: none;}
+        .toggleHead {
+            color: blue;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <div th:insert="~{general.html :: navbar}"></div>
@@ -35,5 +43,15 @@
         </tr>
     </tbody>
 </table>
+<script>
+    function toggleData(id) {
+        let displayData = document.getElementById(id).style.display;
+        if (displayData === 'block') {
+            document.getElementById(id).style.display = 'none';
+        } else {
+            document.getElementById(id).style.display = 'block';
+        }
+    }
+</script>
 </body>
 </html>
