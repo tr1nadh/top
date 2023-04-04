@@ -17,6 +17,10 @@
   <p th:if="${#fields.hasErrors('firstname')}" th:errorclass="error" th:errors="*{firstname}"></p>
   <label>Lastname: <input type="text" th:field="*{lastname}"></label> <br>
   <p th:if="${#fields.hasErrors('lastname')}" th:errorclass="error" th:errors="*{lastname}"></p>
+  <label>PhoneNo: <input type="number" th:field="*{phoneNo}"></label> <br>
+  <p th:if="${#fields.hasErrors('phoneNo')}" th:errorclass="error" th:errors="*{phoneNo}"></p>
+  <label>Email address: <input type="email" th:field="*{emailAddress}"></label> <br>
+  <p th:if="${#fields.hasErrors('emailAddress')}" th:errorclass="error" th:errors="*{emailAddress}"></p>
   <label>Role:
     <select th:field="*{role}">
       <option th:each="role : ${roles}"
@@ -26,10 +30,6 @@
     </select>
     <a href="/add-role">Add new role</a>
   </label> <br>
-  <label>PhoneNo: <input type="number" th:field="*{phoneNo}"></label> <br>
-  <p th:if="${#fields.hasErrors('phoneNo')}" th:errorclass="error" th:errors="*{phoneNo}"></p>
-  <label>Email address: <input type="email" th:field="*{emailAddress}"></label> <br>
-  <p th:if="${#fields.hasErrors('emailAddress')}" th:errorclass="error" th:errors="*{emailAddress}"></p>
   <label>Gender:
     <input type="radio" th:field="*{gender}" th:value="Male"> Male
     <input type="radio" th:field="*{gender}" th:value="Female"> Female
