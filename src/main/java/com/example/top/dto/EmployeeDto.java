@@ -21,6 +21,9 @@ public class EmployeeDto {
     @NotEmpty(message = "Last name cannot be empty")
     private String lastname;
 
+    @NotEmpty(message = "Username cannot be empty")
+    private String username;
+
     @Pattern(regexp="(^$|[0-9]{10})", message = "Phone no must be 10 digits")
     @NotEmpty(message = "Phone no cannot be empty")
     private String phoneNo;
@@ -28,6 +31,9 @@ public class EmployeeDto {
     @Email(message = "Must be a valid email")
     @NotEmpty(message = "Email cannot be empty")
     private String emailAddress;
+
+    @NotEmpty(message = "Password cannot be empty")
+    private String password;
 
     private RoleDto role;
 
