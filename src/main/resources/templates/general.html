@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://thymeleaf.org">
+<html lang="en" xmlns:th="https://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,6 +9,17 @@
 <nav th:fragment="navbar">
     <a href="/employees">Employee</a>
     <a href="/orders">Orders</a>
+
+    <a class="toggleHead"
+       style="float: right;"
+       th:attr="onclick=|toggleData('account-nav')|"
+       sec:authentication="name"></a>
+    <div th:id="account-nav" class="toggle"
+    style="float: right;">
+        <p>Change username</p>
+        <p>Change password</p>
+        <a href="/logout">Logout</a>
+    </div>
 </nav>
 <a th:fragment="back" onclick="history.back()" style="cursor: pointer; color: blue">Back</a>
 </body>
