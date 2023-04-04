@@ -4,6 +4,7 @@ import com.example.top.entity.employee.Employee;
 import com.example.top.repository.EmployeeRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,12 +15,16 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository repository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     public void saveEmployee(Employee employee) {
         if (employee == null) {
             log.severe("Cannot add null as an employee");
             return;
         }
+
+        employee.setPassword(passwordEncoder.encode(employee.getPassword()));
 
         repository.save(employee);
 
