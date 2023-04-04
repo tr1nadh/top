@@ -29,11 +29,8 @@ public class Employee {
 
     private String lastname;
 
-    @OneToOne(
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @Column(unique = true)
+    private String username;
 
     @Column(unique = true)
     private String phoneNo;
@@ -41,6 +38,17 @@ public class Employee {
     @Column(unique = true)
     private String emailAddress;
 
+    @Column(unique = true)
+    private String password;
+
+    @OneToOne(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+    )
+    @JoinColumn(name = "role_id")
+    private Role role;
+
     private String gender;
+
+    private boolean enabled;
 
 }
