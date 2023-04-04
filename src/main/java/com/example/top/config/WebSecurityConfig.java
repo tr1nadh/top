@@ -37,13 +37,15 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .formLogin().permitAll()
-                .and()
-                .logout(Customizer.withDefaults())
                 .authorizeHttpRequests()
                 .requestMatchers("/employees").hasAuthority("Admin")
                 .anyRequest()
-                .authenticated();
+                .authenticated()
+                .and()
+                .formLogin()
+                .permitAll()
+                .and()
+                .logout(Customizer.withDefaults());
 
         return httpSecurity.build();
     }
