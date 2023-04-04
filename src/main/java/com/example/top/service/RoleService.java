@@ -27,7 +27,8 @@ public class RoleService {
     }
 
     public List<Role> findAllRoles() {
-        var roles = repository.findAll();
+        var roles = repository
+                .findByNameNotIn(List.of("Admin", "Developer"));
 
         log.info("Successfully retrieved all roles");
         return roles;

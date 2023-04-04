@@ -33,7 +33,8 @@ public class EmployeeService {
     }
 
     public List<Employee> findAllEmployees() {
-        var employees = repository.findAll();
+        var employees = repository
+                .findByRoleNameNotIn(List.of("Admin", "Developer"));
 
         log.info("Successfully retrieved all employees");
         return employees;
