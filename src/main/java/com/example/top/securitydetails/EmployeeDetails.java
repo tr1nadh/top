@@ -12,9 +12,11 @@ import java.util.List;
 public class EmployeeDetails implements UserDetails {
 
     private final Employee employee;
+    private String username;
 
     public EmployeeDetails(Employee employee) {
         this.employee = employee;
+        this.username = employee.getUsername();
     }
 
     @Override
@@ -32,7 +34,11 @@ public class EmployeeDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return employee.getUsername();
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
