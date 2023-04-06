@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Alert</title>
+</head>
+<body>
+<script th:inline="javascript">
+/*<![CDATA[*/
+    let message = /*[[${message}]]*/
+    alert(message);
+    window.location = /*[[${toMapping}]]*/
+ /*]]>*/
+</script>
+</body>
+</html>
