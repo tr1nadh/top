@@ -23,7 +23,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.Objects;
 
 @Controller
-public class EmployeeController {
+public class EmployeeController extends ControllerHelper {
 
     @Autowired
     private EmployeeService empService;
@@ -77,7 +77,7 @@ public class EmployeeController {
             emp.setUsername(updateEmp.getNewUsername());
         }
 
-        return new ModelAndView("redirect:" + updateEmp.getFromMapping());
+        return getAlertView("Username changed", updateEmp.getFromMapping());
     }
 
     @PostMapping("/update-emp-password")
@@ -91,7 +91,7 @@ public class EmployeeController {
             System.out.println(bindingResult.getAllErrors());
         }
 
-        return new ModelAndView("redirect:" + updateEmp.getFromMapping());
+        return getAlertView("Password changed", updateEmp.getFromMapping());
     }
 
     @GetMapping("/delete-employee")
