@@ -24,12 +24,19 @@ public class EmployeeService {
             return;
         }
 
-        employee.setPassword(passwordEncoder.encode(employee.getPassword()));
-
-        repository.save(employee);
+        repository.save(checkPasswordChange(employee));
 
         var name = employee.getFirstname() + " " + employee.getLastname();
         log.info("Employee with the name '" + name + "' has been saved" );
+    }
+
+    public Employee checkPasswordChange(Employee employee) {
+        if (employee.isPasswordChanged()) {
+            employee.setPassword(passwordEncoder.encode(employee.getPassword()));
+            employee.setPasswordChanged(false);
+        }
+
+        return employee;
     }
 
     public List<Employee> findAllEmployees() {
@@ -68,4 +75,34 @@ public class EmployeeService {
     }
 
 
+    public void updateUsername(String oldUsername, String newUsername) {
+        var employee = repository.findEmployeeByUsername(oldUsername);
+
+        if (employee == null) {
+            log.severe("No employee found with the username '" + oldUsername + "'");
+            return;
+        }
+
+        employee.setUsername(newUsername);
+        saveEmployee(employee);
+        log.info("Employee username successfully updated from '" + oldUsername + "' to '" + newUsername + "'");
+    }
+
+    public void updatePassword(String username, String oldPassword, String newPassword) {
+        var employee = repository.findEmployeeByUsername(username);
+
+        if (employee == null) {
+            log.severe("No employee found with the username '" + username + "' to change password");
+            return;
+        }
+
+        if (!passwordEncoder.matches(oldPassword, employee.getPassword())) {
+            log.severe("Cannot change to new password, Old password is wrong");
+            return;
+        }
+
+        employee.setPassword(newPassword);
+        saveEmployee(employee);
+        log.info("Successfully updated the password of employee username '" + username + "'");
+    }
 }
