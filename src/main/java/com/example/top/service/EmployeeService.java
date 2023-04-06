@@ -2,8 +2,10 @@ package com.example.top.service;
 
 import com.example.top.entity.employee.Employee;
 import com.example.top.repository.EmployeeRepository;
+import com.example.top.securitydetails.EmployeeDetails;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -82,6 +84,10 @@ public class EmployeeService {
             log.severe("No employee found with the username '" + oldUsername + "'");
             return;
         }
+
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        var emp = (EmployeeDetails) auth.getPrincipal();
+        emp.setUsername(newUsername);
 
         employee.setUsername(newUsername);
         saveEmployee(employee);
