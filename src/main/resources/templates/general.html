@@ -13,11 +13,23 @@
     <a class="toggleHead"
        style="float: right;"
        th:attr="onclick=|toggleData('account-nav')|"
-       sec:authentication="name"></a>
-    <div th:id="account-nav" class="toggle"
-    style="float: right;">
-        <p>Change username</p>
-        <p>Change password</p>
+       sec:authentication="name"></a><br>
+    <div th:id="account-nav" class="toggle" style="float: right;">
+        <p class="toggleHead" th:attr="onclick=|toggleData('emp-username-update-form')|">Change username</p>
+        <form id="emp-username-update-form" class="toggle" th:action="@{/update-emp-username}" method="post">
+            <input name="oldUsername" type="hidden" th:value="${#authentication.name}">
+            <input name="newUsername" type="text">
+            <input type="hidden" name="fromMapping" th:value="${#ctx.springRequestContext.requestUri}">
+            <input type="submit">
+        </form>
+        <p class="toggleHead" th:attr="onclick=|toggleData('emp-password-update-form')|">Change password</p>
+        <form id="emp-password-update-form" class="toggle" th:action="@{/update-emp-password}" method="post">
+            <input name="username" type="hidden" th:value="${#authentication.name}">
+            <input name="oldPassword" type="password" placeholder="Old password"> <br>
+            <input name="newPassword" type="password" placeholder="New password"> <br>
+            <input type="hidden" name="fromMapping" th:value="${#ctx.springRequestContext.requestUri}">
+            <input type="submit">
+        </form>
         <a href="/logout">Logout</a>
     </div>
 </nav>
