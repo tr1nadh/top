@@ -4,13 +4,11 @@ import com.example.top.dto.EmployeeDto;
 import com.example.top.dto.UpdateEmpPasswordDto;
 import com.example.top.dto.UpdateEmpUsernameDto;
 import com.example.top.entity.employee.Employee;
-import com.example.top.securitydetails.EmployeeDetails;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.RoleService;
 import com.example.top.util.mapper.EmployeeMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,12 +68,7 @@ public class EmployeeController extends ControllerHelper {
     @PostMapping("/update-emp-username")
     public ModelAndView updateEmployeeUsername(@Valid @ModelAttribute("updateEmp")
                                                UpdateEmpUsernameDto updateEmp, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
-            empService.updateUsername(updateEmp.getOldUsername(), updateEmp.getNewUsername());
-            var auth = SecurityContextHolder.getContext().getAuthentication();
-            var emp = (EmployeeDetails) auth.getPrincipal();
-            emp.setUsername(updateEmp.getNewUsername());
-        }
+        if (!bindingResult.hasErrors()) empService.updateUsername(updateEmp.getOldUsername(), updateEmp.getNewUsername());
 
         return getAlertView("Username changed", updateEmp.getFromMapping());
     }
@@ -86,10 +79,6 @@ public class EmployeeController extends ControllerHelper {
         if (!bindingResult.hasErrors())
             empService.updatePassword(updateEmp.getUsername(),
                     updateEmp.getOldPassword(), updateEmp.getNewPassword());
-
-        if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.getAllErrors());
-        }
 
         return getAlertView("Password changed", updateEmp.getFromMapping());
     }
