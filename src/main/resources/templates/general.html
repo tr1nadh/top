@@ -7,7 +7,7 @@
 </head>
 <body>
 <nav th:fragment="navbar">
-    <a href="/employees">Employee</a>
+    <a sec:authorize="hasAuthority('Admin')" href="/employees">Employee</a>
     <a href="/orders">Orders</a>
 
     <a class="toggleHead"
