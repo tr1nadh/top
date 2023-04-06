@@ -47,6 +47,15 @@ public class Employee {
 
     private String gender;
 
+    private boolean passwordChanged;
+
     private boolean enabled;
 
+    public void setPassword(String password) {
+        if (this.password == null ||
+        !this.password.equals(password)) {
+            passwordChanged = true;
+            this.password = password;
+        }
+    }
 }
