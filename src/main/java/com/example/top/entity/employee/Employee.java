@@ -47,9 +47,8 @@ public class Employee {
 
     private String gender;
 
+    @Transient
     private boolean passwordChanged;
-
-    private boolean enabled;
 
     public void setPassword(String password) {
         if (this.password == null ||
