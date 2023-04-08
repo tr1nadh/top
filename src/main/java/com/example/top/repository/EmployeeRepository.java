@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    Employee findEmployeeByUsername(String username);
     List<Employee> findByRoleNameNotIn(List<String> names);
 }
