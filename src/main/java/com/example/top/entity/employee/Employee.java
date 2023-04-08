@@ -1,5 +1,6 @@
 package com.example.top.entity.employee;
 
+import com.example.top.entity.Account;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,16 +31,10 @@ public class Employee {
     private String lastname;
 
     @Column(unique = true)
-    private String username;
-
-    @Column(unique = true)
     private String phoneNo;
 
     @Column(unique = true)
     private String emailAddress;
-
-    @Column(unique = true)
-    private String password;
 
     @OneToOne
     @JoinColumn(name = "role_id")
@@ -47,14 +42,6 @@ public class Employee {
 
     private String gender;
 
-    @Transient
-    private boolean passwordChanged;
-
-    public void setPassword(String password) {
-        if (this.password == null ||
-        !this.password.equals(password)) {
-            passwordChanged = true;
-            this.password = password;
-        }
-    }
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
+    private Account account;
 }
