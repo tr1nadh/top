@@ -1,6 +1,7 @@
 package com.example.top.util.mapper;
 
 import com.example.top.dto.EmployeeDto;
+import com.example.top.entity.Account;
 import com.example.top.entity.employee.Employee;
 import com.example.top.entity.employee.Role;
 
@@ -12,7 +13,9 @@ public class EmployeeMapper {
     public static Employee map(EmployeeDto employeeDto) {
         var mappedEmp = Mapper.map(employeeDto, new Employee());
         var mappedRole = Mapper.map(employeeDto.getRole(), new Role());
+        var mappedAccount = Mapper.map(employeeDto.getAccount(), new Account());
         mappedEmp.setRole(mappedRole);
+        mappedEmp.setAccount(mappedAccount);
 
         return mappedEmp;
     }
