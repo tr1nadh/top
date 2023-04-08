@@ -1,8 +1,6 @@
 package com.example.top.controller;
 
 import com.example.top.dto.EmployeeDto;
-import com.example.top.dto.UpdateEmpPasswordDto;
-import com.example.top.dto.UpdateEmpUsernameDto;
 import com.example.top.entity.employee.Employee;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.RoleService;
@@ -63,24 +61,6 @@ public class EmployeeController extends ControllerHelper {
         mv.setViewName("employee/employee");
 
         return mv;
-    }
-
-    @PostMapping("/update-emp-username")
-    public ModelAndView updateEmployeeUsername(@Valid @ModelAttribute("updateEmp")
-                                               UpdateEmpUsernameDto updateEmp, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) empService.updateUsername(updateEmp.getOldUsername(), updateEmp.getNewUsername());
-
-        return getAlertView("Username changed", updateEmp.getFromMapping());
-    }
-
-    @PostMapping("/update-emp-password")
-    public ModelAndView updateEmployeePassword(@Valid @ModelAttribute("updateEmp")
-                                               UpdateEmpPasswordDto updateEmp, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors())
-            empService.updatePassword(updateEmp.getUsername(),
-                    updateEmp.getOldPassword(), updateEmp.getNewPassword());
-
-        return getAlertView("Password changed", updateEmp.getFromMapping());
     }
 
     @GetMapping("/delete-employee")
