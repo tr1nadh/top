@@ -2,10 +2,8 @@ package com.example.top.service;
 
 import com.example.top.entity.employee.Employee;
 import com.example.top.repository.EmployeeRepository;
-import com.example.top.securitydetails.EmployeeDetails;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +24,7 @@ public class EmployeeService {
             return;
         }
 
+        employee.getAccount().setEmployee(employee);
         repository.save(checkPasswordChange(employee));
 
         var name = employee.getFirstname() + " " + employee.getLastname();
@@ -33,9 +32,10 @@ public class EmployeeService {
     }
 
     public Employee checkPasswordChange(Employee employee) {
-        if (employee.isPasswordChanged()) {
-            employee.setPassword(passwordEncoder.encode(employee.getPassword()));
-            employee.setPasswordChanged(false);
+        var account = employee.getAccount();
+        if (account.isPasswordChanged()) {
+            account.setPassword(passwordEncoder.encode(account.getPassword()));
+            account.setPasswordChanged(false);
         }
 
         return employee;
@@ -74,41 +74,5 @@ public class EmployeeService {
 
         var name = employee.getFirstname() + " " + employee.getLastname();
         log.info("Employee with name '" + name + "' has been deleted");
-    }
-
-
-    public void updateUsername(String oldUsername, String newUsername) {
-        var employee = repository.findEmployeeByUsername(oldUsername);
-
-        if (employee == null) {
-            log.severe("No employee found with the username '" + oldUsername + "'");
-            return;
-        }
-
-        var auth = SecurityContextHolder.getContext().getAuthentication();
-        var emp = (EmployeeDetails) auth.getPrincipal();
-        emp.setUsername(newUsername);
-
-        employee.setUsername(newUsername);
-        saveEmployee(employee);
-        log.info("Employee username successfully updated from '" + oldUsername + "' to '" + newUsername + "'");
-    }
-
-    public void updatePassword(String username, String oldPassword, String newPassword) {
-        var employee = repository.findEmployeeByUsername(username);
-
-        if (employee == null) {
-            log.severe("No employee found with the username '" + username + "' to change password");
-            return;
-        }
-
-        if (!passwordEncoder.matches(oldPassword, employee.getPassword())) {
-            log.severe("Cannot change to new password, Old password is wrong");
-            return;
-        }
-
-        employee.setPassword(newPassword);
-        saveEmployee(employee);
-        log.info("Successfully updated the password of employee username '" + username + "'");
     }
 }
