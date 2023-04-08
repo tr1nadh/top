@@ -1,6 +1,6 @@
 package com.example.top.config;
 
-import com.example.top.securitydetails.AccountDetailsService;
+import com.example.top.securitydetails.EmployeeDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,7 +17,7 @@ public class WebSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new AccountDetailsService();
+        return new EmployeeDetailsService();
     }
 
     @Bean

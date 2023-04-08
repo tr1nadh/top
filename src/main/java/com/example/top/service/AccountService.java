@@ -2,7 +2,7 @@ package com.example.top.service;
 
 import com.example.top.entity.Account;
 import com.example.top.repository.AccountRepository;
-import com.example.top.securitydetails.AccountDetails;
+import com.example.top.securitydetails.EmployeeDetails;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -47,7 +47,7 @@ public class AccountService {
         }
 
         var auth = SecurityContextHolder.getContext().getAuthentication();
-        var emp = (AccountDetails) auth.getPrincipal();
+        var emp = (EmployeeDetails) auth.getPrincipal();
         emp.setUsername(newUsername);
 
         employee.setUsername(newUsername);
