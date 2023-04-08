@@ -1,22 +1,22 @@
 package com.example.top.securitydetails;
 
-import com.example.top.repository.EmployeeRepository;
+import com.example.top.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-public class EmployeeDetailsService implements UserDetailsService {
+public class AccountDetailsService implements UserDetailsService {
 
     @Autowired
-    private EmployeeRepository repository;
+    private AccountRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var employee = repository.findEmployeeByUsername(username);
+        var account = repository.findAccountByUsername(username);
 
-        if (employee == null) throw new UsernameNotFoundException("Could not find user");
+        if (account == null) throw new UsernameNotFoundException("Could not find user");
 
-        return new EmployeeDetails(employee);
+        return new AccountDetails(account);
     }
 }
