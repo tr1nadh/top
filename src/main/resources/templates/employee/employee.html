@@ -37,8 +37,13 @@
             <td th:text="${emp.emailAddress}"></td>
             <td th:text="${emp.gender}"></td>
             <td>
-                <a th:href="@{/edit-employee?id={id}(id=${emp.employeeId})}">Update</a>
-                <a th:href="@{/delete-employee?id={id}(id=${emp.employeeId})}">Delete</a>
+                <a class="toggleHead"
+                   th:attr="onclick=|toggleData('update-link')|">Update</a>
+                <div id="update-link" class="toggle">
+                    <a th:href="@{|/update-emp-info?id=${emp.employeeId}|}">Update info</a>
+                    <a th:href="@{|/update-emp-account?id=${emp.employeeId}|}">Update account</a>
+                </div>
+                <a th:href="@{|/delete-employee?id=${emp.employeeId}|}">Delete</a>
             </td>
         </tr>
     </tbody>
