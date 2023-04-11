@@ -18,21 +18,12 @@ public class RoleService {
     @Autowired
     private RoleRepository repository;
 
-    public void addRole(Role role) {
+    public void saveRole(Role role) {
         if (role == null)
             throw new IllegalArgumentException("The object 'Role' cannot be null");
 
         if (findAllRolesWithNames().contains(role.getName()))
             throw new DuplicateRoleNameException("Role '" + role.getName() + "' already existed");
-
-        repository.save(role);
-
-        log.info("New role '" + role.getName() + "' has been added");
-    }
-
-    public void saveRole(Role role) {
-        if (role == null)
-            throw new IllegalArgumentException("The object 'Role' cannot be null");
 
         repository.save(role);
 
