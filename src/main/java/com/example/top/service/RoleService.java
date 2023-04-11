@@ -1,7 +1,7 @@
 package com.example.top.service;
 
 import com.example.top.entity.employee.Role;
-import com.example.top.exception.DuplicateRoleNameException;
+import com.example.top.exception.DuplicateRoleException;
 import com.example.top.exception.UnknownIdException;
 import com.example.top.repository.RoleRepository;
 import lombok.extern.java.Log;
@@ -22,7 +22,7 @@ public class RoleService {
             throw new IllegalArgumentException("The object 'Role' cannot be null");
 
         if (isRoleAlreadyExists(role))
-            throw new DuplicateRoleNameException("Role '" + role.getName() + "' already existed");
+            throw new DuplicateRoleException("Role '" + role.getName() + "' already existed");
 
         repository.save(role);
 
