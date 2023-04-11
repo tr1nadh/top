@@ -26,7 +26,7 @@ public class RoleService {
 
         repository.save(role);
 
-        log.info("Role with the name '" + role.getName() + "' is saved");
+        log.info("Role '" + role.getName() + "' is saved");
     }
 
     private boolean isRoleAlreadyExists(Role role) {
@@ -56,7 +56,7 @@ public class RoleService {
         }
 
         var role = optRole.get();
-        log.info("Role with the name '" + role.getName() + "' has been retrieved");
+        log.info("Role '" + role.getName() + "' has been retrieved");
         return role;
     }
 
@@ -69,6 +69,6 @@ public class RoleService {
 
         repository.deleteById(id);
 
-        log.info("Role with the name '" + optRole.get().getName() + "' has been deleted");
+        log.info("Role '" + optRole.get().getName() + "' has been deleted");
     }
 }
