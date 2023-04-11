@@ -50,7 +50,7 @@ public class RoleService {
 
         var optRole = repository.findById(id);
 
-        if (optRole.isEmpty()) {
+        if (optRole.isEmpty() || List.of("Admin", "Developer").contains(optRole.get().getName())) {
             log.severe("No role found with the id '" + id + "'");
             return new Role();
         }
