@@ -21,7 +21,7 @@ public class RoleController extends ControllerHelper {
     @Autowired
     private RoleService service;
 
-    @GetMapping({"/add-role", "/edit-role"})
+    @GetMapping({"/add-role", "/update-role"})
     public ModelAndView renderRole(Long id) {
         return getRenderView((id == null) ? new Role() : service.getRole(id));
     }
@@ -30,7 +30,7 @@ public class RoleController extends ControllerHelper {
     public ModelAndView saveRole(@Valid @ModelAttribute("role") RoleDto role, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return getRenderView(role);
 
-        var toMapping = (role.getRoleId() == null) ? "/add-role" : "/edit-role?id=" + role.getRoleId();
+        var toMapping = (role.getRoleId() == null) ? "/add-role" : "/update-role?id=" + role.getRoleId();
         try {
             service.saveRole(Mapper.map(role, new Role()));
         } catch (Exception ex) {
