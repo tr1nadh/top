@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
-public class RoleController {
+public class RoleController extends ControllerHelper {
 
     @Autowired
     private RoleService service;
@@ -30,9 +30,14 @@ public class RoleController {
     public ModelAndView saveRole(@Valid @ModelAttribute("role") RoleDto role, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return getRenderView(role);
 
-        service.saveRole(Mapper.map(role, new Role()));
+        var toMapping = (role.getRoleId() == null) ? "/add-role" : "/edit-role?id=" + role.getRoleId();
+        try {
+            service.saveRole(Mapper.map(role, new Role()));
+        } catch (Exception ex) {
+            return getAlertView(ex.getMessage(), toMapping);
+        }
 
-        return new ModelAndView("redirect:/roles");
+        return getAlertView("Role saved", toMapping);
     }
 
     private ModelAndView getRenderView(Object role) {
