@@ -21,12 +21,16 @@ public class RoleService {
         if (role == null)
             throw new IllegalArgumentException("The object 'Role' cannot be null");
 
-        if (findAllRolesWithNames().contains(role.getName()))
+        if (isRoleAlreadyExists(role))
             throw new DuplicateRoleNameException("Role '" + role.getName() + "' already existed");
 
         repository.save(role);
 
         log.info("Role with the name '" + role.getName() + "' is saved");
+    }
+
+    private boolean isRoleAlreadyExists(Role role) {
+        return findAllRolesWithNames().contains(role.getName());
     }
 
     public List<String> findAllRolesWithNames() {
