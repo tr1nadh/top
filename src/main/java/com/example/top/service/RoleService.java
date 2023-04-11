@@ -64,7 +64,7 @@ public class RoleService {
         if (id == null) throw new IllegalArgumentException("Id cannot be null");
 
         var optRole = repository.findById(id);
-        if (optRole.isEmpty())
+        if (optRole.isEmpty() || List.of("Admin", "Developer").contains(optRole.get().getName()))
             throw new UnknownIdException("No role found with the id '" + id + "'");
 
         repository.deleteById(id);
