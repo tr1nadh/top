@@ -8,7 +8,6 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,10 +30,7 @@ public class RoleService {
     }
 
     public List<String> findAllRolesWithNames() {
-        var list = new ArrayList<String>();
-        for (var role : findAllRoles()) list.add(role.getName());
-
-        return list;
+        return repository.findAll().stream().map(Role::getName).toList();
     }
 
     public List<Role> findAllRoles() {
