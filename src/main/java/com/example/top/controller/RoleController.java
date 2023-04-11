@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class RoleController extends ControllerHelper {
@@ -58,9 +57,13 @@ public class RoleController extends ControllerHelper {
     }
 
     @GetMapping("/delete-role")
-    public RedirectView deleteRole(Long id) {
-        service.deleteRole(id);
+    public ModelAndView deleteRole(Long id) {
+        try {
+            service.deleteRole(id);
+        } catch (Exception ex) {
+            return getAlertView(ex.getMessage(), "/roles");
+        }
 
-        return new RedirectView("roles");
+        return getAlertView("Role deleted", "/roles");
     }
 }
