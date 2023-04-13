@@ -16,7 +16,7 @@ public class RoleService {
 
     @Autowired
     private RoleRepository repository;
-    private final List<String> excludeList = List.of("Admin", "Developer");
+    private final List<String> excludeRoles = List.of("Admin", "Developer");
 
     public void saveRole(Role role) {
         if (role == null)
@@ -40,7 +40,7 @@ public class RoleService {
 
     public List<Role> findAllRoles() {
         var roles = repository
-                .findByNameNotIn(excludeList);
+                .findByNameNotIn(excludeRoles);
 
         log.info("Successfully retrieved all roles");
         return roles;
@@ -51,7 +51,7 @@ public class RoleService {
 
         var optRole = repository.findById(id);
 
-        if (optRole.isEmpty() || excludeList.contains(optRole.get().getName())) {
+        if (optRole.isEmpty() || excludeRoles.contains(optRole.get().getName())) {
             log.severe("No role found with the id '" + id + "'");
             return new Role();
         }
@@ -65,7 +65,7 @@ public class RoleService {
         if (id == null) throw new IllegalArgumentException("Id cannot be null");
 
         var optRole = repository.findById(id);
-        if (optRole.isEmpty() || excludeList.contains(optRole.get().getName()))
+        if (optRole.isEmpty() || excludeRoles.contains(optRole.get().getName()))
             throw new UnknownIdException("No role found with the id '" + id + "'");
 
         repository.deleteById(id);
