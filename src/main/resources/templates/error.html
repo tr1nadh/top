@@ -6,7 +6,8 @@
 </head>
 <body>
 <p th:text="${message}">Unknown error</p>
-<a th:href="${fallbackUrl}">Back</a>
+<a onclick="history.back()"
+   style="cursor: pointer; color: blue; text-decoration: underline">Back</a>
 <a href="/">Home</a>
 </body>
 </html>
