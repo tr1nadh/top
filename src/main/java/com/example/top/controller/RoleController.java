@@ -30,11 +30,8 @@ public class RoleController extends ControllerHelper {
         if (bindingResult.hasErrors()) return getRenderView(role);
 
         var toMapping = (role.getRoleId() == null) ? "/add-role" : "/update-role?id=" + role.getRoleId();
-        try {
-            service.saveRole(Mapper.map(role, new Role()));
-        } catch (Exception ex) {
-            return getAlertView(ex.getMessage(), toMapping);
-        }
+
+        service.saveRole(Mapper.map(role, new Role()));
 
         return getAlertView("Role saved", toMapping);
     }
@@ -58,11 +55,7 @@ public class RoleController extends ControllerHelper {
 
     @GetMapping("/delete-role")
     public ModelAndView deleteRole(Long id) {
-        try {
-            service.deleteRole(id);
-        } catch (Exception ex) {
-            return getAlertView(ex.getMessage(), "/roles");
-        }
+        service.deleteRole(id);
 
         return getAlertView("Role deleted", "/roles");
     }
