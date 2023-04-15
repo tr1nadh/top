@@ -6,6 +6,7 @@ import com.example.top.exception.UnknownIdException;
 import com.example.top.repository.RoleRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -68,7 +69,11 @@ public class RoleService {
         if (optRole.isEmpty() || excludeRoles.contains(optRole.get().getName()))
             throw new UnknownIdException("No role found with the id '" + id + "'");
 
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException ex) {
+            throw new IllegalStateException("Cannot delete assigned role");
+        }
 
         log.info("Role '" + optRole.get().getName() + "' has been deleted");
     }
