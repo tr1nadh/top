@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.Objects;
-
 @Controller
 public class EmployeeController extends ControllerHelper {
 
@@ -33,17 +31,31 @@ public class EmployeeController extends ControllerHelper {
 
     @PostMapping("/save-employee")
     public ModelAndView saveEmployee(@Valid @ModelAttribute("employee") EmployeeDto employee, BindingResult bindingResult) {
-        if (bindingResult.hasErrors() && !isValidPasswordUpdate(employee, bindingResult)) return getRenderView(employee);
+        if (bindingResult.hasErrors() && !isAccountNull(employee, bindingResult)) return getRenderView(employee);
 
         empService.saveEmployee(EmployeeMapper.map(employee));
 
         return new ModelAndView("redirect:/employees");
     }
 
-    private boolean isValidPasswordUpdate(EmployeeDto employee, BindingResult bindingResult) {
-        return employee.getEmployeeId() != null &&
-                bindingResult.getAllErrors().size() == 1 &&
-                Objects.requireNonNull(bindingResult.findEditor("password", String.class)).getValue() == null;
+    private boolean isAccountNull(EmployeeDto employee, BindingResult bindingResult) {
+        return !employee.isHasAccount() && areThereOtherErrorsThenAccountErrors(bindingResult);
+    }
+
+    private boolean areThereOtherErrorsThenAccountErrors(BindingResult bindingResult) {
+        return noOfIgnoreErrors(bindingResult) == noOfErrors(bindingResult);
+    }
+
+    private int noOfIgnoreErrors(BindingResult bindingResult) {
+        var no = 0;
+        if (bindingResult.hasFieldErrors("account.username")) no++;
+        if (bindingResult.hasFieldErrors("account.password")) no++;
+
+        return no;
+    }
+
+    private int noOfErrors(BindingResult bindingResult) {
+        return bindingResult.getAllErrors().size();
     }
 
     private ModelAndView getRenderView(Object employee) {

@@ -37,4 +37,6 @@ public class EmployeeDto {
 
     @Valid
     private AccountDto account;
+
+    private boolean hasAccount;
 }
