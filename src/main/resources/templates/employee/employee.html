@@ -38,8 +38,8 @@
             <td th:text="${emp.gender}"></td>
             <td>
                 <a class="toggleHead"
-                   th:attr="onclick=|toggleData('update-link')|">Update</a>
-                <div id="update-link" class="toggle">
+                   th:attr="onclick=|toggleData('update-link${emp.employeeId}')|">Update</a>
+                <div th:id="update-link+${emp.employeeId}" class="toggle">
                     <a th:href="@{|/update-emp-info?id=${emp.employeeId}|}">Update info</a>
                     <a th:href="@{|/update-emp-account?id=${emp.employeeId}|}">Update account</a>
                 </div>
