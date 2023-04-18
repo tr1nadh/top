@@ -7,6 +7,11 @@
     .error {
       color: red;
     }
+    .toggle {display: none;}
+    .toggleHead {
+      color: blue;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -17,14 +22,10 @@
   <p th:if="${#fields.hasErrors('firstname')}" th:errorclass="error" th:errors="*{firstname}"></p>
   <label>Lastname: <input type="text" th:field="*{lastname}"></label> <br>
   <p th:if="${#fields.hasErrors('lastname')}" th:errorclass="error" th:errors="*{lastname}"></p>
-  <label>Username: <input type="text" th:field="*{account.username}"></label> <br>
-  <p th:if="${#fields.hasErrors('account.username')}" th:errorclass="error" th:errors="*{account.username}"></p>
   <label>PhoneNo: <input type="number" th:field="*{phoneNo}"></label> <br>
   <p th:if="${#fields.hasErrors('phoneNo')}" th:errorclass="error" th:errors="*{phoneNo}"></p>
   <label>Email address: <input type="email" th:field="*{emailAddress}"></label> <br>
   <p th:if="${#fields.hasErrors('emailAddress')}" th:errorclass="error" th:errors="*{emailAddress}"></p>
-  <label>Password: <input type="password" th:field="*{account.password}"></label> <br>
-  <p th:if="${#fields.hasErrors('account.password')}" th:errorclass="error" th:errors="*{account.password}"></p>
   <label>Role:
     <select th:field="*{role}">
       <option th:each="role : ${roles}"
@@ -39,9 +40,35 @@
     <input type="radio" th:field="*{gender}" th:value="Female"> Female
   </label> <br>
   <p th:if="${#fields.hasErrors('gender')}" th:errorclass="error" th:errors="*{gender}"></p>
+
+  <label>
+    <input th:field="*{hasAccount}" type="checkbox" onchange="toggleData('account-details')"> Add account
+  </label> <br>
+
+  <!-- Account details  -->
+  <div id="account-details" class="toggle">
+    <label>Username: <input type="text" th:field="*{account.username}"></label> <br>
+    <p th:if="${#fields.hasErrors('account.username')}" th:errorclass="error" th:errors="*{account.username}"></p>
+    <label>Password: <input type="password" th:field="*{account.password}"></label> <br>
+    <p th:if="${#fields.hasErrors('account.password')}" th:errorclass="error" th:errors="*{account.password}"></p>
+  </div>
+
   <input type="submit" value="save">
 </form>
 
 <div th:replace="~{general.html :: back}"></div>
+<script>
+    if (document.getElementById('hasAccount1').checked) {
+      document.getElementById('account-details').style.display = 'block';
+    }
+    function toggleData(id) {
+        let displayData = document.getElementById(id).style.display;
+        if (displayData === 'block') {
+            document.getElementById(id).style.display = 'none';
+        } else {
+            document.getElementById(id).style.display = 'block';
+        }
+    }
+</script>
 </body>
 </html>
