@@ -24,9 +24,19 @@ public class EmployeeController extends ControllerHelper {
     @Autowired
     private RoleService roleService;
 
-    @GetMapping({"/add-employee", "/edit-employee"})
-    public ModelAndView renderEmployee(Long id) {
-        return getRenderView((id == null) ? new Employee() : empService.getEmployee(id));
+    @GetMapping("/add-employee")
+    public ModelAndView renderAddEmployee() {
+        return getRenderView(new Employee());
+    }
+
+    @GetMapping("/update-employee")
+    public ModelAndView renderUpdateEmployeeInfo(Long id) {
+        var mv = new ModelAndView();
+        mv.addObject("employee",  empService.getEmployee(id));
+        mv.addObject("roles", roleService.findAllRoles());
+        mv.setViewName("employee/save-emp-info");
+
+        return mv;
     }
 
     @PostMapping("/save-employee")
@@ -64,6 +74,22 @@ public class EmployeeController extends ControllerHelper {
         mv.addObject("roles", roleService.findAllRoles());
         mv.setViewName("employee/save-employee");
         return mv;
+    }
+
+    @PostMapping("/save-emp-info")
+    public ModelAndView saveEmployeeInfo(@Valid @ModelAttribute("employee") EmployeeDto employee, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            var mv = new ModelAndView();
+            mv.addObject("employee", employee);
+            mv.addObject("roles", roleService.findAllRoles());
+            mv.setViewName("employee/save-emp-info");
+
+            return mv;
+        }
+
+        empService.saveEmployee(EmployeeMapper.mapInfo(employee));
+
+        return new ModelAndView("redirect:/employees");
     }
 
     @RequestMapping("/employees")

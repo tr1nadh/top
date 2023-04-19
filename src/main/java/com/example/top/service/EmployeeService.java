@@ -24,8 +24,12 @@ public class EmployeeService {
             return;
         }
 
-        employee.getAccount().setEmployee(employee);
-        repository.save(checkPasswordChange(employee));
+        if (employee.getAccount() == null) {
+            repository.save(employee);
+        } else {
+            employee.getAccount().setEmployee(employee);
+            repository.save(checkPasswordChange(employee));
+        }
 
         var name = employee.getFirstname() + " " + employee.getLastname();
         log.info("Employee with the name '" + name + "' has been saved" );
