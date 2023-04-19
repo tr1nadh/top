@@ -26,22 +26,17 @@ public class EmployeeController extends ControllerHelper {
 
     @GetMapping("/add-employee")
     public ModelAndView renderAddEmployee() {
-        return getRenderView(new Employee());
+        return getAddView(new Employee());
     }
 
     @GetMapping("/update-employee")
     public ModelAndView renderUpdateEmployeeInfo(Long id) {
-        var mv = new ModelAndView();
-        mv.addObject("employee",  empService.getEmployee(id));
-        mv.addObject("roles", roleService.findAllRoles());
-        mv.setViewName("employee/save-emp-info");
-
-        return mv;
+        return getUpdateView(empService.getEmployee(id));
     }
 
     @PostMapping("/save-employee")
     public ModelAndView saveEmployee(@Valid @ModelAttribute("employee") EmployeeDto employee, BindingResult bindingResult) {
-        if (bindingResult.hasErrors() && !isAccountNull(employee, bindingResult)) return getRenderView(employee);
+        if (bindingResult.hasErrors() && !isAccountNull(employee, bindingResult)) return getAddView(employee);
 
         empService.saveEmployee(EmployeeMapper.map(employee));
 
@@ -68,28 +63,31 @@ public class EmployeeController extends ControllerHelper {
         return bindingResult.getAllErrors().size();
     }
 
-    private ModelAndView getRenderView(Object employee) {
+    private ModelAndView getAddView(Object employee) {
         var mv = new ModelAndView();
         mv.addObject("employee", employee);
         mv.addObject("roles", roleService.findAllRoles());
         mv.setViewName("employee/save-employee");
+
         return mv;
     }
 
     @PostMapping("/save-emp-info")
     public ModelAndView saveEmployeeInfo(@Valid @ModelAttribute("employee") EmployeeDto employee, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            var mv = new ModelAndView();
-            mv.addObject("employee", employee);
-            mv.addObject("roles", roleService.findAllRoles());
-            mv.setViewName("employee/save-emp-info");
-
-            return mv;
-        }
+        if (bindingResult.hasErrors()) return getUpdateView(employee);
 
         empService.saveEmployee(EmployeeMapper.mapInfo(employee));
 
         return new ModelAndView("redirect:/employees");
+    }
+
+    private ModelAndView getUpdateView(Object employee) {
+        var mv = new ModelAndView();
+        mv.addObject("employee",  employee);
+        mv.addObject("roles", roleService.findAllRoles());
+        mv.setViewName("employee/save-emp-info");
+
+        return mv;
     }
 
     @RequestMapping("/employees")
