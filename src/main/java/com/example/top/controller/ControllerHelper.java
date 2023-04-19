@@ -9,15 +9,6 @@ public abstract class ControllerHelper {
     @Autowired
     private HttpServletRequest request;
 
-    public ModelAndView getAlertView(String message, String toMapping) {
-        var mv = new ModelAndView();
-        mv.addObject("message", message);
-        mv.addObject("toMapping", toMapping);
-        mv.setViewName("alert-n-continue");
-
-        return mv;
-    }
-
     public ModelAndView getAlertView(String message) {
         var mv = new ModelAndView();
         mv.addObject("message", message);
@@ -29,5 +20,14 @@ public abstract class ControllerHelper {
 
     private String getCurrentMapping() {
         return request.getRequestURI();
+    }
+
+    public ModelAndView getAlertView(String message, String toMapping) {
+        var mv = new ModelAndView();
+        mv.addObject("message", message);
+        mv.addObject("toMapping", toMapping);
+        mv.setViewName("alert-n-continue");
+
+        return mv;
     }
 }
