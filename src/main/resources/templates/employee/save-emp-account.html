@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Save employee account</title>
+</head>
+<body>
+<div th:insert="~{general.html :: navbar}"></div>
+<form action="#" th:action="@{/save-emp-account}" th:object="${account}" method="post">
+    <input type="hidden" th:field="*{accountId}">
+    <input type="hidden" th:value="${employeeId}" name="employeeId">
+    <label>Username: <input type="text" th:field="*{username}"></label> <br>
+    <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"></p>
+    <label>Password: <input type="password" th:field="*{password}"></label> <br>
+    <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>
+
+    <input type="submit" value="save">
+</form>
+<div th:replace="~{general.html :: back}"></div>
+</body>
+</html>

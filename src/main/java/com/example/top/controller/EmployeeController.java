@@ -1,10 +1,13 @@
 package com.example.top.controller;
 
+import com.example.top.dto.AccountDto;
 import com.example.top.dto.EmployeeDto;
+import com.example.top.entity.Account;
 import com.example.top.entity.employee.Employee;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.RoleService;
 import com.example.top.util.mapper.EmployeeMapper;
+import com.example.top.util.mapper.Mapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +35,16 @@ public class EmployeeController extends ControllerHelper {
     @GetMapping("/update-employee")
     public ModelAndView renderUpdateEmployeeInfo(Long id) {
         return getUpdateView(empService.getEmployee(id));
+    }
+
+    @GetMapping("/update-emp-account")
+    public ModelAndView renderUpdateEmployeeAccount(Long id) {
+        var mv = new ModelAndView();
+        mv.addObject("account", empService.getAccount(id));
+        mv.addObject("employeeId", id);
+        mv.setViewName("employee/save-emp-account");
+
+        return mv;
     }
 
     @PostMapping("/save-employee")
@@ -88,6 +101,21 @@ public class EmployeeController extends ControllerHelper {
         mv.setViewName("employee/save-emp-info");
 
         return mv;
+    }
+
+    @PostMapping("save-emp-account")
+    public ModelAndView saveAccount(@Valid @ModelAttribute("account") AccountDto account, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            var mv = new ModelAndView();
+            mv.addObject("account", account);
+            mv.setViewName("employee/save-emp-account");
+
+            return mv;
+        }
+
+        empService.saveAccount(account.getEmployeeId(), Mapper.map(account, new Account()));
+
+        return new ModelAndView("redirect:/employees");
     }
 
     @RequestMapping("/employees")

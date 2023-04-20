@@ -12,12 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AccountDto {
 
-    private Long userId;
+    private Long employeeId;
+
+    private Long accountId;
 
     @NotEmpty(message = "Username cannot be empty")
     private String username;
 
-    @NotEmpty(message = "Password cannot be empty")
     private String password;
 
     private EmployeeDto employee;
