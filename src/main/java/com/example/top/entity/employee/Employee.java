@@ -30,6 +30,9 @@ public class Employee {
 
     private String lastname;
 
+    @Transient
+    private String fullName = firstname + " " + lastname;
+
     @Column(unique = true)
     private String phoneNo;
 
