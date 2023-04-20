@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class EmployeeController extends ControllerHelper {
@@ -53,7 +52,7 @@ public class EmployeeController extends ControllerHelper {
 
         empService.saveEmployee(EmployeeMapper.map(employee));
 
-        return new ModelAndView("redirect:/employees");
+        return getAlertView("Employee saved", "/employees");
     }
 
     private boolean isAccountNull(EmployeeDto employee, BindingResult bindingResult) {
@@ -91,7 +90,7 @@ public class EmployeeController extends ControllerHelper {
 
         empService.saveEmployee(EmployeeMapper.mapInfo(employee));
 
-        return new ModelAndView("redirect:/employees");
+        return getAlertView("Employee saved", "/employees");
     }
 
     private ModelAndView getUpdateView(Object employee) {
@@ -115,7 +114,7 @@ public class EmployeeController extends ControllerHelper {
 
         empService.saveAccount(account.getEmployeeId(), Mapper.map(account, new Account()));
 
-        return new ModelAndView("redirect:/employees");
+        return getAlertView("Account saved", "/employees");
     }
 
     @RequestMapping("/employees")
@@ -128,9 +127,9 @@ public class EmployeeController extends ControllerHelper {
     }
 
     @GetMapping("/delete-employee")
-    public RedirectView deleteEmployee(Long id) {
+    public ModelAndView deleteEmployee(Long id) {
         empService.deleteEmployee(id);
 
-        return new RedirectView("employees");
+        return getAlertView("Employee deleted", "/employees");
     }
 }
