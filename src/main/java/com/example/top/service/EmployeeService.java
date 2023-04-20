@@ -22,10 +22,7 @@ public class EmployeeService {
     private BCryptPasswordEncoder passwordEncoder;
 
     public void saveEmployee(Employee employee) {
-        if (employee == null) {
-            log.severe("Cannot add null as an employee");
-            return;
-        }
+        if (employee == null) throw new IllegalArgumentException("Cannot add null as an employee");
 
         if (employee.getAccount() == null) {
             repository.save(employee);
@@ -34,8 +31,7 @@ public class EmployeeService {
             repository.save(checkPasswordChange(employee));
         }
 
-        var name = employee.getFirstname() + " " + employee.getLastname();
-        log.info("Employee with the name '" + name + "' has been saved" );
+        log.info("Employee with the name '" + employee.getFullName() + "' has been saved" );
     }
 
     public Employee checkPasswordChange(Employee employee) {
@@ -76,22 +72,23 @@ public class EmployeeService {
     }
 
     public Employee getEmployee(Long id) {
-        var optEmployee = repository.findById(id);
+        if (id == null) throw new IllegalArgumentException("Id cannot be null");
 
+        var optEmployee = repository.findById(id);
         if (optEmployee.isEmpty()) {
              log.severe("No employee found with the id '" + id + "'");
-             return null;
+             return new Employee();
         }
 
         var employee = optEmployee.get();
-        var name = employee.getFirstname() + " " + employee.getLastname();
-        log.info("Employee with name '" + name + "' has been retrieved");
+        log.info("Employee with name '" + employee.getFullName() + "' has been retrieved");
         return employee;
     }
 
     public Account getAccount(Long empId) {
-        var account = getEmployee(empId).getAccount();
+        if (empId == null) throw new IllegalArgumentException("empId cannot be null");
 
+        var account = getEmployee(empId).getAccount();
         if (account == null) {
             log.severe("No account found with the employee id '" + empId + "'");
             return new Account();
@@ -102,15 +99,14 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(Long id) {
-        var employee = getEmployee(id);
-        if (employee == null) {
-            log.severe("Cannot delete the employee with the id '" + id + "' which doesn't exists");
-            return;
-        }
+        if (id == null) throw new IllegalArgumentException("Id cannot be null");
+
+        var optEmployee = repository.findById(id);
+        if (optEmployee.isEmpty()) throw new UnknownIdException("No employee found with the id '" + id + "'");
 
         repository.deleteById(id);
 
-        var name = employee.getFirstname() + " " + employee.getLastname();
-        log.info("Employee with name '" + name + "' has been deleted");
+        var employee = optEmployee.get();
+        log.info("Employee with name '" + employee.getFullName() + "' has been deleted");
     }
 }
