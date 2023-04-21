@@ -1,6 +1,7 @@
 package com.example.top.service.order;
 
 import com.example.top.entity.order.Order;
+import com.example.top.exception.UnknownIdException;
 import com.example.top.repository.OrderRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,7 @@ public class OrderCRUDService {
     private OrderRepository repository;
 
     public void saveOrder(Order order) {
-        if (order == null) {
-            log.severe("Cannot add null as an order");
-            return;
-        }
+        if (order == null) throw new IllegalArgumentException("The object 'Order' cannot be null");
 
         repository.save(order);
 
@@ -25,12 +23,10 @@ public class OrderCRUDService {
     }
 
     public Order getOrder(Long id) {
-        var optionalOrder = repository.findById(id);
+        if (id == null) throw new IllegalArgumentException("Id cannot be null");
 
-        if (optionalOrder.isEmpty()) {
-            log.severe("No order found with the id '" + id + "'");
-            return null;
-        }
+        var optionalOrder = repository.findById(id);
+        if (optionalOrder.isEmpty()) throw new UnknownIdException("No order found with the id '" + id + "'");
 
         log.info("Order with the id '" + id + "' has been retrieved");
         return optionalOrder.get();
@@ -58,11 +54,10 @@ public class OrderCRUDService {
     }
 
     public void deleteOrder(Long id) {
+        if (id == null) throw new IllegalArgumentException("Id cannot be null");
+
         var order = getOrder(id);
-        if (order == null) {
-            log.severe("Cannot delete the order with the id '" + id + "' which doesn't exists");
-            return;
-        }
+        if (order == null) throw new IllegalStateException("Cannot delete the order with the id '" + id + "' which doesn't exists");
 
         repository.deleteById(id);
 

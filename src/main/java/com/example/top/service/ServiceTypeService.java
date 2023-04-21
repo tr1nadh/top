@@ -1,6 +1,7 @@
 package com.example.top.service;
 
 import com.example.top.entity.order.ServiceType;
+import com.example.top.exception.UnknownIdException;
 import com.example.top.repository.ServiceTypeRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,11 @@ public class ServiceTypeService {
     private ServiceTypeRepository repository;
 
     public void saveServiceType(ServiceType type) {
-        if (type == null) {
-            log.severe("Cannot add null as a service type");
-            return;
-        }
+        if (type == null) throw new IllegalArgumentException("The object 'ServiceType' cannot be null");
 
         repository.save(type);
 
-        log.info("Service type with the name '" + type.getName() + "' is saved");
+        log.info("Service type '" + type.getName() + "' is saved");
     }
 
     public List<ServiceType> findAllServiceTypes() {
@@ -34,27 +32,24 @@ public class ServiceTypeService {
     }
 
     public ServiceType getServiceType(Long id) {
-        var optServiceType = repository.findById(id);
+        if (id == null) throw new IllegalArgumentException("Id cannot be null");
 
-        if (optServiceType.isEmpty()) {
-            log.severe("No service type found with the id '" + id + "'");
-            return null;
-        }
+        var optServiceType = repository.findById(id);
+        if (optServiceType.isEmpty()) throw new UnknownIdException("No service type found with the id '" + id + "'");
 
         var serviceType = optServiceType.get();
-        log.info("Service type with the name '" + serviceType.getName() + "' has been retrieved");
+        log.info("Service type '" + serviceType.getName() + "' has been retrieved");
         return serviceType;
     }
 
     public void deleteServiceType(Long id) {
+        if (id == null) throw new IllegalArgumentException("Id cannot be null");
+
         var serviceType = getServiceType(id);
-        if (serviceType == null) {
-            log.severe("Cannot delete the service type with the id '" + id + "' which doesn't exists");
-            return;
-        }
+        if (serviceType == null) throw new IllegalStateException("Cannot delete the service type with the id '" + id + "' which doesn't exists");
 
         repository.deleteById(id);
 
-        log.info("Service type with the name '" + serviceType.getName() + "' has been deleted");
+        log.info("Service type '" + serviceType.getName() + "' has been deleted");
     }
 }

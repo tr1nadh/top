@@ -15,6 +15,9 @@ import java.util.List;
 public class OrderService extends OrderCRUDService {
 
     public List<Order> getOrdersByParams(String search, String orderStatus) {
+        if (!GeneralUtil.isQualifiedString(search)) throw new IllegalArgumentException("'search' not a qualified string");
+        if (!GeneralUtil.isQualifiedString(orderStatus)) throw new IllegalArgumentException("'orderStatus' not a qualified string");
+
         List<Order> orders;
         if (GeneralUtil.isQualifiedString(orderStatus)) orders = getOrdersBySearchAndOrderStatus(search, orderStatus);
         else if (!GeneralUtil.isQualifiedString(search)) orders = findOrdersByOrderStatus("Pending");
@@ -32,7 +35,11 @@ public class OrderService extends OrderCRUDService {
     }
 
     public void updateAmount(Long orderId, int addAmount, int removeAmount) {
+        if (orderId == null) throw new IllegalArgumentException("orderId cannot be null");
+
         var dbOrder = getOrder(orderId);
+        if (dbOrder == null) throw new IllegalStateException("Cannot update amount of order which doesn't exists");
+
         var prevAm = dbOrder.getPayment().getAmountPaid();
         if (addAmount != 0) {
             if ((prevAm + addAmount) > dbOrder.getPayment().getTotalAmount()) {
@@ -54,7 +61,11 @@ public class OrderService extends OrderCRUDService {
     }
 
     public void updateServiceStatus(Long orderId, String serviceStatus) {
+        if (orderId == null) throw new IllegalArgumentException("orderId cannot be null");
+
         var dbOrder = getOrder(orderId);
+        if (dbOrder == null) throw new IllegalStateException("Cannot update status of order which doesn't exists");
+
         if (serviceStatus != null) {
             dbOrder.getService().setServiceStatus(serviceStatus);
             updateOrderStatus(dbOrder);
@@ -84,7 +95,11 @@ public class OrderService extends OrderCRUDService {
     }
 
     public void cancelOrder(Long id) {
+        if (id == null) throw new IllegalArgumentException("orderId cannot be null");
+
         var dbOrder = getOrder(id);
+        if (dbOrder == null) throw new IllegalStateException("Cannot cancel the order which doesn't exists");
+
         dbOrder.setOrderStatus(OrderStatus.CANCELLED.toString());
         dbOrder.getPayment().setAmountPaid(0);
         saveOrder(dbOrder);
