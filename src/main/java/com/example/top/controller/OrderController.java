@@ -62,7 +62,7 @@ public class OrderController {
     @GetMapping({"/", "/orders"})
     public ModelAndView getOrders(String search, String orderStatus) {
         var mv = new ModelAndView();
-        mv.addObject("orders", orderService.getOrdersByParams(search, orderStatus));
+        mv.addObject("orders", orderService.params.getOrdersByParams(search, orderStatus));
         mv.addObject("order", new Order());
         mv.addObject("serviceStatus", Arrays.stream(ServiceStatus.values()).toList());
         mv.addObject("paymentStatus", Arrays.stream(PaymentStatus.values()).toList());
@@ -74,8 +74,8 @@ public class OrderController {
 
     @PostMapping("/update-order")
     public RedirectView updateOrder(@ModelAttribute("order") OrderUpdateDto order) {
-        orderService.updateServiceStatus(order.getOrderId(), order.getServiceStatus());
-        orderService.updateAmount(order.getOrderId(), order.getAddAmount(), order.getRemoveAmount());
+        orderService.update.updateServiceStatus(order.getOrderId(), order.getServiceStatus());
+        orderService.update.updateAmount(order.getOrderId(), order.getAddAmount(), order.getRemoveAmount());
 
         return new RedirectView("orders");
     }
