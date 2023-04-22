@@ -58,7 +58,7 @@ public class EmployeeService {
             account.setUsername(username);
         }
         employee.setAccount(account);
-        saveEmployee(employee);
+        repository.save(employee);
 
         log.info("Account has been successfully saved to an employee of id " + empId);
     }
@@ -88,9 +88,15 @@ public class EmployeeService {
     public Account getAccount(Long empId) {
         if (empId == null) throw new IllegalArgumentException("'empId' cannot be null");
 
-        var account = getEmployee(empId).getAccount();
-        if (account == null) {
+        var employee = repository.findById(empId);
+        if (employee.isEmpty()) {
             log.severe("No account found with the employee id '" + empId + "'");
+            return null;
+        }
+
+        var account = employee.get().getAccount();
+        if (account == null) {
+            log.severe("There isn't any account associated with the employee of id '" + empId + "'");
             return null;
         }
 
@@ -107,7 +113,6 @@ public class EmployeeService {
 
         repository.deleteById(id);
 
-        var employee = optEmployee.get();
-        log.info("Employee '" + employee.getFullName() + "' has been deleted");
+        log.info("Employee '" + optEmployee.get().getFullName() + "' has been deleted");
     }
 }

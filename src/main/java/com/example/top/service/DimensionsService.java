@@ -47,12 +47,12 @@ public class DimensionsService {
     public void deleteDimensions(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
-        var dimensions = getDimensions(id);
-        if (dimensions == null)
+        var dimensions = repository.findById(id);
+        if (dimensions.isEmpty())
             throw new IllegalStateException("Cannot delete dimensions: No dimensions exists with the id '" + id + "'");
 
         repository.deleteById(id);
 
-        log.info("Dimensions '" + dimensions.getName() + "' has been deleted");
+        log.info("Dimensions '" + dimensions.get().getName() + "' has been deleted");
     }
 }

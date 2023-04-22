@@ -43,13 +43,17 @@ public class AccountService {
         var account = repository.findAccountByUsername(oldUsername);
         if (account == null) throw new IllegalStateException("Cannot update username: No account exists with the username " + oldUsername);
 
+        updateUsernameInContext(newUsername);
+
+        account.setUsername(newUsername);
+        repository.save(account);
+        log.info("Account username successfully changed from '" + oldUsername + "' to '" + newUsername + "'");
+    }
+
+    private void updateUsernameInContext(String newUsername) {
         var auth = SecurityContextHolder.getContext().getAuthentication();
         var emp = (EmployeeDetails) auth.getPrincipal();
         emp.setUsername(newUsername);
-
-        account.setUsername(newUsername);
-        saveAccount(account);
-        log.info("Account username successfully changed from '" + oldUsername + "' to '" + newUsername + "'");
     }
 
     public void updatePassword(String username, String oldPassword, String newPassword) {
@@ -65,7 +69,7 @@ public class AccountService {
             throw new IllegalStateException("Cannot change to new password: Old password is wrong");
 
         account.setPassword(newPassword);
-        saveAccount(account);
+        repository.save(checkPasswordChange(account));
         log.info("Successfully updated the password of account username '" + username + "'");
     }
 }

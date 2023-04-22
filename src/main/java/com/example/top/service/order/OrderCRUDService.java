@@ -35,8 +35,8 @@ public class OrderCRUDService {
     public void deleteOrder(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
-        var order = getOrder(id);
-        if (order == null)
+        var order = repository.findById(id);
+        if (order.isEmpty())
             throw new IllegalStateException("Cannot delete the order: No order exists with the id '" + id + "'");
 
         repository.deleteById(id);
