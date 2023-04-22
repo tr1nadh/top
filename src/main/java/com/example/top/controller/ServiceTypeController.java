@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
-public class ServiceTypeController {
+public class ServiceTypeController extends ControllerHelper {
 
     @Autowired
     private ServiceTypeService service;
@@ -32,7 +31,7 @@ public class ServiceTypeController {
 
         service.saveServiceType(Mapper.map(type, new ServiceType()));
 
-        return new ModelAndView("redirect:/service-types");
+        return getAlertView("Service type saved", "/service-types");
     }
 
     private ModelAndView getRenderView(Object type) {
@@ -53,9 +52,9 @@ public class ServiceTypeController {
     }
 
     @GetMapping("/delete-service-type")
-    public RedirectView deleteServiceType(Long id) {
+    public ModelAndView deleteServiceType(Long id) {
         service.deleteServiceType(id);
 
-        return new RedirectView("service-types");
+        return getAlertView("Service type deleted", "/service-types");
     }
 }

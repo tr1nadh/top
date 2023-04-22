@@ -19,12 +19,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Arrays;
 
 @Controller
-public class OrderController {
+public class OrderController extends ControllerHelper {
 
     @Autowired
     private OrderService orderService;
@@ -46,7 +45,7 @@ public class OrderController {
 
         orderService.crud.saveOrder(OrderMapper.map(order));
 
-        return new ModelAndView("redirect:/orders");
+        return getAlertView("Order saved", "/orders");
     }
 
     private ModelAndView getRenderView(Object order) {
@@ -56,6 +55,7 @@ public class OrderController {
         mv.addObject("serviceTypes", serviceTypeService.findAllServiceTypes());
         mv.addObject("dimensions", dimensionsService.findAllDimensions());
         mv.setViewName("order/save-order");
+
         return mv;
     }
 
@@ -73,24 +73,24 @@ public class OrderController {
     }
 
     @PostMapping("/update-order")
-    public RedirectView updateOrder(@ModelAttribute("order") OrderUpdateDto order) {
+    public ModelAndView updateOrder(@ModelAttribute("order") OrderUpdateDto order) {
         orderService.update.updateServiceStatus(order.getOrderId(), order.getServiceStatus());
         orderService.update.updateAmount(order.getOrderId(), order.getAddAmount(), order.getRemoveAmount());
 
-        return new RedirectView("orders");
+        return getAlertView("Order updated", "/orders");
     }
 
     @GetMapping("/cancel-order")
-    public RedirectView cancelOrder(Long id) {
+    public ModelAndView cancelOrder(Long id) {
         orderService.cancelOrder(id);
 
-        return new RedirectView("orders");
+        return getAlertView("Order cancelled", "/orders");
     }
 
     @GetMapping("/delete-order")
-    public RedirectView deleteOrder(Long id) {
+    public ModelAndView deleteOrder(Long id) {
         orderService.crud.deleteOrder(id);
 
-        return new RedirectView("orders");
+        return getAlertView("Order deleted", "/orders");
     }
 }

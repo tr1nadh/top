@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
-public class DimensionsController {
+public class DimensionsController extends ControllerHelper {
 
     @Autowired
     private DimensionsService service;
@@ -32,13 +31,14 @@ public class DimensionsController {
 
         service.saveDimensions(Mapper.map(dimensions, new Dimensions()));
 
-        return new ModelAndView("redirect:/dimensions");
+        return getAlertView("Dimensions saved", "/dimensions");
     }
 
     private ModelAndView getRenderView(Object dimensions) {
         var mv = new ModelAndView();
         mv.addObject("dimensions", dimensions);
         mv.setViewName("order/dimensions/save-dimensions");
+
         return mv;
     }
 
@@ -52,9 +52,9 @@ public class DimensionsController {
     }
 
     @GetMapping("/delete-dimensions")
-    public RedirectView deleteDimensions(Long id) {
+    public ModelAndView deleteDimensions(Long id) {
         service.deleteDimensions(id);
 
-        return new RedirectView("dimensions");
+        return getAlertView("Dimensions deleted", "/dimensions");
     }
 }
