@@ -2,7 +2,6 @@ package com.example.top.service;
 
 import com.example.top.entity.Account;
 import com.example.top.entity.employee.Employee;
-import com.example.top.exception.UnknownIdException;
 import com.example.top.repository.EmployeeRepository;
 import com.example.top.util.GeneralUtil;
 import lombok.extern.java.Log;
@@ -22,7 +21,7 @@ public class EmployeeService {
     private BCryptPasswordEncoder passwordEncoder;
 
     public void saveEmployee(Employee employee) {
-        if (employee == null) throw new IllegalArgumentException("Cannot add null as an employee");
+        if (employee == null) throw new IllegalArgumentException("'employee' cannot be null");
 
         if (employee.getAccount() == null) {
             repository.save(employee);
@@ -31,7 +30,7 @@ public class EmployeeService {
             repository.save(checkPasswordChange(employee));
         }
 
-        log.info("Employee with the name '" + employee.getFullName() + "' has been saved" );
+        log.info("Employee '" + employee.getFullName() + "' has been saved" );
     }
 
     public Employee checkPasswordChange(Employee employee) {
@@ -45,11 +44,12 @@ public class EmployeeService {
     }
 
     public void saveAccount(Long empId, Account account) {
-        if (empId == null) throw new IllegalArgumentException("empId cannot be null");
-        if (account == null) throw new IllegalArgumentException("Cannot add null as an Account");
+        if (empId == null) throw new IllegalArgumentException("'empId' cannot be null");
+        if (account == null) throw new IllegalArgumentException("'account' cannot be null");
 
         var optEmployee = repository.findById(empId);
-        if (optEmployee.isEmpty()) throw new UnknownIdException("No employee found with the id " + empId);
+        if (optEmployee.isEmpty())
+            throw new IllegalStateException("Cannot save account to an employee: No employee exists with the id '" + empId + "'");
 
         var employee = optEmployee.get();
         if (!GeneralUtil.isQualifiedString(account.getPassword())) {
@@ -60,7 +60,7 @@ public class EmployeeService {
         employee.setAccount(account);
         saveEmployee(employee);
 
-        log.info("Account has been successfully saved of employee id " + empId);
+        log.info("Account has been successfully saved to an employee of id " + empId);
     }
 
     public List<Employee> findAllEmployees() {
@@ -72,41 +72,42 @@ public class EmployeeService {
     }
 
     public Employee getEmployee(Long id) {
-        if (id == null) throw new IllegalArgumentException("Id cannot be null");
+        if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
         var optEmployee = repository.findById(id);
         if (optEmployee.isEmpty()) {
              log.severe("No employee found with the id '" + id + "'");
-             return new Employee();
+             return null;
         }
 
         var employee = optEmployee.get();
-        log.info("Employee with name '" + employee.getFullName() + "' has been retrieved");
+        log.info("Employee '" + employee.getFullName() + "' has been retrieved");
         return employee;
     }
 
     public Account getAccount(Long empId) {
-        if (empId == null) throw new IllegalArgumentException("empId cannot be null");
+        if (empId == null) throw new IllegalArgumentException("'empId' cannot be null");
 
         var account = getEmployee(empId).getAccount();
         if (account == null) {
             log.severe("No account found with the employee id '" + empId + "'");
-            return new Account();
+            return null;
         }
 
-        log.info("Account with the id '" + empId + "' has been retrieved");
+        log.info("Account with the employee id '" + empId + "' has been retrieved");
         return account;
     }
 
     public void deleteEmployee(Long id) {
-        if (id == null) throw new IllegalArgumentException("Id cannot be null");
+        if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
         var optEmployee = repository.findById(id);
-        if (optEmployee.isEmpty()) throw new UnknownIdException("No employee found with the id '" + id + "'");
+        if (optEmployee.isEmpty())
+            throw new IllegalStateException("Cannot delete employee: No employee exists with the id '" + id + "'");
 
         repository.deleteById(id);
 
         var employee = optEmployee.get();
-        log.info("Employee with name '" + employee.getFullName() + "' has been deleted");
+        log.info("Employee '" + employee.getFullName() + "' has been deleted");
     }
 }

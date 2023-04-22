@@ -2,7 +2,6 @@ package com.example.top.service;
 
 import com.example.top.entity.employee.Role;
 import com.example.top.exception.DuplicateRoleException;
-import com.example.top.exception.UnknownIdException;
 import com.example.top.repository.RoleRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class RoleService {
 
     public void saveRole(Role role) {
         if (role == null)
-            throw new IllegalArgumentException("The object 'Role' cannot be null");
+            throw new IllegalArgumentException("'role' cannot be null");
 
         if (isRoleAlreadyExists(role))
             throw new DuplicateRoleException("Role '" + role.getName() + "' already existed");
@@ -48,13 +47,13 @@ public class RoleService {
     }
 
     public Role getRole(Long id) {
-        if (id == null) throw new IllegalArgumentException("Id cannot be null");
+        if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
         var optRole = repository.findById(id);
 
         if (optRole.isEmpty() || excludeRoles.contains(optRole.get().getName())) {
             log.severe("No role found with the id '" + id + "'");
-            return new Role();
+            return null;
         }
 
         var role = optRole.get();
@@ -63,16 +62,16 @@ public class RoleService {
     }
 
     public void deleteRole(Long id) {
-        if (id == null) throw new IllegalArgumentException("Id cannot be null");
+        if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
         var optRole = repository.findById(id);
         if (optRole.isEmpty() || excludeRoles.contains(optRole.get().getName()))
-            throw new UnknownIdException("No role found with the id '" + id + "'");
+            throw new IllegalStateException("Cannot delete role: No role exists with the id '" + id + "'");
 
         try {
             repository.deleteById(id);
         } catch (DataIntegrityViolationException ex) {
-            throw new IllegalStateException("Cannot delete assigned role");
+            throw new IllegalStateException("Cannot delete role: This role is already assigned to an employee");
         }
 
         log.info("Role '" + optRole.get().getName() + "' has been deleted");

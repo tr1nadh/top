@@ -1,7 +1,6 @@
 package com.example.top.service;
 
 import com.example.top.entity.Account;
-import com.example.top.exception.NoSuchAccount;
 import com.example.top.repository.AccountRepository;
 import com.example.top.securitydetails.EmployeeDetails;
 import com.example.top.util.GeneralUtil;
@@ -21,7 +20,7 @@ public class AccountService {
     private BCryptPasswordEncoder passwordEncoder;
 
     public void saveAccount(Account account) {
-        if (account == null) throw new IllegalArgumentException("The object 'Account' cannot be null");
+        if (account == null) throw new IllegalArgumentException("'account' cannot be null");
 
         repository.save(checkPasswordChange(account));
 
@@ -38,11 +37,11 @@ public class AccountService {
     }
 
     public void updateUsername(String oldUsername, String newUsername) {
-        if (!GeneralUtil.isQualifiedString(oldUsername)) throw new IllegalArgumentException("Old username not a qualified string");
-        if (!GeneralUtil.isQualifiedString(newUsername)) throw new IllegalArgumentException("New username not a qualified string");
+        if (!GeneralUtil.isQualifiedString(oldUsername)) throw new IllegalArgumentException("'oldUsername' is not a qualified string");
+        if (!GeneralUtil.isQualifiedString(newUsername)) throw new IllegalArgumentException("'newUsername' is not a qualified string");
 
         var account = repository.findAccountByUsername(oldUsername);
-        if (account == null) throw new NoSuchAccount("No account found with the username '" + oldUsername + "'");
+        if (account == null) throw new IllegalStateException("Cannot update username: No account exists with the username " + oldUsername);
 
         var auth = SecurityContextHolder.getContext().getAuthentication();
         var emp = (EmployeeDetails) auth.getPrincipal();
@@ -50,20 +49,20 @@ public class AccountService {
 
         account.setUsername(newUsername);
         saveAccount(account);
-        log.info("Account username successfully updated from '" + oldUsername + "' to '" + newUsername + "'");
+        log.info("Account username successfully changed from '" + oldUsername + "' to '" + newUsername + "'");
     }
 
     public void updatePassword(String username, String oldPassword, String newPassword) {
-        if (!GeneralUtil.isQualifiedString(username)) throw new IllegalArgumentException("Username not a qualified string");
-        if (!GeneralUtil.isQualifiedString(oldPassword)) throw new IllegalArgumentException("Old password not a qualified string");
-        if (!GeneralUtil.isQualifiedString(newPassword)) throw new IllegalArgumentException("New password not a qualified string");
+        if (!GeneralUtil.isQualifiedString(username)) throw new IllegalArgumentException("'username' is not a qualified string");
+        if (!GeneralUtil.isQualifiedString(oldPassword)) throw new IllegalArgumentException("'oldPassword' is not a qualified string");
+        if (!GeneralUtil.isQualifiedString(newPassword)) throw new IllegalArgumentException("'newPassword' is not a qualified string");
 
         var account = repository.findAccountByUsername(username);
         if (account == null)
-            throw new NoSuchAccount("No account found with the username '" + username + "'");
+            throw new IllegalStateException("Cannot update password: No account exists with the username " + username);
 
         if (!passwordEncoder.matches(oldPassword, account.getPassword()))
-            throw new IllegalStateException("Cannot change to new password, Old password is wrong");
+            throw new IllegalStateException("Cannot change to new password: Old password is wrong");
 
         account.setPassword(newPassword);
         saveAccount(account);
