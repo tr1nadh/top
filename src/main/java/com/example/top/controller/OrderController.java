@@ -37,14 +37,14 @@ public class OrderController {
 
     @GetMapping({"/add-order", "/edit-order"})
     public ModelAndView renderOrder(Long id) {
-        return getRenderView((id == null) ? new Order() : orderService.getOrder(id));
+        return getRenderView((id == null) ? new Order() : orderService.crud.getOrder(id));
     }
 
     @PostMapping("/save-order")
     public ModelAndView saveOrder(@Valid @ModelAttribute("order") OrderDto order, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return getRenderView(order);
 
-        orderService.saveOrder(OrderMapper.map(order));
+        orderService.crud.saveOrder(OrderMapper.map(order));
 
         return new ModelAndView("redirect:/orders");
     }
@@ -89,7 +89,7 @@ public class OrderController {
 
     @GetMapping("/delete-order")
     public RedirectView deleteOrder(Long id) {
-        orderService.deleteOrder(id);
+        orderService.crud.deleteOrder(id);
 
         return new RedirectView("orders");
     }
