@@ -89,15 +89,13 @@ public class EmployeeService {
         if (empId == null) throw new IllegalArgumentException("'empId' cannot be null");
 
         var employee = repository.findById(empId);
-        if (employee.isEmpty()) {
-            log.severe("No account found with the employee id '" + empId + "'");
-            return null;
-        }
+        if (employee.isEmpty())
+            throw new IllegalStateException("No employee exists with the id '" + empId + "'");
 
         var account = employee.get().getAccount();
         if (account == null) {
             log.severe("There isn't any account associated with the employee of id '" + empId + "'");
-            return null;
+            return new Account();
         }
 
         log.info("Account with the employee id '" + empId + "' has been retrieved");
