@@ -40,8 +40,6 @@
     </thead>
     <tbody>
     <tr th:each="order : ${orders}">
-        <form th:action="@{/update-order}" th:object="${order}" method="post">
-            <input type="hidden" name="orderId" th:value="${order.orderId}">
         <td th:text="${order.orderId}"></td>
         <td>
             <p class="toggleHead"
@@ -79,14 +77,24 @@
                th:attr="onclick=|toggleData('ssSelect${order.orderId}')|"
                th:text="${order.service.serviceStatus}"></p>
 
-                <select th:id="ssSelect + ${order.orderId}" class="toggle" name="serviceStatus"
-                        onchange="this.form.submit()">
-                    <option selected disabled value="Select">Select</option>
-                    <option th:each="status : ${serviceStatus}"
-                            th:value="${status}"
-                            th:text="${status}"
-                    ></option>
-                </select>
+<!--  Service status update form  -->
+
+            <form th:action="@{/update-order-service-status}" th:object="${order}" method="post">
+                <input type="hidden" name="orderId" th:value="${order.orderId}">
+                <label>
+                    <select th:id="ssSelect + ${order.orderId}" class="toggle" name="serviceStatus"
+                            onchange="this.form.submit()">
+                        <option selected disabled value="Select">Select</option>
+                        <option th:each="status : ${serviceStatus}"
+                                th:value="${status}"
+                                th:text="${status}"
+                        ></option>
+                    </select>
+                </label>
+            </form>
+
+<!-- End -->
+
         </td>
         <td th:text="${order.payment.totalAmount}"></td>
         <td>
@@ -97,20 +105,37 @@
                th:attr="onclick=|toggleData('apAdd${order.orderId}')|"
                href="#">+</a>
 
+<!--  Add amount update form  -->
+
+            <form th:id="apAdd + ${order.orderId}" class="toggle"
+                  th:action="@{/add-order-amount}" th:object="${order}" method="post">
+                <input type="hidden" name="orderId" th:value="${order.orderId}">
+                <label>
+                    <input type="number" name="addAmount" value="0">
+                </label>
+                <input type="submit" value="Add">
+            </form>
+
+<!--  End  -->
+
             <a class="toggleHead"
                th:if="${order.orderStatus == 'PENDING'}"
                th:attr="onclick=|toggleData('apRm${order.orderId}')|"
                href="#">-</a>
 
-            <div th:id="apAdd + ${order.orderId}" class="toggle">
-                <input type="number" name="addAmount" value="0">
-                <input type="submit" value="Add">
-            </div>
+<!--  Remove amount update form  -->
 
-            <div th:id="apRm + ${order.orderId}" class="toggle">
-                <input type="number" name="removeAmount" value="0">
+            <form th:id="apRm + ${order.orderId}" class="toggle"
+                  th:action="@{/remove-order-amount}" th:object="${order}" method="post">
+                <input type="hidden" name="orderId" th:value="${order.orderId}">
+                <label>
+                    <input type="number" name="removeAmount" value="0">
+                </label>
                 <input type="submit" value="Remove">
-            </div>
+            </form>
+
+<!--  End  -->
+
         </td>
         <td th:text="${order.payment.paymentStatus}"></td>
         <td th:text="${order.orderStatus}"></td>
@@ -119,7 +144,6 @@
             <a th:if="${order.orderStatus == 'PENDING'}" th:href="@{/cancel-order?id={id}(id=${order.orderId})}">Cancel</a>
             <a th:if="${order.orderStatus == 'CANCELLED'}" th:href="@{/delete-order?id={id}(id=${order.orderId})}">Delete</a>
         </td>
-        </form>
     </tr>
     </tbody>
 </table>

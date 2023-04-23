@@ -1,7 +1,9 @@
 package com.example.top.controller;
 
+import com.example.top.dto.AddAmountToOrderDto;
 import com.example.top.dto.OrderDto;
-import com.example.top.dto.OrderUpdateDto;
+import com.example.top.dto.RemoveOrderAmountDto;
+import com.example.top.dto.UpdateOrderServiceStatusDto;
 import com.example.top.entity.order.Order;
 import com.example.top.enums.OrderStatus;
 import com.example.top.enums.PaymentStatus;
@@ -72,12 +74,35 @@ public class OrderController extends ControllerHelper {
         return mv;
     }
 
-    @PostMapping("/update-order")
-    public ModelAndView updateOrder(@ModelAttribute("order") OrderUpdateDto order) {
-        orderService.update.updateServiceStatus(order.getOrderId(), order.getServiceStatus());
-        orderService.update.updateAmount(order.getOrderId(), order.getAddAmount(), order.getRemoveAmount());
+    @PostMapping("/update-order-service-status")
+    public ModelAndView updateOrderServiceStatus(UpdateOrderServiceStatusDto updateOrder) {
+        orderService.update.updateServiceStatus(updateOrder.getOrderId(), updateOrder.getServiceStatus());
 
-        return getAlertView("Order updated", "/orders");
+        return getAlertView("Service status updated", "/orders");
+    }
+
+    @PostMapping("/add-order-amount")
+    public ModelAndView addOrderAmount(@Valid AddAmountToOrderDto updateOrder, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            var error = bindingResult.getFieldError("addAmount");
+            return getAlertView(error.getDefaultMessage(), "/orders");
+        }
+
+        orderService.update.addAmount(updateOrder.getOrderId(), updateOrder.getAddAmount());
+
+        return getAlertView("Amount added", "/orders");
+    }
+
+    @PostMapping("/remove-order-amount")
+    public ModelAndView removeOrderAmount(@Valid RemoveOrderAmountDto updateOrder, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            var error = bindingResult.getFieldError("removeAmount");
+            return getAlertView(error.getDefaultMessage(), "/orders");
+        }
+
+        orderService.update.removeAmount(updateOrder.getOrderId(), updateOrder.getRemoveAmount());
+
+        return getAlertView("Amount removed", "/orders");
     }
 
     @GetMapping("/cancel-order")

@@ -16,22 +16,7 @@ public class OrderUpdateService {
     @Autowired
     private OrderRepository repository;
 
-    public void updateAmount(Long orderId, int addAmount, int removeAmount) {
-        if (orderId == null) throw new IllegalArgumentException("'orderId' cannot be null");
-
-        var optDbOrder = repository.findById(orderId);
-        if (optDbOrder.isEmpty())
-            throw new IllegalStateException("Cannot update amount of order: No order exists with the id '" + orderId + "'");
-
-        var dbOrder = optDbOrder.get();
-        if (addAmount != 0) addAmount(orderId, addAmount);
-        else if (removeAmount != 0) removeAmount(orderId, removeAmount);
-
-        updateAmountStatus(dbOrder);
-        repository.save(dbOrder);
-    }
-
-    private void addAmount(Long orderId, int addAmount) {
+    public void addAmount(Long orderId, int addAmount) {
         if (orderId == null) throw new IllegalArgumentException("'orderId' cannot be null");
 
         var optDbOrder = repository.findById(orderId);
@@ -49,7 +34,7 @@ public class OrderUpdateService {
         repository.save(dbOrder);
     }
 
-    private void removeAmount(Long orderId, int removeAmount) {
+    public void removeAmount(Long orderId, int removeAmount) {
         if (orderId == null) throw new IllegalArgumentException("'orderId' cannot be null");
 
         var optDbOrder = repository.findById(orderId);
