@@ -1,6 +1,6 @@
 package com.example.top.service;
 
-import com.example.top.entity.Account;
+import com.example.top.entity.employee.Account;
 import com.example.top.repository.AccountRepository;
 import com.example.top.securitydetails.EmployeeDetails;
 import com.example.top.util.GeneralUtil;
