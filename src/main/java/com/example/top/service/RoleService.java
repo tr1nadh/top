@@ -1,7 +1,7 @@
 package com.example.top.service;
 
 import com.example.top.entity.employee.Role;
-import com.example.top.exception.DuplicateRoleException;
+import com.example.top.exception.DuplicateException;
 import com.example.top.repository.RoleRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class RoleService {
             throw new IllegalArgumentException("'role' cannot be null");
 
         if (isRoleAlreadyExists(role))
-            throw new DuplicateRoleException("Role '" + role.getName() + "' already existed");
+            throw new DuplicateException("Role '" + role.getName() + "' already existed");
 
         repository.save(role);
 
