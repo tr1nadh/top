@@ -102,7 +102,7 @@ public class EmployeeController extends ControllerHelper {
         return mv;
     }
 
-    @PostMapping("save-emp-account")
+    @PostMapping("/save-emp-account")
     public ModelAndView saveAccount(@Valid @ModelAttribute("account") AccountDto account, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             var mv = new ModelAndView();
