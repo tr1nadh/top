@@ -4,7 +4,9 @@ import com.example.top.entity.order.Order;
 import com.example.top.repository.OrderRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 @Log
 public class OrderCRUDService {
 
