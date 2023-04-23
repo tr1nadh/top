@@ -1,7 +1,7 @@
 package com.example.top.controller;
 
-import com.example.top.dto.AccountDto;
-import com.example.top.dto.EmployeeDto;
+import com.example.top.dto.employee.AccountDto;
+import com.example.top.dto.employee.EmployeeDto;
 import com.example.top.entity.Account;
 import com.example.top.entity.employee.Employee;
 import com.example.top.service.EmployeeService;

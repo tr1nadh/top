@@ -1,4 +1,4 @@
-package com.example.top.dto;
+package com.example.top.dto.order;
 
 import com.example.top.entity.order.Dimensions;
 import com.example.top.entity.order.ServiceType;

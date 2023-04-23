@@ -1,4 +1,4 @@
-package com.example.top.dto;
+package com.example.top.dto.order;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleDto {
+public class DimensionsDto {
 
-    private Long roleId;
+    private Long dimensionsId;
 
     @NotEmpty(message = "Name cannot be empty")
     private String name;

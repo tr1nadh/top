@@ -1,6 +1,6 @@
 package com.example.top.util.mapper;
 
-import com.example.top.dto.OrderDto;
+import com.example.top.dto.order.OrderDto;
 import com.example.top.entity.employee.Employee;
 import com.example.top.entity.order.Customer;
 import com.example.top.entity.order.Order;

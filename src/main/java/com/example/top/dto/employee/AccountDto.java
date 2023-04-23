@@ -1,4 +1,4 @@
-package com.example.top.dto;
+package com.example.top.dto.employee;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;

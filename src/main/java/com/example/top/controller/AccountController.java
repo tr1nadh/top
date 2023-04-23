@@ -1,7 +1,7 @@
 package com.example.top.controller;
 
-import com.example.top.dto.UpdateEmpPasswordDto;
-import com.example.top.dto.UpdateEmpUsernameDto;
+import com.example.top.dto.employee.UpdateEmpPasswordDto;
+import com.example.top.dto.employee.UpdateEmpUsernameDto;
 import com.example.top.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

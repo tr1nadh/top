@@ -1,6 +1,6 @@
 package com.example.top.controller;
 
-import com.example.top.dto.ServiceTypeDto;
+import com.example.top.dto.order.ServiceTypeDto;
 import com.example.top.entity.order.ServiceType;
 import com.example.top.service.ServiceTypeService;
 import com.example.top.util.mapper.Mapper;

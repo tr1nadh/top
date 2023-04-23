@@ -1,9 +1,9 @@
 package com.example.top.controller;
 
-import com.example.top.dto.AddAmountToOrderDto;
-import com.example.top.dto.OrderDto;
-import com.example.top.dto.RemoveOrderAmountDto;
-import com.example.top.dto.UpdateOrderServiceStatusDto;
+import com.example.top.dto.order.AddAmountToOrderDto;
+import com.example.top.dto.order.OrderDto;
+import com.example.top.dto.order.RemoveOrderAmountDto;
+import com.example.top.dto.order.UpdateOrderServiceStatusDto;
 import com.example.top.entity.order.Order;
 import com.example.top.enums.OrderStatus;
 import com.example.top.enums.PaymentStatus;

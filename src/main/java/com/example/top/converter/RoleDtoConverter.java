@@ -1,6 +1,6 @@
 package com.example.top.converter;
 
-import com.example.top.dto.RoleDto;
+import com.example.top.dto.employee.RoleDto;
 import com.example.top.service.RoleService;
 import com.example.top.util.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
