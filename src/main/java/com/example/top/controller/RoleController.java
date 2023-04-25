@@ -57,6 +57,6 @@ public class RoleController extends ControllerHelper {
     public ModelAndView deleteRole(Long id) {
         service.deleteRole(id);
 
-        return getAlertView("Role deleted", "/roles");
+        return new ModelAndView("redirect:/roles");
     }
 }
