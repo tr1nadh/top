@@ -1,5 +1,6 @@
 package com.example.top.entity.employee;
 
+import com.example.top.util.GeneralUtil;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,6 +39,9 @@ public class Account {
     private Employee employee;
 
     public void setPassword(String password) {
+        if (!GeneralUtil.isQualifiedString(password))
+            return;
+
         if (this.password == null ||
                 !this.password.equals(password)) {
             passwordChanged = true;

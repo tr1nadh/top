@@ -2,6 +2,8 @@ package com.example.top.service;
 
 import com.example.top.entity.employee.Account;
 import com.example.top.entity.employee.Employee;
+import com.example.top.exception.DuplicateException;
+import com.example.top.repository.AccountRepository;
 import com.example.top.repository.EmployeeRepository;
 import com.example.top.util.GeneralUtil;
 import lombok.extern.java.Log;
@@ -17,6 +19,8 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository repository;
+    @Autowired
+    private AccountRepository accountRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -47,20 +51,41 @@ public class EmployeeService {
         if (empId == null) throw new IllegalArgumentException("'empId' cannot be null");
         if (account == null) throw new IllegalArgumentException("'account' cannot be null");
 
-        var optEmployee = repository.findById(empId);
-        if (optEmployee.isEmpty())
+        var optDbEmployee = repository.findById(empId);
+        if (optDbEmployee.isEmpty())
             throw new IllegalStateException("Cannot save account to an employee: No employee exists with the id '" + empId + "'");
 
-        var employee = optEmployee.get();
-        if (!GeneralUtil.isQualifiedString(account.getPassword())) {
-            var username = account.getUsername();
-            account = employee.getAccount();
-            account.setUsername(username);
+        var dbEmployee = optDbEmployee.get();
+        var username = account.getUsername();
+        if (!dbEmployee.getAccount().getUsername().equals(username) &&
+                isUsernameAlreadyExists(username))
+            throw new DuplicateException("Username '" + username + "' already exists");
+
+        if (isThisANewAccount(dbEmployee)) {
+            if (GeneralUtil.isQualifiedString(account.getPassword())) {
+                account.setEmployee(dbEmployee);
+                dbEmployee.setAccount(account);
+                repository.save(checkPasswordChange(dbEmployee));
+                return;
+            } else throw new IllegalStateException("Cannot save account without a password");
         }
-        employee.setAccount(account);
-        repository.save(employee);
+
+        if (GeneralUtil.isQualifiedString(account.getPassword())) {
+            account.setEmployee(dbEmployee);
+            dbEmployee.setAccount(account);
+        } else dbEmployee.getAccount().setUsername(username);
+
+        repository.save(checkPasswordChange(dbEmployee));
 
         log.info("Account has been successfully saved to an employee of id " + empId);
+    }
+
+    private boolean isThisANewAccount(Employee dbEmployee) {
+        return dbEmployee.getAccount().getPassword() == null;
+    }
+
+    private boolean isUsernameAlreadyExists(String username) {
+        return accountRepository.findByUsername(username).size() > 0;
     }
 
     public List<Employee> findAllEmployees() {
