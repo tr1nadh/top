@@ -29,7 +29,7 @@ public class RoleController extends ControllerHelper {
     public ModelAndView saveRole(@Valid @ModelAttribute("role") RoleDto role, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return getRenderView(role);
 
-        var toMapping = (role.getRoleId() == null) ? "/add-role" : "/update-role?id=" + role.getRoleId();
+        var toMapping = (role.getRoleId() == null) ? "/add-role" : "/roles";
 
         service.saveRole(Mapper.map(role, new Role()));
 
