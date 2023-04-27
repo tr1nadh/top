@@ -53,11 +53,8 @@ public class RoleService {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
         var optRole = repository.findById(id);
-
-        if (optRole.isEmpty() || excludeRoles.contains(optRole.get().getName())) {
-            log.severe("No role found with the id '" + id + "'");
-            return null;
-        }
+        if (optRole.isEmpty() || excludeRoles.contains(optRole.get().getName()))
+            throw new IllegalStateException("No role found with the id '" + id + "'");
 
         var role = optRole.get();
         log.info("Role '" + role.getName() + "' has been retrieved");
