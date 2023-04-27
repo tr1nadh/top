@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
     List<Role> findByNameNotIn(List<String> roles);
+    List<Role> findByName(String name);
 }

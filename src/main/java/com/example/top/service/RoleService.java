@@ -31,11 +31,14 @@ public class RoleService {
     }
 
     private boolean isRoleAlreadyExists(Role role) {
-        return findAllRolesWithNames().contains(role.getName());
-    }
+        if (role.getRoleId() != null) {
+            var dbRole = repository.findById(role.getRoleId());
+            if (dbRole.isEmpty()) throw new IllegalStateException("Unknown role");
+            if (dbRole.get().getName().equals(role.getName())) return false;
+        }
 
-    public List<String> findAllRolesWithNames() {
-        return repository.findAll().stream().map(Role::getName).toList();
+        var roles = repository.findByName(role.getName());
+        return roles.size() > 0;
     }
 
     public List<Role> findAllRoles() {
