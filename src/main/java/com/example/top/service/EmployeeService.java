@@ -27,19 +27,14 @@ public class EmployeeService {
     public void saveEmployee(Employee employee) {
         if (employee == null) throw new IllegalArgumentException("'employee' cannot be null");
 
-        if (employee.getAccount() == null) {
-            repository.save(employee);
-        } else {
-            employee.getAccount().setEmployee(employee);
-            repository.save(checkPasswordChange(employee));
-        }
+        repository.save(checkPasswordChange(employee));
 
         log.info("Employee '" + employee.getFullName() + "' has been saved" );
     }
 
     public Employee checkPasswordChange(Employee employee) {
         var account = employee.getAccount();
-        if (account.isPasswordChanged()) {
+        if (employee.isHasAccount() && account.isPasswordChanged()) {
             account.setPassword(passwordEncoder.encode(account.getPassword()));
             account.setPasswordChanged(false);
         }

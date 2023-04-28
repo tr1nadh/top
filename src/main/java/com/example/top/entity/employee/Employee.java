@@ -44,7 +44,6 @@ public class Employee {
 
     private String gender;
 
-    @Transient
     private boolean hasAccount;
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
