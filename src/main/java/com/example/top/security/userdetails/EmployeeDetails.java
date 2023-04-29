@@ -1,4 +1,4 @@
-package com.example.top.securitydetails;
+package com.example.top.security.userdetails;
 
 import com.example.top.entity.employee.Employee;
 import org.springframework.security.core.GrantedAuthority;

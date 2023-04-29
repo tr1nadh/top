@@ -1,4 +1,4 @@
-package com.example.top.securitydetails;
+package com.example.top.security.userdetails;
 
 import com.example.top.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

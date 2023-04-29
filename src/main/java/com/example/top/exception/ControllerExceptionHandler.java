@@ -1,4 +1,4 @@
-package com.example.top;
+package com.example.top.exception;
 
 import com.example.top.controller.AController;
 import org.springframework.web.bind.annotation.ControllerAdvice;

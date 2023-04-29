@@ -2,7 +2,7 @@ package com.example.top.service;
 
 import com.example.top.entity.employee.Account;
 import com.example.top.repository.AccountRepository;
-import com.example.top.securitydetails.EmployeeDetails;
+import com.example.top.security.userdetails.EmployeeDetails;
 import com.example.top.util.GeneralUtil;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
