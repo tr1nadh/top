@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
-public abstract class ControllerHelper {
+public abstract class AController {
 
     @Autowired
     private HttpServletRequest request;
