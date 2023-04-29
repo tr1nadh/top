@@ -1,11 +1,9 @@
 package com.example.top.service;
 
 import com.example.top.entity.employee.Role;
-import com.example.top.exception.DuplicateException;
 import com.example.top.repository.RoleRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,23 +20,9 @@ public class RoleService {
         if (role == null)
             throw new IllegalArgumentException("'role' cannot be null");
 
-        if (isRoleAlreadyExists(role))
-            throw new DuplicateException("Role '" + role.getName() + "' already existed");
-
         repository.save(role);
 
         log.info("Role '" + role.getName() + "' is saved");
-    }
-
-    private boolean isRoleAlreadyExists(Role role) {
-        if (role.getRoleId() != null) {
-            var dbRole = repository.findById(role.getRoleId());
-            if (dbRole.isEmpty()) throw new IllegalStateException("Unknown role");
-            if (dbRole.get().getName().equals(role.getName())) return false;
-        }
-
-        var roles = repository.findByName(role.getName());
-        return roles.size() > 0;
     }
 
     public List<Role> findAllRoles() {
@@ -68,11 +52,7 @@ public class RoleService {
         if (optRole.isEmpty() || excludeRoles.contains(optRole.get().getName()))
             throw new IllegalStateException("Cannot delete role: No role exists with the id '" + id + "'");
 
-        try {
-            repository.deleteById(id);
-        } catch (DataIntegrityViolationException ex) {
-            throw new IllegalStateException("Cannot delete role: This role is already assigned to an employee");
-        }
+        repository.deleteById(id);
 
         log.info("Role '" + optRole.get().getName() + "' has been deleted");
     }
