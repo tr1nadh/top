@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class AccountController extends ControllerHelper {
+public class AccountController extends AController {
 
     @Autowired
     private AccountService service;

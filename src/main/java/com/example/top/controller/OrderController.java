@@ -25,7 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Arrays;
 
 @Controller
-public class OrderController extends ControllerHelper {
+public class OrderController extends AController {
 
     @Autowired
     private OrderService orderService;
