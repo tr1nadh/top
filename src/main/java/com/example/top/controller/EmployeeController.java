@@ -1,7 +1,7 @@
 package com.example.top.controller;
 
-import com.example.top.dto.employee.AccountDto;
 import com.example.top.dto.employee.EmployeeDto;
+import com.example.top.dto.employee.UpdateAccountDto;
 import com.example.top.entity.employee.Account;
 import com.example.top.entity.employee.Employee;
 import com.example.top.service.EmployeeService;
@@ -103,7 +103,7 @@ public class EmployeeController extends AController {
     }
 
     @PostMapping("/save-emp-account")
-    public ModelAndView saveAccount(@Valid @ModelAttribute("account") AccountDto account, BindingResult bindingResult) {
+    public ModelAndView saveAccount(@Valid @ModelAttribute("account") UpdateAccountDto account, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             var mv = new ModelAndView();
             mv.addObject("account", account);

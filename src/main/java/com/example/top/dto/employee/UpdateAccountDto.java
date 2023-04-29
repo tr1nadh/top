@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountDto {
+public class UpdateAccountDto {
 
     private Long employeeId;
 
@@ -19,7 +19,6 @@ public class AccountDto {
     @NotEmpty(message = "Username cannot be empty")
     private String username;
 
-    @NotEmpty(message = "Password cannot be empty")
     private String password;
 
     private EmployeeDto employee;
