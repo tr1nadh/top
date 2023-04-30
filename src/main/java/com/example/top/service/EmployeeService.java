@@ -2,10 +2,8 @@ package com.example.top.service;
 
 import com.example.top.entity.employee.Account;
 import com.example.top.entity.employee.Employee;
-import com.example.top.exception.DuplicateException;
 import com.example.top.repository.AccountRepository;
 import com.example.top.repository.EmployeeRepository;
-import com.example.top.util.GeneralUtil;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -51,36 +49,17 @@ public class EmployeeService {
             throw new IllegalStateException("Cannot save account to an employee: No employee exists with the id '" + empId + "'");
 
         var dbEmployee = optDbEmployee.get();
-        var username = account.getUsername();
-        if (!dbEmployee.getAccount().getUsername().equals(username) &&
-                isUsernameAlreadyExists(username))
-            throw new DuplicateException("Username '" + username + "' already exists");
-
-        if (isThisANewAccount(dbEmployee)) {
-            if (GeneralUtil.isQualifiedString(account.getPassword())) {
-                account.setEmployee(dbEmployee);
-                dbEmployee.setAccount(account);
-                repository.save(checkPasswordChange(dbEmployee));
-                return;
-            } else throw new IllegalStateException("Cannot save account without a password");
-        }
-
-        if (GeneralUtil.isQualifiedString(account.getPassword())) {
+        if (account.isPasswordChanged()) {
+            if (!dbEmployee.isHasAccount()) dbEmployee.setHasAccount(true);
             account.setEmployee(dbEmployee);
             dbEmployee.setAccount(account);
-        } else dbEmployee.getAccount().setUsername(username);
+        } else if (dbEmployee.isHasAccount() && account.isUsernameChanged())
+            dbEmployee.getAccount().setUsername(account.getUsername());
+        else if (!dbEmployee.isHasAccount()) throw new IllegalStateException("Cannot save account without a password");
 
         repository.save(checkPasswordChange(dbEmployee));
 
         log.info("Account has been successfully saved to an employee of id " + empId);
-    }
-
-    private boolean isThisANewAccount(Employee dbEmployee) {
-        return dbEmployee.getAccount().getPassword() == null;
-    }
-
-    private boolean isUsernameAlreadyExists(String username) {
-        return accountRepository.findByUsername(username).size() > 0;
     }
 
     public List<Employee> findAllEmployees() {

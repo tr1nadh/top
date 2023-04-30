@@ -34,9 +34,19 @@ public class Account {
     @Transient
     private boolean passwordChanged;
 
+    @Transient
+    private boolean usernameChanged;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    public void setUsername(String username) {
+        if (!GeneralUtil.isQualifiedString(username)) return;
+
+        this.username = username;
+        usernameChanged = true;
+    }
 
     public void setPassword(String password) {
         if (!GeneralUtil.isQualifiedString(password))
