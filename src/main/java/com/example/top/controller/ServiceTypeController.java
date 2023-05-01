@@ -55,6 +55,6 @@ public class ServiceTypeController extends AController {
     public ModelAndView deleteServiceType(Long id) {
         service.deleteServiceType(id);
 
-        return getAlertView("Service type deleted", "/service-types");
+        return new ModelAndView("redirect:/service-types");
     }
 }

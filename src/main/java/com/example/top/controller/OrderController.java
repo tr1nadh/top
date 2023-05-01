@@ -123,6 +123,6 @@ public class OrderController extends AController {
     public ModelAndView deleteOrder(Long id) {
         orderService.crud.deleteOrder(id);
 
-        return getAlertView("Order deleted", "/orders");
+        return new ModelAndView("redirect:/orders");
     }
 }

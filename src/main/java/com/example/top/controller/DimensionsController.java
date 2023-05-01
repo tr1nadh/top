@@ -55,6 +55,6 @@ public class DimensionsController extends AController {
     public ModelAndView deleteDimensions(Long id) {
         service.deleteDimensions(id);
 
-        return getAlertView("Dimensions deleted", "/dimensions");
+        return new ModelAndView("redirect:/dimensions");
     }
 }

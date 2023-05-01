@@ -130,6 +130,6 @@ public class EmployeeController extends AController {
     public ModelAndView deleteEmployee(Long id) {
         empService.deleteEmployee(id);
 
-        return getAlertView("Employee deleted", "/employees");
+        return new ModelAndView("redirect:/employees");
     }
 }
