@@ -105,6 +105,13 @@ public class OrderController extends AController {
         return getAlertView("Amount removed", "/orders");
     }
 
+    @GetMapping("/move-order-pending")
+    public ModelAndView moveOrderToPending(Long id) {
+        orderService.moveOrderToPending(id);
+
+        return getAlertView("Order moved to pending", "/orders");
+    }
+
     @GetMapping("/cancel-order")
     public ModelAndView cancelOrder(Long id) {
         orderService.cancelOrder(id);

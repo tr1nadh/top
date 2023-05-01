@@ -145,6 +145,10 @@
             <a th:if="${order.orderStatus == 'CANCELLED'}"
                th:attr="onclick=|confirmDelete('${order.orderId}')|"
                href="#">Delete</a>
+            <a th:if="${order.orderStatus != 'PENDING'}"
+               th:href="@{/move-order-pending?id={id}(id=${order.orderId})}">
+                Move to pending
+            </a>
         </td>
     </tr>
     </tbody>
