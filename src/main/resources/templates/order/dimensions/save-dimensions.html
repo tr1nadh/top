@@ -17,6 +17,6 @@
     <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
     <input type="submit" value="save">
 </form>
-<div th:replace="~{general.html :: back}"></div>
+<a style="cursor: pointer; color: blue" href="/dimensions">Back</a>
 </body>
 </html>
