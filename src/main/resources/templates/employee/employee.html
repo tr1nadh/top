@@ -43,7 +43,8 @@
                     <a th:href="@{|/update-employee?id=${emp.employeeId}|}">Update info</a>
                     <a th:href="@{|/update-emp-account?id=${emp.employeeId}|}">Update account</a>
                 </div>
-                <a th:href="@{|/delete-employee?id=${emp.employeeId}|}">Delete</a>
+                <a th:attr="onclick=|confirmDelete('${emp.employeeId}')|"
+                   href="#">Delete</a>
             </td>
         </tr>
     </tbody>
@@ -57,6 +58,15 @@
             document.getElementById(id).style.display = 'block';
         }
     }
+
+    function confirmDelete(id) {
+        let text = "Are you sure you want to delete?";
+        let link = "/delete-employee?id=" + id;
+        if (confirm(text) == true) {
+          window.location.replace(link);
+        }
+    }
+
 </script>
 </body>
 </html>
