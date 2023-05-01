@@ -57,6 +57,6 @@
   <p th:if="${#fields.hasErrors('payment.amountPaid')}" th:errorclass="error" th:errors="*{payment.amountPaid}"></p>
   <input type="submit" value="save">
 </form>
-<div th:replace="~{general.html :: back}"></div>
+<a style="cursor: pointer; color: blue" href="/orders">Back</a>
 </body>
 </html>
