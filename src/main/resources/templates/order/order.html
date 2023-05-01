@@ -140,7 +140,7 @@
         <td th:text="${order.payment.paymentStatus}"></td>
         <td th:text="${order.orderStatus}"></td>
         <td>
-            <a th:href="@{/edit-order?id={id}(id=${order.orderId})}">Edit</a>
+            <a th:href="@{/update-order?id={id}(id=${order.orderId})}">Update</a>
             <a th:if="${order.orderStatus == 'PENDING'}" th:href="@{/cancel-order?id={id}(id=${order.orderId})}">Cancel</a>
             <a th:if="${order.orderStatus == 'CANCELLED'}" th:href="@{/delete-order?id={id}(id=${order.orderId})}">Delete</a>
         </td>

@@ -36,7 +36,7 @@ public class OrderController extends AController {
     @Autowired
     private DimensionsService dimensionsService;
 
-    @GetMapping({"/add-order", "/edit-order"})
+    @GetMapping({"/add-order", "/update-order"})
     public ModelAndView renderOrder(Long id) {
         return getRenderView((id == null) ? new Order() : orderService.crud.getOrder(id));
     }
