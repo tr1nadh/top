@@ -142,7 +142,9 @@
         <td>
             <a th:href="@{/update-order?id={id}(id=${order.orderId})}">Update</a>
             <a th:if="${order.orderStatus == 'PENDING'}" th:href="@{/cancel-order?id={id}(id=${order.orderId})}">Cancel</a>
-            <a th:if="${order.orderStatus == 'CANCELLED'}" th:href="@{/delete-order?id={id}(id=${order.orderId})}">Delete</a>
+            <a th:if="${order.orderStatus == 'CANCELLED'}"
+               th:attr="onclick=|confirmDelete('${order.orderId}')|"
+               href="#">Delete</a>
         </td>
     </tr>
     </tbody>
@@ -154,6 +156,14 @@
             document.getElementById(id).style.display = 'none';
         } else {
             document.getElementById(id).style.display = 'block';
+        }
+    }
+
+    function confirmDelete(id) {
+        let text = "Are you sure you want to delete?";
+        let link = "/delete-role?id=" + id;
+        if (confirm(text) == true) {
+          window.location.replace(link);
         }
     }
 </script>

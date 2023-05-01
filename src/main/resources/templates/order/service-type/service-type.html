@@ -19,11 +19,21 @@
     <td th:text="${serviceType.name}"></td>
     <td>
       <a th:href="@{/edit-service-type?id={id}(id=${serviceType.serviceTypeId})}">Edit</a>
-      <a th:href="@{/delete-service-type?id={id}(id=${serviceType.serviceTypeId})}">Delete</a>
+      <a th:attr="onclick=|confirmDelete('${serviceType.serviceTypeId}')|"
+         href="#">Delete</a>
     </td>
   </tr>
   </tbody>
 </table>
 <a style="cursor: pointer; color: blue" href="/orders">Back</a>
+<script>
+  function confirmDelete(id) {
+    let text = "Are you sure you want to delete?";
+    let link = "/delete-role?id=" + id;
+    if (confirm(text) == true) {
+      window.location.replace(link);
+    }
+  }
+</script>
 </body>
 </html>
