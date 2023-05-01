@@ -20,7 +20,7 @@ public class ServiceTypeController extends AController {
     @Autowired
     private ServiceTypeService service;
 
-    @GetMapping({"/add-service-type", "/edit-service-type"})
+    @GetMapping({"/add-service-type", "/update-service-type"})
     public ModelAndView renderServiceType(Long id) {
         return getRenderView((id == null) ? new ServiceType() : service.getServiceType(id));
     }

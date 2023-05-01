@@ -18,7 +18,7 @@
     <tr th:each="dimension : ${dimensions}">
         <td th:text="${dimension.name}"></td>
         <td>
-            <a th:href="@{/edit-dimensions?id={id}(id=${dimension.dimensionsId})}">Edit</a>
+            <a th:href="@{/update-dimensions?id={id}(id=${dimension.dimensionsId})}">Update</a>
             <a th:attr="onclick=|confirmDelete('${dimension.dimensionsId}')|"
                href="#">Delete</a>
         </td>

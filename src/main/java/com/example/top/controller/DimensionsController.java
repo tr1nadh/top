@@ -20,7 +20,7 @@ public class DimensionsController extends AController {
     @Autowired
     private DimensionsService service;
 
-    @GetMapping({"/add-dimensions", "/edit-dimensions"})
+    @GetMapping({"/add-dimensions", "/update-dimensions"})
     public ModelAndView renderDimensions(Long id) {
         return getRenderView((id == null) ? new Dimensions() : service.getDimensions(id));
     }

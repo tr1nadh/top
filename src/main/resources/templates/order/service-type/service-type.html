@@ -18,7 +18,7 @@
   <tr th:each="serviceType : ${serviceTypes}">
     <td th:text="${serviceType.name}"></td>
     <td>
-      <a th:href="@{/edit-service-type?id={id}(id=${serviceType.serviceTypeId})}">Edit</a>
+      <a th:href="@{/update-service-type?id={id}(id=${serviceType.serviceTypeId})}">Update</a>
       <a th:attr="onclick=|confirmDelete('${serviceType.serviceTypeId}')|"
          href="#">Delete</a>
     </td>
