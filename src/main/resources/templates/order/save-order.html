@@ -23,7 +23,7 @@
   <select th:field="*{handleBy}">
     <option th:each="employee : ${employees}"
             th:value="${employee.employeeId}"
-            th:text="${employee.firstname} + ${employee.lastname}"
+            th:text="${employee.fullName}"
     ></option>
   </select>
   </label> <br>
