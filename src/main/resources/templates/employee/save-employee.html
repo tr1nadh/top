@@ -18,10 +18,8 @@
 <div th:insert="~{general.html :: navbar}"></div>
 <form action="#" th:action="@{/save-employee}" th:object="${employee}" method="post">
   <input type="hidden" th:field="*{employeeId}">
-  <label>Firstname: <input type="text" th:field="*{firstname}"></label> <br>
-  <p th:if="${#fields.hasErrors('firstname')}" th:errorclass="error" th:errors="*{firstname}"></p>
-  <label>Lastname: <input type="text" th:field="*{lastname}"></label> <br>
-  <p th:if="${#fields.hasErrors('lastname')}" th:errorclass="error" th:errors="*{lastname}"></p>
+  <label>Firstname: <input type="text" th:field="*{fullName}"></label> <br>
+  <p th:if="${#fields.hasErrors('fullName')}" th:errorclass="error" th:errors="*{fullName}"></p>
   <label>PhoneNo: <input type="number" th:field="*{phoneNo}"></label> <br>
   <p th:if="${#fields.hasErrors('phoneNo')}" th:errorclass="error" th:errors="*{phoneNo}"></p>
   <label>Email address: <input type="email" th:field="*{emailAddress}"></label> <br>

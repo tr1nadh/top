@@ -53,7 +53,7 @@
         <td>
             <p class="toggleHead"
                th:attr="onclick=|toggleData('employee-data${order.orderId}')|"
-               th:text="${order.handleBy.firstname} + ${order.handleBy.lastname}"></p>
+               th:text="${order.handleBy.fullName}"></p>
             <div th:id="employee-data + ${order.orderId}" class="toggle">
                 Gender: <p th:text="${order.handleBy.gender}"></p>
                 Role: <p th:text="${order.handleBy.role.name}"></p>

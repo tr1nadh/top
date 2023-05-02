@@ -25,12 +25,7 @@ public class Employee {
     private Long employeeId;
 
     @Column(unique = true)
-    private String firstname;
-
-    private String lastname;
-
-    @Transient
-    private String fullName = firstname + " " + lastname;
+    private String fullName;
 
     @Column(unique = true)
     private String phoneNo;

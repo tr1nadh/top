@@ -19,8 +19,7 @@
 <table>
     <thead>
         <tr>
-            <th>Firstname</th>
-            <th>Lastname</th>
+            <th>FullName</th>
             <th>Role</th>
             <th>PhoneNo</th>
             <th>EmailAddress</th>
@@ -30,8 +29,7 @@
     </thead>
     <tbody>
         <tr th:each="emp : ${employees}">
-            <td th:text="${emp.firstname}"></td>
-            <td th:text="${emp.lastname}"></td>
+            <td th:text="${emp.fullName}"></td>
             <td th:text="${emp.role.name}"></td>
             <td th:text="${emp.phoneNo}"></td>
             <td th:text="${emp.emailAddress}"></td>
