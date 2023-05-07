@@ -6,6 +6,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Embeddable
 @Getter
 @Setter
@@ -20,8 +22,7 @@ public class Service {
     )
     @JoinColumn(name = "service_type_id")
     private ServiceType serviceType;
-
-    private String bookingDate;
+    private LocalDate bookingDate;
     @OneToOne(
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )

@@ -36,8 +36,6 @@
     </select>
     <a href="/service-types">Service types</a>
   </label> <br>
-  <label>Booking date: <input type="text" th:field="*{service.bookingDate}"></label> <br>
-  <p th:if="${#fields.hasErrors('service.bookingDate')}" th:errorclass="error" th:errors="*{service.bookingDate}"></p>
   <label>Dimensions:
     <select th:field="*{service.dimensions}">
       <option th:each="dimension : ${dimensions}"

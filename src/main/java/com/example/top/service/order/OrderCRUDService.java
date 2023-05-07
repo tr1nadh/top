@@ -6,6 +6,8 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 @Log
 public class OrderCRUDService {
@@ -16,9 +18,21 @@ public class OrderCRUDService {
     public void saveOrder(Order order) {
         if (order == null) throw new IllegalArgumentException("'order' cannot be null");
 
+        checkOrder(order);
         repository.save(order);
 
         log.info("Order with the id '" + order.getOrderId() + "' has been saved" );
+    }
+
+    private void checkOrder(Order order) {
+        if (order.getOrderId() == null) {
+            order.getService().setBookingDate(LocalDate.now());
+            return;
+        }
+
+        var dbOrder = repository.findById(order.getOrderId());
+        var prevBookingDate = dbOrder.get().getService().getBookingDate();
+        order.getService().setBookingDate(prevBookingDate);
     }
 
     public Order getOrder(Long id) {
