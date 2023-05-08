@@ -26,4 +26,8 @@ public class ServiceDto {
     @NotNull(message = "Printing charges cannot be null")
     @Min(value = 1, message = "Printing charges cannot be zero")
     private int printingCharges;
+
+    @NotNull(message = "Service charges cannot be null")
+    @Min(value = 1, message = "Service charges cannot be zero")
+    private int serviceCharges;
 }

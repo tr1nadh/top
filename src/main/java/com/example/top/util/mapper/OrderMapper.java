@@ -15,7 +15,7 @@ public class OrderMapper {
         order.setCustomer(Mapper.map(orderDto.getCustomer(), new Customer()));
         order.setHandleBy(Mapper.map(orderDto.getHandleBy(), new Employee()));
         order.setService(Mapper.map(orderDto.getService(), new Service()));
-        order.setPayment(Mapper.map(orderDto.getPayment(), new Payment()));
+        order.setPayment(new Payment());
 
         return order;
     }

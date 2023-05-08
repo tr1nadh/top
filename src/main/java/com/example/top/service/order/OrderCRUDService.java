@@ -30,16 +30,27 @@ public class OrderCRUDService {
     }
 
     private void setUpdateValues(Order order) {
-        var dbOrder = repository.findById(order.getOrderId());
-        var prevBookingDate = dbOrder.get().getService().getBookingDate();
+        var dbOrder = repository.findById(order.getOrderId()).get();
+        var prevBookingDate = dbOrder.getService().getBookingDate();
         order.getService().setBookingDate(prevBookingDate);
-        var amountPaid = dbOrder.get().getPayment().getAmountPaid();
-        var prevAmountPaid = order.getPayment().getAmountPaid();
+        var prevAmountPaid = dbOrder.getPayment().getAmountPaid();
+        var amountPaid = order.getPayment().getAmountPaid();
         order.getPayment().setAmountPaid(Math.max(amountPaid, prevAmountPaid));
+        setPayableAmount(order);
+    }
+
+    private void setPayableAmount(Order order) {
+        if (order.getService().isAnyPriceChanged()) {
+            var totalAmount = order.getService().getPrintingCharges() + order.getService().getServiceCharges();
+            order.getPayment().setTotalAmount(totalAmount);
+        }
     }
 
     private void setDefaultValues(Order order) {
-        order.getService().setBookingDate(LocalDate.now());
+        var service = order.getService();
+        service.setBookingDate(LocalDate.now());
+        var totalAmount = service.getPrintingCharges() + service.getServiceCharges();
+        order.getPayment().setTotalAmount(totalAmount);
     }
 
     public Order getOrder(Long id) {

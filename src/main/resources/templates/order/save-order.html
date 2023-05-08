@@ -49,8 +49,8 @@
   <p th:if="${#fields.hasErrors('service.quantity')}" th:errorclass="error" th:errors="*{service.quantity}"></p>
   <label>Printing charges: <input type="number" th:field="*{service.printingCharges}"></label> <br>
   <p th:if="${#fields.hasErrors('service.printingCharges')}" th:errorclass="error" th:errors="*{service.printingCharges}"></p>
-  <label>Total amount: <input type="number" th:field="*{payment.totalAmount}"></label> <br>
-  <p th:if="${#fields.hasErrors('payment.totalAmount')}" th:errorclass="error" th:errors="*{payment.totalAmount}"></p>
+  <label>Service charges: <input type="number" th:field="*{service.serviceCharges}"></label> <br>
+  <p th:if="${#fields.hasErrors('service.serviceCharges')}" th:errorclass="error" th:errors="*{service.serviceCharges}"></p>
   <input type="submit" value="save">
 </form>
 <a style="cursor: pointer; color: blue" href="/orders">Back</a>
