@@ -18,21 +18,25 @@ public class OrderCRUDService {
     public void saveOrder(Order order) {
         if (order == null) throw new IllegalArgumentException("'order' cannot be null");
 
-        checkOrder(order);
+        prepareOrderForSaving(order);
         repository.save(order);
 
         log.info("Order with the id '" + order.getOrderId() + "' has been saved" );
     }
 
-    private void checkOrder(Order order) {
-        if (order.getOrderId() == null) {
-            order.getService().setBookingDate(LocalDate.now());
-            return;
-        }
+    private void prepareOrderForSaving(Order order) {
+        if (order.getOrderId() == null) setDefaultValues(order);
+        else setUpdateValues(order);
+    }
 
+    private void setUpdateValues(Order order) {
         var dbOrder = repository.findById(order.getOrderId());
         var prevBookingDate = dbOrder.get().getService().getBookingDate();
         order.getService().setBookingDate(prevBookingDate);
+    }
+
+    private void setDefaultValues(Order order) {
+        order.getService().setBookingDate(LocalDate.now());
     }
 
     public Order getOrder(Long id) {

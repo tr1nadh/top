@@ -33,4 +33,10 @@ public class Service {
 
     private int printingCharges;
     private String serviceStatus = "PENDING";
+
+    public void setBookingDate(LocalDate bookingDate) {
+        if (bookingDate == null) return;
+
+        this.bookingDate = bookingDate;
+    }
 }
