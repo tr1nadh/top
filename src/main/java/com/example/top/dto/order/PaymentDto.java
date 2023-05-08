@@ -14,8 +14,4 @@ public class PaymentDto {
     @NotNull(message = "Total amount cannot be null")
     @Min(value = 1, message = "Total amount cannot be zero")
     private int totalAmount;
-
-    @NotNull(message = "Amount paid cannot be null")
-    @Min(value = 1, message = "Amount paid cannot be zero")
-    private int amountPaid;
 }

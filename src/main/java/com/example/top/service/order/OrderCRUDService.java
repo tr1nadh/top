@@ -33,6 +33,9 @@ public class OrderCRUDService {
         var dbOrder = repository.findById(order.getOrderId());
         var prevBookingDate = dbOrder.get().getService().getBookingDate();
         order.getService().setBookingDate(prevBookingDate);
+        var amountPaid = dbOrder.get().getPayment().getAmountPaid();
+        var prevAmountPaid = order.getPayment().getAmountPaid();
+        order.getPayment().setAmountPaid(Math.max(amountPaid, prevAmountPaid));
     }
 
     private void setDefaultValues(Order order) {

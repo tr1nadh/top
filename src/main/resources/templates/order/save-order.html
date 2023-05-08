@@ -51,8 +51,6 @@
   <p th:if="${#fields.hasErrors('service.printingCharges')}" th:errorclass="error" th:errors="*{service.printingCharges}"></p>
   <label>Total amount: <input type="number" th:field="*{payment.totalAmount}"></label> <br>
   <p th:if="${#fields.hasErrors('payment.totalAmount')}" th:errorclass="error" th:errors="*{payment.totalAmount}"></p>
-  <label>Amount paid: <input type="number" th:field="*{payment.amountPaid}"></label> <br>
-  <p th:if="${#fields.hasErrors('payment.amountPaid')}" th:errorclass="error" th:errors="*{payment.amountPaid}"></p>
   <input type="submit" value="save">
 </form>
 <a style="cursor: pointer; color: blue" href="/orders">Back</a>
