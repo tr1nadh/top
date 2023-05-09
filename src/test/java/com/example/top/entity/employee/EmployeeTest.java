@@ -27,8 +27,6 @@ class EmployeeTest {
         account.setPassword("fresh3@123");
 
         var employee = Employee.builder()
-                .firstname("Fresh3")
-                .lastname("Fresh3")
                 .phoneNo("9822443622")
                 .emailAddress("fresh3@gmail.com")
                 .role(role)
