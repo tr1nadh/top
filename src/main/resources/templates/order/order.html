@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Orders</title>
+    <link th:replace="~{general.html :: b-css}">
+    <link th:replace="~{general.html :: fa-css}">
+    <script th:replace="~{general.html :: b-js}"></script>
     <style>
         .toggle {display: none;}
         .toggleHead {
@@ -12,148 +15,211 @@
     </style>
 </head>
 <body>
-<div th:insert="~{general.html :: navbar}"></div>
-<a href="/add-order">Add order</a>
-<a href="/service-types">Service types</a>
-<a href="/dimensions">Dimensions</a>
-<form action="/orders">
-    <input type="text"  name="search" autocomplete="on">
-    <input type="submit" value="search"> <br>
-    <input type="submit" name="orderStatus" value="Pending">
-    <input type="submit" name="orderStatus" value="Completed">
-    <input type="submit" name="orderStatus" value="Cancelled">
-</form>
-<table>
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Customer</th>
-        <th>Handle by</th>
-        <th>Service</th>
-        <th>Service status</th>
-        <th>Total amount</th>
-        <th>Amount paid</th>
-        <th>Payment status</th>
-        <th>Order status</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="order : ${orders}">
-        <td th:text="${order.orderId}"></td>
-        <td>
-            <p class="toggleHead"
-               th:attr="onclick=|toggleData('customer-data${order.orderId}')|"
-               th:text="${order.customer.name}"></p>
-            <div th:id="customer-data + ${order.orderId}" class="toggle">
-                Phone no: <p th:text="${order.customer.phoneNo}"></p>
-                Email: <p th:text="${order.customer.emailAddress}"></p>
-            </div>
-        </td>
-        <td>
-            <p class="toggleHead"
-               th:attr="onclick=|toggleData('employee-data${order.orderId}')|"
-               th:text="${order.handleBy.fullName}"></p>
-            <div th:id="employee-data + ${order.orderId}" class="toggle">
-                Gender: <p th:text="${order.handleBy.gender}"></p>
-                Role: <p th:text="${order.handleBy.role.name}"></p>
-                Phone no: <p th:text="${order.handleBy.phoneNo}"></p>
-                Email: <p th:text="${order.handleBy.emailAddress}"></p>
-            </div>
-        </td>
-        <td>
-            <p class="toggleHead"
-               th:attr="onclick=|toggleData('service-data${order.orderId}')|"
-               th:text="${order.service.serviceType.name}"></p>
-            <div th:id="service-data + ${order.orderId}" class="toggle">
-                Booking date: <p th:text="${order.service.bookingDate}"></p>
-                Dimensions: <p th:text="${order.service.dimensions.name}"></p>
-                Quantity: <p th:text="${order.service.quantity}"></p>
-                Printing charges: <p th:text="${order.service.printingCharges}"></p>
-                Service charges: <p th:text="${order.service.serviceCharges}"></p>
-            </div>
-        </td>
-        <td>
-            <p class="toggleHead"
-               th:attr="onclick=|toggleData('ssSelect${order.orderId}')|"
-               th:text="${order.service.serviceStatus}"></p>
+<div class="container-sm">
+    <div th:insert="~{general.html :: navbar}"></div>
+    <a href="/add-order">Add order</a>
+    <a href="/service-types">Service types</a>
+    <a href="/dimensions">Dimensions</a>
+    <form action="/orders">
+        <input type="text"  name="search" autocomplete="on">
+        <input type="submit" value="search"> <br>
+        <input type="submit" name="orderStatus" value="Pending">
+        <input type="submit" name="orderStatus" value="Completed">
+        <input type="submit" name="orderStatus" value="Cancelled">
+    </form>
+    <table class="table table-hover border">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Customer</th>
+            <th>Handle by</th>
+            <th>Service</th>
+            <th>Service status</th>
+            <th>Total amount</th>
+            <th>Amount paid</th>
+            <th>Payment status</th>
+            <th>Order status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.orderId}"></td>
+            <td>
+<!--                Button trigger modal -->
+                <a
+                        class="text-decoration-none"
+                        role="button"
+                        data-bs-toggle="modal"
+                        th:attr="data-bs-target=|#customer-${order.orderId}-details|"
+                        th:text="${order.customer.name}" href="#">
+                </a>
 
-<!--  Service status update form  -->
+<!--                Modal  -->
+                <div class="modal fade"
+                th:id="customer-+${order.orderId}+-details" tabindex="-1"
+                aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Customer details</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p class="d-inline">Name: <span th:text="${order.customer.name}"></span></p><br>
+                                <p class="d-inline">Phone no: <span th:text="${order.customer.phoneNo}"></span></p><br>
+                                <p class="d-inline">Email: <span th:text="${order.customer.emailAddress}"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!--                Modal ends -->
+            </td>
+            <td>
+<!--                Modal trigger button -->
+                <a
+                        class="text-decoration-none"
+                        role="button"
+                        data-bs-toggle="modal"
+                        th:attr="data-bs-target=|#employee-${order.orderId}-details|"
+                        th:text="${order.handleBy.fullName}"
+                        href="#"></a>
 
-            <form th:action="@{/update-order-service-status}" th:object="${order}" method="post">
-                <input type="hidden" name="orderId" th:value="${order.orderId}">
-                <label>
-                    <select th:id="ssSelect + ${order.orderId}" class="toggle" name="serviceStatus"
-                            onchange="this.form.submit()">
-                        <option selected disabled value="Select">Select</option>
-                        <option th:each="status : ${serviceStatus}"
-                                th:value="${status}"
-                                th:text="${status}"
-                        ></option>
-                    </select>
-                </label>
-            </form>
+                <!--                Modal  -->
+                <div class="modal fade"
+                     th:id="employee-+${order.orderId}+-details" tabindex="-1"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Handle by employee details</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p class="d-inline">Full Name: <span th:text="${order.handleBy.fullName}"></span></p><br>
+                                <p class="d-inline">Gender: <span th:text="${order.handleBy.gender}"></span></p><br>
+                                <p class="d-inline">Role: <span th:text="${order.handleBy.role.name}"></span></p><br>
+                                <p class="d-inline">Phone no: <span th:text="${order.handleBy.phoneNo}"></span></p><br>
+                                <p class="d-inline">Email: <span th:text="${order.handleBy.emailAddress}"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                Modal ends -->
+            </td>
+            <td>
+                <!--                Modal trigger button -->
+                <a
+                        class="text-decoration-none"
+                        role="button"
+                        data-bs-toggle="modal"
+                        th:attr="data-bs-target=|#service-${order.orderId}-details|"
+                        th:text="${order.service.serviceType.name}"
+                        href="#">
+                </a>
 
-<!-- End -->
+                <!--                Modal  -->
+                <div class="modal fade"
+                     th:id="service-+${order.orderId}+-details" tabindex="-1"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Service details</h1>
+                            </div>
+                            <div class="modal-body">
+                                <p class="d-inline">Service: <span th:text="${order.service.serviceType.name}"></span></p><br>
+                                <p class="d-inline">Booking date: <span th:text="${order.service.bookingDate}"></span></p><br>
+                                <p class="d-inline">Dimensions: <span th:text="${order.service.dimensions.name}"></span></p><br>
+                                <p class="d-inline">Quantity: <span th:text="${order.service.quantity}"></span></p><br>
+                                <p class="d-inline">Printing charges: <span th:text="${order.service.printingCharges}"></span></p><br>
+                                <p class="d-inline">Service charges: <span th:text="${order.service.serviceCharges}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                Modal ends -->
+            </td>
+            <td>
+                <p class="toggleHead"
+                   th:attr="onclick=|toggleData('ssSelect${order.orderId}')|"
+                   th:text="${order.service.serviceStatus}"></p>
 
-        </td>
-        <td th:text="${order.payment.totalAmount}"></td>
-        <td>
-            <p th:text="${order.payment.amountPaid}"></p>
+    <!--  Service status update form  -->
 
-            <a class="toggleHead"
-               th:if="${order.orderStatus == 'PENDING'}"
-               th:attr="onclick=|toggleData('apAdd${order.orderId}')|"
-               href="#">+</a>
+                <form th:action="@{/update-order-service-status}" th:object="${order}" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.orderId}">
+                    <label>
+                        <select th:id="ssSelect + ${order.orderId}" class="toggle" name="serviceStatus"
+                                onchange="this.form.submit()">
+                            <option selected disabled value="Select">Select</option>
+                            <option th:each="status : ${serviceStatus}"
+                                    th:value="${status}"
+                                    th:text="${status}"
+                            ></option>
+                        </select>
+                    </label>
+                </form>
 
-<!--  Add amount update form  -->
+    <!-- End -->
 
-            <form th:id="apAdd + ${order.orderId}" class="toggle"
-                  th:action="@{/add-order-amount}" th:object="${order}" method="post">
-                <input type="hidden" name="orderId" th:value="${order.orderId}">
-                <label>
-                    <input type="number" name="addAmount" value="0">
-                </label>
-                <input type="submit" value="Add">
-            </form>
+            </td>
+            <td th:text="${order.payment.totalAmount}"></td>
+            <td>
+                <p th:text="${order.payment.amountPaid}"></p>
 
-<!--  End  -->
+                <a class="toggleHead"
+                   th:if="${order.orderStatus == 'PENDING'}"
+                   th:attr="onclick=|toggleData('apAdd${order.orderId}')|"
+                   href="#">+</a>
 
-            <a class="toggleHead"
-               th:if="${order.orderStatus == 'PENDING'}"
-               th:attr="onclick=|toggleData('apRm${order.orderId}')|"
-               href="#">-</a>
+    <!--  Add amount update form  -->
 
-<!--  Remove amount update form  -->
+                <form th:id="apAdd + ${order.orderId}" class="toggle"
+                      th:action="@{/add-order-amount}" th:object="${order}" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.orderId}">
+                    <label>
+                        <input type="number" name="addAmount" value="0">
+                    </label>
+                    <input type="submit" value="Add">
+                </form>
 
-            <form th:id="apRm + ${order.orderId}" class="toggle"
-                  th:action="@{/remove-order-amount}" th:object="${order}" method="post">
-                <input type="hidden" name="orderId" th:value="${order.orderId}">
-                <label>
-                    <input type="number" name="removeAmount" value="0">
-                </label>
-                <input type="submit" value="Remove">
-            </form>
+    <!--  End  -->
 
-<!--  End  -->
+                <a class="toggleHead"
+                   th:if="${order.orderStatus == 'PENDING'}"
+                   th:attr="onclick=|toggleData('apRm${order.orderId}')|"
+                   href="#">-</a>
 
-        </td>
-        <td th:text="${order.payment.paymentStatus}"></td>
-        <td th:text="${order.orderStatus}"></td>
-        <td>
-            <a th:href="@{/update-order?id={id}(id=${order.orderId})}">Update</a>
-            <a th:if="${order.orderStatus == 'PENDING'}" th:href="@{/cancel-order?id={id}(id=${order.orderId})}">Cancel</a>
-            <a th:if="${order.orderStatus == 'CANCELLED'}"
-               th:attr="onclick=|confirmDelete('${order.orderId}')|"
-               href="#">Delete</a>
-            <a th:if="${order.orderStatus != 'PENDING'}"
-               th:href="@{/move-order-pending?id={id}(id=${order.orderId})}">
-                Move to pending
-            </a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <!--  Remove amount update form  -->
+
+                <form th:id="apRm + ${order.orderId}" class="toggle"
+                      th:action="@{/remove-order-amount}" th:object="${order}" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.orderId}">
+                    <label>
+                        <input type="number" name="removeAmount" value="0">
+                    </label>
+                    <input type="submit" value="Remove">
+                </form>
+
+    <!--  End  -->
+
+            </td>
+            <td th:text="${order.payment.paymentStatus}"></td>
+            <td th:text="${order.orderStatus}"></td>
+            <td>
+                <a th:href="@{/update-order?id={id}(id=${order.orderId})}">Update</a>
+                <a th:if="${order.orderStatus == 'PENDING'}" th:href="@{/cancel-order?id={id}(id=${order.orderId})}">Cancel</a>
+                <a th:if="${order.orderStatus == 'CANCELLED'}"
+                   th:attr="onclick=|confirmDelete('${order.orderId}')|"
+                   href="#">Delete</a>
+                <a th:if="${order.orderStatus != 'PENDING'}"
+                   th:href="@{/move-order-pending?id={id}(id=${order.orderId})}">
+                    Move to pending
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <script>
     function toggleData(id) {
         let displayData = document.getElementById(id).style.display;
