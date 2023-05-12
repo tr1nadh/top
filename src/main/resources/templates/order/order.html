@@ -69,6 +69,10 @@
                                 <p class="d-inline">Phone no: <span th:text="${order.customer.phoneNo}"></span></p><br>
                                 <p class="d-inline">Email: <span th:text="${order.customer.emailAddress}"></span></p>
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-primary">Update</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,6 +103,10 @@
                                 <p class="d-inline">Role: <span th:text="${order.handleBy.role.name}"></span></p><br>
                                 <p class="d-inline">Phone no: <span th:text="${order.handleBy.phoneNo}"></span></p><br>
                                 <p class="d-inline">Email: <span th:text="${order.handleBy.emailAddress}"></span></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-primary">Update</button>
                             </div>
                         </div>
                     </div>
@@ -133,87 +141,139 @@
                                 <p class="d-inline">Printing charges: <span th:text="${order.service.printingCharges}"></span></p><br>
                                 <p class="d-inline">Service charges: <span th:text="${order.service.serviceCharges}"></span>
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-primary">Update</button>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!--                Modal ends -->
             </td>
             <td>
-                <p class="toggleHead"
-                   th:attr="onclick=|toggleData('ssSelect${order.orderId}')|"
-                   th:text="${order.service.serviceStatus}"></p>
+                <!--                Modal trigger button -->
+                <a
+                        class="text-decoration-none"
+                        role="button"
+                        data-bs-toggle="modal"
+                        th:attr="data-bs-target=|#change-order-${order.orderId}-service-status|"
+                        th:text="${order.service.serviceStatus}"
+                        href="#">
+                </a>
 
-    <!--  Service status update form  -->
+                <!--                Modal  -->
+                <div class="modal fade"
+                     th:id="change-order-+${order.orderId}+-service-status" tabindex="-1"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Update order service status</h1>
+                            </div>
+                            <div class="modal-body">
+                                <!--  Service status update form  -->
 
-                <form th:action="@{/update-order-service-status}" th:object="${order}" method="post">
-                    <input type="hidden" name="orderId" th:value="${order.orderId}">
-                    <label>
-                        <select th:id="ssSelect + ${order.orderId}" class="toggle" name="serviceStatus"
-                                onchange="this.form.submit()">
-                            <option selected disabled value="Select">Select</option>
-                            <option th:each="status : ${serviceStatus}"
-                                    th:value="${status}"
-                                    th:text="${status}"
-                            ></option>
-                        </select>
-                    </label>
-                </form>
+                                <form th:action="@{/update-order-service-status}" th:object="${order}" method="post">
+                                    <input type="hidden" name="orderId" th:value="${order.orderId}">
+                                    <label>
+                                        <select class="form-select" name="serviceStatus" onchange="this.form.submit()">
+                                            <option selected disabled value="Select">Select</option>
+                                            <option th:each="status : ${serviceStatus}"
+                                                    th:value="${status}"
+                                                    th:text="${status}"
+                                            ></option>
+                                        </select>
+                                    </label>
+                                </form>
 
-    <!-- End -->
+                                <!-- End -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                Modal ends -->
 
             </td>
             <td th:text="${order.payment.totalAmount}"></td>
             <td>
-                <p th:text="${order.payment.amountPaid}"></p>
+                <p th:if="${order.orderStatus != 'PENDING'}" th:text="${order.payment.amountPaid}"></p>
+                <!--                Modal trigger button -->
+                <a
+                        class="text-decoration-none"
+                        th:if="${order.orderStatus == 'PENDING'}"
+                        role="button"
+                        data-bs-toggle="modal"
+                        th:attr="data-bs-target=|#update-order-${order.orderId}-amount|"
+                        th:text="${order.payment.amountPaid}"
+                        href="#">
+                </a>
 
-                <a class="toggleHead"
-                   th:if="${order.orderStatus == 'PENDING'}"
-                   th:attr="onclick=|toggleData('apAdd${order.orderId}')|"
-                   href="#">+</a>
+                <!--                Modal  -->
+                <div class="modal fade"
+                     th:id="update-order-+${order.orderId}+-amount" tabindex="-1"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Add or Remove amount</h1>
+                            </div>
+                            <div class="modal-body">
+                                <!--  Add amount update form  -->
 
-    <!--  Add amount update form  -->
+                                <form th:action="@{/add-order-amount}" th:object="${order}" method="post">
+                                    <input type="hidden" name="orderId" th:value="${order.orderId}">
+                                    <div class="input-group mb-3">
+                                        <label>
+                                            <input class="form-control" type="number" name="addAmount" value="0"
+                                                   placeholder="Must be more then 0" aria-describedby="add-submit-btn">
+                                        </label>
+                                        <input class="btn btn-outline-primary" type="submit" id="add-submit-btn" value="Add">
+                                    </div>
+                                </form>
 
-                <form th:id="apAdd + ${order.orderId}" class="toggle"
-                      th:action="@{/add-order-amount}" th:object="${order}" method="post">
-                    <input type="hidden" name="orderId" th:value="${order.orderId}">
-                    <label>
-                        <input type="number" name="addAmount" value="0">
-                    </label>
-                    <input type="submit" value="Add">
-                </form>
+                                <!--  End  -->
 
-    <!--  End  -->
+                                <!--  Remove amount update form  -->
 
-                <a class="toggleHead"
-                   th:if="${order.orderStatus == 'PENDING'}"
-                   th:attr="onclick=|toggleData('apRm${order.orderId}')|"
-                   href="#">-</a>
+                                <form th:action="@{/remove-order-amount}" th:object="${order}" method="post">
+                                    <input type="hidden" name="orderId" th:value="${order.orderId}">
+                                    <div class="input-group mb-3">
+                                        <label>
+                                            <input class="form-control" type="number" name="removeAmount" value="0"
+                                                   placeholder="Must be more then 0" aria-describedby="remove-submit-btn">
+                                        </label>
+                                        <input class="btn btn-outline-primary" type="submit" id="remove-submit-btn" value="Remove">
+                                    </div>
+                                </form>
 
-    <!--  Remove amount update form  -->
-
-                <form th:id="apRm + ${order.orderId}" class="toggle"
-                      th:action="@{/remove-order-amount}" th:object="${order}" method="post">
-                    <input type="hidden" name="orderId" th:value="${order.orderId}">
-                    <label>
-                        <input type="number" name="removeAmount" value="0">
-                    </label>
-                    <input type="submit" value="Remove">
-                </form>
-
-    <!--  End  -->
+                                <!--  End  -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                Modal ends -->
 
             </td>
             <td th:text="${order.payment.paymentStatus}"></td>
             <td th:text="${order.orderStatus}"></td>
             <td>
-                <a th:href="@{/update-order?id={id}(id=${order.orderId})}">Update</a>
-                <a th:if="${order.orderStatus == 'PENDING'}" th:href="@{/cancel-order?id={id}(id=${order.orderId})}">Cancel</a>
-                <a th:if="${order.orderStatus == 'CANCELLED'}"
+                <a class="btn btn-success btn-sm" th:href="@{/update-order?id={id}(id=${order.orderId})}" title="Update">
+                    <i class="fa-solid fa-pen-to-square"></i> Update</a>
+                <a class="btn btn-danger btn-sm" th:if="${order.orderStatus == 'PENDING'}" th:href="@{/cancel-order?id={id}(id=${order.orderId})}"
+                title="Cancel">
+                    <i class="fa-solid fa-ban"></i> Cancel</a>
+                <a class="btn btn-danger btn-sm" th:if="${order.orderStatus == 'CANCELLED'}"
                    th:attr="onclick=|confirmDelete('${order.orderId}')|"
-                   href="#">Delete</a>
-                <a th:if="${order.orderStatus != 'PENDING'}"
+                   href="#"><i class="fa-solid fa-trash"></i> Delete</a>
+                <a class="btn btn-warning btn-sm" th:if="${order.orderStatus != 'PENDING'}"
                    th:href="@{/move-order-pending?id={id}(id=${order.orderId})}">
-                    Move to pending
+                    <i class="fa-solid fa-arrow-turn-up fa-rotate-90"></i> Move to pending
                 </a>
             </td>
         </tr>
