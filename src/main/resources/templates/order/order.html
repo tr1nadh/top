@@ -150,56 +150,39 @@
                 <!--                Modal ends -->
             </td>
             <td>
-                <!--                Modal trigger button -->
-                <a
-                        class="text-decoration-none"
-                        role="button"
-                        data-bs-toggle="modal"
-                        th:attr="data-bs-target=|#change-order-${order.orderId}-service-status|"
-                        th:text="${order.service.serviceStatus}"
-                        href="#">
+
+                <p th:if="${order.orderStatus != 'PENDING'}" th:text="${order.service.serviceStatus}"></p>
+                <a th:id="update-order-+${order.orderId}+-ss-head" class="text-decoration-none"
+                   th:if="${order.orderStatus == 'PENDING'}"
+                   th:attr="onClick=|swapElements('update-order-${order.orderId}-ss-head','update-order-${order.orderId}-service-status')|"
+                   th:text="${order.service.serviceStatus}"
+                   href="#" style="display: block;">
                 </a>
 
-                <!--                Modal  -->
-                <div class="modal fade"
-                     th:id="change-order-+${order.orderId}+-service-status" tabindex="-1"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5">Update order service status</h1>
-                            </div>
-                            <div class="modal-body">
-                                <!--  Service status update form  -->
-
-                                <form th:action="@{/update-order-service-status}" th:object="${order}" method="post">
-                                    <input type="hidden" name="orderId" th:value="${order.orderId}">
-                                    <label>
-                                        <select class="form-select" name="serviceStatus" onchange="this.form.submit()">
-                                            <option selected disabled value="Select">Select</option>
-                                            <option th:each="status : ${serviceStatus}"
-                                                    th:value="${status}"
-                                                    th:text="${status}"
-                                            ></option>
-                                        </select>
-                                    </label>
-                                </form>
-
-                                <!-- End -->
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
+                <!--  Service status update form  -->
+                <div th:id="update-order-+${order.orderId}+-service-status" class="toggle" style="display: none;">
+                    <form th:action="@{/update-order-service-status}" th:object="${order}" method="post">
+                        <input type="hidden" name="orderId" th:value="${order.orderId}">
+                        <div class="input-group input-group-sm">
+                            <select class="form-select" name="serviceStatus" onchange="this.form.submit()">
+                                <option selected disabled value="Select">Select</option>
+                                <option th:each="status : ${serviceStatus}"
+                                        th:value="${status}"
+                                        th:text="${status}"
+                                ></option>
+                            </select>
+                            <button class="btn btn-outline-danger" type="button"
+                                    th:attr="onClick=|swapElements('update-order-${order.orderId}-ss-head','update-order-${order.orderId}-service-status')|"
+                            >X</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
-                <!--                Modal ends -->
-
+                <!-- End -->
             </td>
             <td th:text="${order.payment.totalAmount}"></td>
             <td>
                 <p th:if="${order.orderStatus != 'PENDING'}" th:text="${order.payment.amountPaid}"></p>
-                <div class="btn-group">
+                <div class="btn-group" th:if="${order.orderStatus == 'PENDING'}">
                     <!--                Modal trigger button -->
                     <button
                             class="btn btn-sm btn-outline-primary"
@@ -269,7 +252,8 @@
             </td>
             <td th:text="${order.orderStatus}"></td>
             <td>
-                <a class="btn btn-success btn-sm" th:href="@{/update-order?id={id}(id=${order.orderId})}" title="Update">
+                <a class="btn btn-success btn-sm" th:href="@{/update-order?id={id}(id=${order.orderId})}"
+                   th:if="${order.orderStatus == 'PENDING'}" title="Update">
                     <i class="fa-solid fa-pen-to-square"></i> Update</a>
                 <a class="btn btn-danger btn-sm" th:if="${order.orderStatus == 'PENDING'}" th:href="@{/cancel-order?id={id}(id=${order.orderId})}"
                 title="Cancel">
@@ -287,6 +271,12 @@
     </table>
 </div>
 <script>
+
+    function swapElements(id1, id2) {
+        toggleData(id1);
+        toggleData(id2);
+    }
+
     function toggleData(id) {
         let displayData = document.getElementById(id).style.display;
         if (displayData === 'block') {
