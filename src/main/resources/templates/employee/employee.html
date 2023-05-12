@@ -44,7 +44,7 @@
                         <button class="btn btn-success btn-sm dropdown-toggle"
                                 type="button"
                                 data-bs-toggle="dropdown"
-                                aria-expanded="false"><i class="fa-solid fa-pen-to-square"></i></button>
+                                aria-expanded="false"><i class="fa-solid fa-pen-to-square"></i> Update</button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" th:href="@{|/update-employee?id=${emp.employeeId}|}">Update info</a></li>
                             <li><a class="dropdown-item" th:href="@{|/update-emp-account?id=${emp.employeeId}|}">Update account</a></li>
@@ -53,7 +53,7 @@
 
                     <a class="btn btn-danger btn-sm"
                        th:attr="onclick=|confirmDelete('${emp.employeeId}')|"
-                       href="#"><i class="fa-sharp fa-solid fa-trash"></i></a>
+                       href="#"><i class="fa-sharp fa-solid fa-trash"></i> Delete</a>
                 </td>
             </tr>
         </tbody>
