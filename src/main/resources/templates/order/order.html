@@ -17,16 +17,23 @@
 <body>
 <div class="container-sm">
     <div th:insert="~{general.html :: navbar}"></div>
-    <a href="/add-order">Add order</a>
-    <a href="/service-types">Service types</a>
-    <a href="/dimensions">Dimensions</a>
-    <form action="/orders">
-        <input type="text"  name="search" autocomplete="on">
-        <input type="submit" value="search"> <br>
-        <input type="submit" name="orderStatus" value="Pending">
-        <input type="submit" name="orderStatus" value="Completed">
-        <input type="submit" name="orderStatus" value="Cancelled">
-    </form>
+    <a class="btn btn-outline-primary btn-sm" href="/add-order">Add order</a>
+    <a class="btn btn-outline-primary btn-sm" href="/service-types">Service types</a>
+    <a class="btn btn-outline-primary btn-sm" href="/dimensions">Dimensions</a>
+    <div class="my-3">
+        <form action="/orders">
+            <div class="input-group mb-3">
+                <input class="form-control border border-primary" type="text" name="search"
+                       placeholder="Search orders using customer name" autocomplete="on">
+                <button class="btn btn-outline-primary" type="submit" value="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i> Search
+                </button>
+                <input class="mx-auto btn btn-outline-warning" type="submit" name="orderStatus" value="Pending">
+                <input class="btn btn-outline-success" type="submit" name="orderStatus" value="Completed">
+                <input class="btn btn-outline-danger" type="submit" name="orderStatus" value="Cancelled">
+            </div>
+        </form>
+    </div>
     <table class="table table-hover border">
         <thead>
         <tr>
@@ -164,7 +171,7 @@
                     <form th:action="@{/update-order-service-status}" th:object="${order}" method="post">
                         <input type="hidden" name="orderId" th:value="${order.orderId}">
                         <div class="input-group input-group-sm">
-                            <select class="form-select" name="serviceStatus" onchange="this.form.submit()">
+                            <select class="form-select border border-primary" name="serviceStatus" onchange="this.form.submit()">
                                 <option selected disabled value="Select">Select</option>
                                 <option th:each="status : ${serviceStatus}"
                                         th:value="${status}"
