@@ -9,23 +9,41 @@
     <script th:fragment="b-js" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg" th:fragment="navbar">
-    <a sec:authorize="hasAuthority('Admin')" href="/employees">Employee</a>
-    <a href="/orders">Orders</a>
-
-    <a class="toggleHead d-flex" role="search"
-       style="float: right;"
-       th:attr="onclick=|toggleData('account-nav')|"
-       sec:authentication="name"></a><br>
+<nav class="container-xxl navbar navbar-expand-lg bg-body-tertiary mb-3" th:fragment="navbar">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Top</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                <li class="nav-item">
+                    <a class="nav-link" href="/employees">Employee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/orders">Orders</a>
+                </li>
+            </ul>
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                   sec:authentication="name"></a>
+                <ul class="dropdown-menu">
+                    <li><p class="dropdown-item">Change username</p></li>
+                    <li><p class="dropdown-item">Change password</p></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
     <div th:id="account-nav" class="toggle" style="float: right;">
-        <p class="toggleHead" th:attr="onclick=|toggleData('emp-username-update-form')|">Change username</p>
         <form id="emp-username-update-form" class="toggle" th:action="@{/update-emp-username}" method="post">
             <input name="oldUsername" type="hidden" th:value="${#authentication.name}">
             <input name="newUsername" type="text">
             <input type="hidden" name="fromMapping" th:value="${#ctx.springRequestContext.requestUri}">
             <input type="submit">
         </form>
-        <p class="toggleHead" th:attr="onclick=|toggleData('emp-password-update-form')|">Change password</p>
         <form id="emp-password-update-form" class="toggle" th:action="@{/update-emp-password}" method="post">
             <input name="username" type="hidden" th:value="${#authentication.name}">
             <input name="oldPassword" type="password" placeholder="Old password"> <br>
@@ -33,9 +51,7 @@
             <input type="hidden" name="fromMapping" th:value="${#ctx.springRequestContext.requestUri}">
             <input type="submit">
         </form>
-        <a href="/logout">Logout</a>
     </div>
-</nav>
 <a th:fragment="back" onclick="history.back()" style="cursor: pointer; color: blue">Back</a>
 </body>
 </html>
