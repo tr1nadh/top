@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Save employee</title>
+  <link th:replace="~{general.html :: b-css}">
+  <link th:replace="~{general.html :: fa-css}">
+  <script th:replace="~{general.html :: b-js}"></script>
   <style>
     .error {
       color: red;
@@ -16,46 +19,84 @@
 </head>
 <body>
 <div th:insert="~{general.html :: navbar}"></div>
-<form action="#" th:action="@{/save-employee}" th:object="${employee}" method="post">
-  <input type="hidden" th:field="*{employeeId}">
-  <label>Firstname: <input type="text" th:field="*{fullName}"></label> <br>
-  <p th:if="${#fields.hasErrors('fullName')}" th:errorclass="error" th:errors="*{fullName}"></p>
-  <label>PhoneNo: <input type="number" th:field="*{phoneNo}"></label> <br>
-  <p th:if="${#fields.hasErrors('phoneNo')}" th:errorclass="error" th:errors="*{phoneNo}"></p>
-  <label>Email address: <input type="email" th:field="*{emailAddress}"></label> <br>
-  <p th:if="${#fields.hasErrors('emailAddress')}" th:errorclass="error" th:errors="*{emailAddress}"></p>
-  <label>Role:
-    <select th:field="*{role}">
-      <option th:each="role : ${roles}"
-              th:value="${role.roleId}"
-              th:text="${role.name}"
-      ></option>
-    </select>
-    <a href="/add-role">Add new role</a>
-  </label> <br>
-  <label>Gender:
-    <input type="radio" th:field="*{gender}" th:value="Male"> Male
-    <input type="radio" th:field="*{gender}" th:value="Female"> Female
-  </label> <br>
-  <p th:if="${#fields.hasErrors('gender')}" th:errorclass="error" th:errors="*{gender}"></p>
+<div class="container-xxl">
+  <div class="d-flex justify-content-center">
+  <div class="border w-50 p-3">
+    <h2 class="text-center mb-3">Save employee</h2>
+    <form class="row g-3" action="#" th:action="@{/save-employee}" th:object="${employee}" method="post">
+      <input type="hidden" th:field="*{employeeId}">
+      <div class="col-md-6 form-floating mb-3">
+        <input type="text" class="form-control" id="fullName" th:field="*{fullName}" placeholder="Venkatappa Raju">
+        <label for="fullName">Full name</label>
+        <p th:if="${#fields.hasErrors('fullName')}" th:errorclass="error" th:errors="*{fullName}"></p>
+      </div>
+      <div class="col-md-6 form-floating mb-3">
+        <input type="number" class="form-control" id="phoneNumber" placeholder="9848032919" th:field="*{phoneNo}">
+        <label for="phoneNumber">Phone number</label>
+        <p th:if="${#fields.hasErrors('phoneNo')}" th:errorclass="error" th:errors="*{phoneNo}"></p>
+      </div>
+      <div class="col-md-12 form-floating mb-3">
+        <input type="email" class="form-control" id="emailAddress" placeholder="venkatapparaju@email.com" th:field="*{emailAddress}">
+        <label for="emailAddress">Email address</label>
+        <p th:if="${#fields.hasErrors('emailAddress')}" th:errorclass="error" th:errors="*{emailAddress}"></p>
+      </div>
+      <div class="col-md-8">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="select-role">Role</label>
+          <select class="form-select" id="select-role" th:field="*{role}">
+            <option th:each="role : ${roles}"
+                    th:value="${role.roleId}"
+                    th:text="${role.name}"
+            ></option>
+          </select>
+          <a class="btn btn-outline-primary" href="/add-role" role="button">Add new role</a>
+        </div>
+      </div>
 
-  <label>
-    <input th:field="*{hasAccount}" type="checkbox" onchange="toggleData('account-details')"> Add account
-  </label> <br>
+      <div class="col-md-4">
+        <label>
+          <input type="radio" class="btn-check" id="male-gender" th:field="*{gender}" th:value="Male" checked>
+          <label class="btn btn-outline-primary" for="male-gender">Male</label>
+          <input type="radio" class="btn-check" id="female-gender" th:field="*{gender}" th:value="Female">
+          <label class="btn btn-outline-primary" for="female-gender">Female</label>
+        </label> <br>
+        <p th:if="${#fields.hasErrors('gender')}" th:errorclass="error" th:errors="*{gender}"></p>
+      </div>
 
-  <!-- Account details  -->
-  <div id="account-details" class="toggle">
-    <label>Username: <input type="text" th:field="*{account.username}"></label> <br>
-    <p th:if="${#fields.hasErrors('account.username')}" th:errorclass="error" th:errors="*{account.username}"></p>
-    <label>Password: <input type="password" th:field="*{account.password}"></label> <br>
-    <p th:if="${#fields.hasErrors('account.password')}" th:errorclass="error" th:errors="*{account.password}"></p>
+      <div class="col-md-12 form-check">
+        <input name="hasAccount" th:value="*{hasAccount}" class="form-check-input" id="hasAccount" type="checkbox" autocomplete="off"
+               onchange="toggleData('account-details')">
+        <label class="form-check-label" for="hasAccount">Add account</label>
+      </div>
+
+      <!-- Account details  -->
+      <div id="account-details" class="col-md-12 row g-3 toggle">
+        <div class="col-md-12 form-floating">
+          <input type="text" class="form-control" th:field="*{account.username}" id="username"
+                 placeholder="Venkatappa">
+          <label for="username">Username</label>
+          <p th:if="${#fields.hasErrors('account.username')}" th:errorclass="error" th:errors="*{account.username}"></p>
+        </div>
+        <div class="col-md-12 form-floating">
+          <input type="password" class="form-control" th:field="*{account.password}" id="password" placeholder="password">
+          <label for="password">Password</label>
+          <p th:if="${#fields.hasErrors('account.password')}" th:errorclass="error" th:errors="*{account.password}"></p>
+        </div>
+      </div>
+      <div class="col-md-4 row g-3 mb-3">
+        <div class="col-md-4">
+          <input class="btn btn-outline-primary" type="submit" value="Save">
+        </div>
+        <div class="col-md-4">
+          <a class="btn btn-outline-danger" href="/employees">Cancel</a>
+        </div>
+      </div>
+    </form>
   </div>
-
-  <input type="submit" value="save">
-</form>
-<a style="cursor: pointer; color: blue" href="/employees">Back</a>
+</div>
+</div>
 <script>
-    if (document.getElementById('hasAccount1').checked) {
+    if (document.getElementById('hasAccount').checked) {
       document.getElementById('account-details').style.display = 'block';
     }
     function toggleData(id) {
