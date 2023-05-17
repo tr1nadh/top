@@ -46,6 +46,7 @@ public class DimensionsController extends AController {
     public ModelAndView getDimensions() {
         var mv = new ModelAndView();
         mv.addObject("dimensions", service.findAllDimensions());
+        mv.addObject("dimensionsObj", new Dimensions());
         mv.setViewName("order/dimensions/dimensions");
 
         return mv;

@@ -2,31 +2,62 @@
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dimensions</title>
+    <link th:replace="~{general.html :: b-css}">
+    <script th:replace="~{general.html :: b-js}"></script>
 </head>
 <body>
 <div th:insert="~{general.html :: navbar}"></div>
-<a href="/add-dimensions">Add dimensions</a>
+<div class="container-xxl w-25">
+    <div class="row g-3 d-flex justify-content-center">
+        <h2 class="text-center">Dimensions</h2>
+        <div class="col-md-12 mb-3">
+            <form action="#" th:action="@{/save-dimensions}" th:object="${dimensionsObj}" method="post">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="New dimension" th:field="*{name}">
+                    <button class="btn btn-outline-primary" type="submit">Add</button>
+                    <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
+                </div>
+            </form>
+        </div>
 <table>
-    <thead>
-    <tr>
-        <th>Dimensions</th>
-        <th>Action</th>
-    </tr>
-    </thead>
     <tbody>
     <tr th:each="dimension : ${dimensions}">
-        <td th:text="${dimension.name}"></td>
         <td>
-            <a th:href="@{/update-dimensions?id={id}(id=${dimension.dimensionsId})}">Update</a>
-            <a th:attr="onclick=|confirmDelete('${dimension.dimensionsId}')|"
-               href="#">Delete</a>
+            <form action="#" th:action="@{/save-dimensions}" th:object="${dimensionsObj}" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" th:id="field-+${dimension.id}" name="name" th:value="${dimension.name}"
+                           disabled>
+                    <a class="btn btn-outline-success" type="button" th:attr="onclick=|openUpdate('${dimension.id}')|">Update</a>
+                    <a th:id="field-+${dimension.id}+-close" class="btn btn-outline-danger" type="button" style="display:none"
+                       th:attr="onclick=|closeUpdate('${dimension.id}')|">X</a>
+                    <a class="btn btn-outline-danger" type="button" th:attr="onclick=|confirmDelete('${dimension.id}')|" href="#">Delete</a>
+                </div>
+            </form>
         </td>
     </tr>
     </tbody>
 </table>
-<a style="cursor: pointer; color: blue" href="/orders">Back</a>
+<a class="btn btn-outline-secondary" href="/orders">Back</a>
+    </div>
+    </div>
 <script>
+  function openUpdate(id) {
+    let inputField = document.getElementById('field-' + id);
+    let closeBtn = document.getElementById('field-' + id + '-close');
+    let isDisabled = inputField.disabled;
+    if (isDisabled === true) {
+      inputField.removeAttribute('disabled');
+      closeBtn.style.display = 'block';
+    }
+  }
+
+  function closeUpdate(id) {
+    document.getElementById('field-' + id).setAttribute('disabled','disabled');
+    document.getElementById('field-' + id + '-close').style.display = 'none';
+  }
+
     function confirmDelete(id) {
         let text = "Are you sure you want to delete?";
         let link = "/delete-dimensions?id=" + id;

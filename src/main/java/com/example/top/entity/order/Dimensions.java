@@ -21,7 +21,7 @@ public class Dimensions {
             strategy = GenerationType.SEQUENCE,
             generator = "dimensions_seq"
     )
-    private Long dimensionsId;
+    private Long id;
 
     @Column(unique = true)
     private String name;
