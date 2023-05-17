@@ -46,6 +46,7 @@ public class ServiceTypeController extends AController {
     public ModelAndView getServiceTypes() {
         var mv = new ModelAndView();
         mv.addObject("serviceTypes", service.findAllServiceTypes());
+        mv.addObject("serviceType", new ServiceType());
         mv.setViewName("order/service-type/service-type");
 
         return mv;
