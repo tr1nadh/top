@@ -28,11 +28,11 @@
       <td>
         <form action="#" th:action="@{/save-role}" th:object="${role}" method="post">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" th:id="role-+${role.roleId}" name="name" th:value="${role.name}"
+          <input type="text" class="form-control" th:id="field-+${role.roleId}" name="name" th:value="${role.name}"
           disabled>
-          <a th:id="role-+${role.roleId}+-update-btn" class="btn btn-outline-success" type="button"
-             th:attr="onclick=|updateRole('${role.roleId}')|">Update</a>
-          <a th:id="role-+${role.roleId}+-close" class="btn btn-outline-danger" type="button" style="display:none"
+          <a class="btn btn-outline-success" type="button"
+             th:attr="onclick=|openUpdate('${role.roleId}')|">Update</a>
+          <a th:id="field-+${role.roleId}+-close" class="btn btn-outline-danger" type="button" style="display:none"
              th:attr="onclick=|closeUpdate('${role.roleId}')|">X</a>
           <a class="btn btn-outline-danger" type="button" th:attr="onclick=|confirmDelete('${role.roleId}')|" href="#">Delete</a>
         </div>
@@ -46,21 +46,19 @@
 </div>
 </div>
 <script>
-  function updateRole(id) {
-    let role = document.getElementById('role-' + id);
-    let roleClose = document.getElementById('role-' + id + '-close');
-    let isDisabled = role.disabled;
+  function openUpdate(id) {
+    let inputField = document.getElementById('field-' + id);
+    let closeBtn = document.getElementById('field-' + id + '-close');
+    let isDisabled = inputField.disabled;
     if (isDisabled === true) {
-      role.removeAttribute('disabled');
-      roleClose.style.display = 'block';
+      inputField.removeAttribute('disabled');
+      closeBtn.style.display = 'block';
     }
   }
 
   function closeUpdate(id) {
-    let role = document.getElementById('role-' + id);
-    let roleClose = document.getElementById('role-' + id + '-close');
-    role.setAttribute('disabled','disabled');
-    roleClose.style.display = 'none';
+    document.getElementById('field-' + id).setAttribute('disabled','disabled');
+    document.getElementById('field-' + id + '-close').style.display = 'none';
   }
   function confirmDelete(id) {
     let text = "Are you sure you want to delete?";
