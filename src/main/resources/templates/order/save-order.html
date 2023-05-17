@@ -48,7 +48,7 @@
             <label class="input-group-text" for="service-select">Service</label>
               <select class="form-select" id="service-select" th:field="*{service.serviceType}">
                 <option th:each="serviceType : ${serviceTypes}"
-                        th:value="${serviceType.serviceTypeId}"
+                        th:value="${serviceType.id}"
                         th:text="${serviceType.name}"
                 ></option>
               </select>
@@ -60,7 +60,7 @@
           <label class="input-group-text" for="dimensions-select">Dimensions</label>
           <select class="form-select" id="dimensions-select" th:field="*{service.dimensions}">
             <option th:each="dimension : ${dimensions}"
-                    th:value="${dimension.dimensionsId}"
+                    th:value="${dimension.id}"
                     th:text="${dimension.name}"
             ></option>
           </select>
