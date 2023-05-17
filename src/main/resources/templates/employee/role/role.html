@@ -2,32 +2,66 @@
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roles</title>
+  <link th:replace="~{general.html :: b-css}">
+  <script th:replace="~{general.html :: b-js}"></script>
 </head>
 <body>
 <div th:insert="~{general.html :: navbar}"></div>
-<a href="/add-role">Add role</a>
-<table>
-  <thead>
-  <tr>
-    <th>Role</th>
-    <th>Action</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="role : ${roles}">
-    <td th:text="${role.name}"></td>
-    <td>
-      <a th:href="@{/update-role?id={id}(id=${role.roleId})}">Update</a>
-      <a th:attr="onclick=|confirmDelete('${role.roleId}')|"
-         href="#">Delete</a>
-    </td>
-  </tr>
-  </tbody>
-</table>
-<a style="cursor: pointer; color: blue" href="/employees">Back</a>
-
+<div class="container-xxl w-25">
+<div class="row g-3 d-flex justify-content-center">
+  <h2 class="text-center">Roles</h2>
+<div class="col-md-12 mb-3">
+  <form action="#" th:action="@{/save-role}" th:object="${role}" method="post">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="New role name" th:field="*{name}">
+      <button class="btn btn-outline-primary" type="submit">Add</button>
+      <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
+    </div>
+  </form>
+</div>
+<div class="col-md-12">
+  <table>
+    <tbody>
+    <tr th:each="role : ${roles}">
+      <td>
+        <form action="#" th:action="@{/save-role}" th:object="${role}" method="post">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" th:id="role-+${role.roleId}" name="name" th:value="${role.name}"
+          disabled>
+          <a th:id="role-+${role.roleId}+-update-btn" class="btn btn-outline-success" type="button"
+             th:attr="onclick=|updateRole('${role.roleId}')|">Update</a>
+          <a th:id="role-+${role.roleId}+-close" class="btn btn-outline-danger" type="button" style="display:none"
+             th:attr="onclick=|closeUpdate('${role.roleId}')|">X</a>
+          <a class="btn btn-outline-danger" type="button" th:attr="onclick=|confirmDelete('${role.roleId}')|" href="#">Delete</a>
+        </div>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <a class="btn btn-outline-secondary" href="/employees">Back</a>
+</div>
+</div>
+</div>
 <script>
+  function updateRole(id) {
+    let role = document.getElementById('role-' + id);
+    let roleClose = document.getElementById('role-' + id + '-close');
+    let isDisabled = role.disabled;
+    if (isDisabled === true) {
+      role.removeAttribute('disabled');
+      roleClose.style.display = 'block';
+    }
+  }
+
+  function closeUpdate(id) {
+    let role = document.getElementById('role-' + id);
+    let roleClose = document.getElementById('role-' + id + '-close');
+    role.setAttribute('disabled','disabled');
+    roleClose.style.display = 'none';
+  }
   function confirmDelete(id) {
     let text = "Are you sure you want to delete?";
     let link = "/delete-role?id=" + id;

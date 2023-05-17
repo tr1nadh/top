@@ -48,6 +48,7 @@ public class RoleController extends AController {
     public ModelAndView getRoles() {
         var mv = new ModelAndView();
         mv.addObject("roles", service.findAllRoles());
+        mv.addObject("role", new Role());
         mv.setViewName("employee/role/role");
 
         return mv;
