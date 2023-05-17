@@ -21,7 +21,7 @@ public class ServiceType {
             strategy = GenerationType.SEQUENCE,
             generator = "service_type_seq"
     )
-    private Long serviceTypeId;
+    private Long id;
 
     @Column(unique = true)
     private String name;
