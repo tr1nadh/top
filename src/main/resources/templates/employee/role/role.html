@@ -10,38 +10,44 @@
 <body>
 <div th:replace="~{general.html :: navbar}"></div>
 <div class="container-xxl w-25">
-<div class="row g-3 d-flex justify-content-center">
-  <h2 class="text-center">Roles</h2>
-<div class="col-md-12 mb-3">
-  <form action="#" th:action="@{/save-role}" th:object="${role}" method="post">
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="New role name" th:field="*{name}">
-      <button class="btn btn-outline-primary" type="submit">Add</button>
-      <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
+  <div class="row g-3 d-flex justify-content-center">
+    <div>
+      <h2 class="text-center">Roles</h2>
     </div>
-  </form>
-</div>
-  <table>
-    <tbody>
-    <tr th:each="role : ${roles}">
-      <td>
-        <form action="#" th:action="@{/save-role}" th:object="${role}" method="post">
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" th:id="field-+${role.roleId}" name="name" th:value="${role.name}"
-          disabled>
-          <a class="btn btn-outline-success" type="button"
-             th:attr="onclick=|openUpdate('${role.roleId}')|">Update</a>
-          <a th:id="field-+${role.roleId}+-close" class="btn btn-outline-danger" type="button" style="display:none"
-             th:attr="onclick=|closeUpdate('${role.roleId}')|">X</a>
-          <a class="btn btn-outline-danger" type="button" th:attr="onclick=|confirmDelete('${role.roleId}')|" href="#">Delete</a>
+    <div class="mb-3">
+      <form action="#" th:action="@{/save-role}" th:object="${role}" method="post">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="New role name" th:field="*{name}">
+          <button class="btn btn-outline-primary" type="submit">Add</button>
+          <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
         </div>
-        </form>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-  <a class="btn btn-outline-secondary" href="/employees">Back</a>
-</div>
+      </form>
+    </div>
+    <div>
+      <table>
+        <tbody>
+        <tr th:each="role : ${roles}">
+          <td>
+            <form action="#" th:action="@{/save-role}" th:object="${role}" method="post">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" th:id="field-+${role.roleId}" name="name" th:value="${role.name}"
+              disabled>
+              <a class="btn btn-outline-success" type="button"
+                 th:attr="onclick=|openUpdate('${role.roleId}')|">Update</a>
+              <a th:id="field-+${role.roleId}+-close" class="btn btn-outline-danger" type="button" style="display:none"
+                 th:attr="onclick=|closeUpdate('${role.roleId}')|">X</a>
+              <a class="btn btn-outline-danger" type="button" th:attr="onclick=|confirmDelete('${role.roleId}')|" href="#">Delete</a>
+            </div>
+            </form>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <a class="btn btn-outline-secondary" href="/employees">Back</a>
+    </div>
+  </div>
 </div>
 <script>
   function openUpdate(id) {

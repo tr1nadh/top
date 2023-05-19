@@ -11,7 +11,9 @@
 <div th:replace="~{general.html :: navbar}"></div>
 <div class="container-xxl w-25">
     <div class="row g-3 d-flex justify-content-center">
-        <h2 class="text-center">Dimensions</h2>
+        <div>
+            <h2 class="text-center">Dimensions</h2>
+        </div>
         <div class="col-md-12 mb-3">
             <form action="#" th:action="@{/save-dimensions}" th:object="${dimensionsObj}" method="post">
                 <div class="input-group">
@@ -21,27 +23,31 @@
                 </div>
             </form>
         </div>
-<table>
-    <tbody>
-    <tr th:each="dimension : ${dimensions}">
-        <td>
-            <form action="#" th:action="@{/save-dimensions}" th:object="${dimensionsObj}" method="post">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" th:id="field-+${dimension.id}" name="name" th:value="${dimension.name}"
-                           disabled>
-                    <a class="btn btn-outline-success" type="button" th:attr="onclick=|openUpdate('${dimension.id}')|">Update</a>
-                    <a th:id="field-+${dimension.id}+-close" class="btn btn-outline-danger" type="button" style="display:none"
-                       th:attr="onclick=|closeUpdate('${dimension.id}')|">X</a>
-                    <a class="btn btn-outline-danger" type="button" th:attr="onclick=|confirmDelete('${dimension.id}')|" href="#">Delete</a>
-                </div>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<a class="btn btn-outline-secondary" href="/orders">Back</a>
+        <div>
+            <table>
+                <tbody>
+                    <tr th:each="dimension : ${dimensions}">
+                        <td>
+                            <form action="#" th:action="@{/save-dimensions}" th:object="${dimensionsObj}" method="post">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" th:id="field-+${dimension.id}" name="name" th:value="${dimension.name}"
+                                           disabled>
+                                    <a class="btn btn-outline-success" type="button" th:attr="onclick=|openUpdate('${dimension.id}')|">Update</a>
+                                    <a th:id="field-+${dimension.id}+-close" class="btn btn-outline-danger" type="button" style="display:none"
+                                       th:attr="onclick=|closeUpdate('${dimension.id}')|">X</a>
+                                    <a class="btn btn-outline-danger" type="button" th:attr="onclick=|confirmDelete('${dimension.id}')|" href="#">Delete</a>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <a class="btn btn-outline-secondary" href="/orders">Back</a>
+        </div>
     </div>
-    </div>
+</div>
 <script>
   function openUpdate(id) {
     let inputField = document.getElementById('field-' + id);

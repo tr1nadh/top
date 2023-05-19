@@ -22,44 +22,45 @@
         <a type="button" class="btn btn-outline-primary btn-sm" href="/add-employee">Add employee</a>
         <a class="btn btn-outline-primary btn-sm" href="/roles">Roles</a>
     </div>
-    <br>
-    <table class="table table-hover border">
-        <thead class="table-light">
-            <tr>
-                <th>FullName</th>
-                <th>Role</th>
-                <th>PhoneNo</th>
-                <th>EmailAddress</th>
-                <th>Gender</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="emp : ${employees}">
-                <td th:text="${emp.fullName}"></td>
-                <td th:text="${emp.role.name}"></td>
-                <td th:text="${emp.phoneNo}"></td>
-                <td th:text="${emp.emailAddress}"></td>
-                <td th:text="${emp.gender}"></td>
-                <td>
-                    <div class="dropdown" style="display:inline-block">
-                        <button class="btn btn-success btn-sm dropdown-toggle"
-                                type="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"><i class="fa-solid fa-pen-to-square"></i> Update</button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" th:href="@{|/update-employee?id=${emp.employeeId}|}">Update info</a></li>
-                            <li><a class="dropdown-item" th:href="@{|/update-emp-account?id=${emp.employeeId}|}">Update account</a></li>
-                        </ul>
-                    </div>
+    <div>
+        <table class="table table-hover border">
+            <thead class="table-light">
+                <tr>
+                    <th>FullName</th>
+                    <th>Role</th>
+                    <th>PhoneNo</th>
+                    <th>EmailAddress</th>
+                    <th>Gender</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="emp : ${employees}">
+                    <td th:text="${emp.fullName}"></td>
+                    <td th:text="${emp.role.name}"></td>
+                    <td th:text="${emp.phoneNo}"></td>
+                    <td th:text="${emp.emailAddress}"></td>
+                    <td th:text="${emp.gender}"></td>
+                    <td>
+                        <div class="dropdown" style="display:inline-block">
+                            <button class="btn btn-success btn-sm dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"><i class="fa-solid fa-pen-to-square"></i> Update</button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" th:href="@{|/update-employee?id=${emp.employeeId}|}">Update info</a></li>
+                                <li><a class="dropdown-item" th:href="@{|/update-emp-account?id=${emp.employeeId}|}">Update account</a></li>
+                            </ul>
+                        </div>
 
-                    <a class="btn btn-danger btn-sm"
-                       th:attr="onclick=|confirmDelete('${emp.employeeId}')|"
-                       href="#"><i class="fa-sharp fa-solid fa-trash"></i> Delete</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                        <a class="btn btn-danger btn-sm"
+                           th:attr="onclick=|confirmDelete('${emp.employeeId}')|"
+                           href="#"><i class="fa-sharp fa-solid fa-trash"></i> Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 <script>
     function toggleData(id) {

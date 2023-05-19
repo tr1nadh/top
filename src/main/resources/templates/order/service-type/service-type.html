@@ -10,7 +10,9 @@
 <div th:replace="~{general.html :: navbar}"></div>
 <div class="container-xxl w-25">
   <div class="row g-3 d-flex justify-content-center">
-    <h2 class="text-center">Service types</h2>
+    <div>
+      <h2 class="text-center">Service types</h2>
+    </div>
     <div class="col-sm-12 mb-3">
       <form action="#" th:action="@{/save-service-type}" th:object="${serviceType}" method="post">
         <div class="input-group">
@@ -20,25 +22,29 @@
         </div>
       </form>
     </div>
-<table>
-  <tbody>
-  <tr th:each="serviceType : ${serviceTypes}">
-    <td>
-      <form action="#" th:action="@{/save-service-type}" th:object="${serviceType}" method="post">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" th:id="field-+${serviceType.id}" name="name" th:value="${serviceType.name}"
-               disabled>
-        <a class="btn btn-outline-success" type="button" th:attr="onclick=|openUpdate('${serviceType.id}')|">Update</a>
-        <a th:id="field-+${serviceType.id}+-close" class="btn btn-outline-danger" type="button" style="display:none"
-           th:attr="onclick=|closeUpdate('${serviceType.id}')|">X</a>
-        <a class="btn btn-outline-danger" type="button" th:attr="onclick=|confirmDelete('${serviceType.id}')|" href="#">Delete</a>
-      </div>
-      </form>
-    </td>
-  </tr>
-  </tbody>
-</table>
-    <a class="btn btn-outline-secondary" href="/orders">Back</a>
+    <div>
+      <table>
+        <tbody>
+        <tr th:each="serviceType : ${serviceTypes}">
+          <td>
+            <form action="#" th:action="@{/save-service-type}" th:object="${serviceType}" method="post">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" th:id="field-+${serviceType.id}" name="name" th:value="${serviceType.name}"
+                     disabled>
+              <a class="btn btn-outline-success" type="button" th:attr="onclick=|openUpdate('${serviceType.id}')|">Update</a>
+              <a th:id="field-+${serviceType.id}+-close" class="btn btn-outline-danger" type="button" style="display:none"
+                 th:attr="onclick=|closeUpdate('${serviceType.id}')|">X</a>
+              <a class="btn btn-outline-danger" type="button" th:attr="onclick=|confirmDelete('${serviceType.id}')|" href="#">Delete</a>
+            </div>
+            </form>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <a class="btn btn-outline-secondary" href="/orders">Back</a>
+    </div>
   </div>
 </div>
 <script>
