@@ -19,7 +19,7 @@
 <div th:replace="~{general.html :: navbar}"></div>
 <div class="container-sm">
     <div class="mb-3">
-        <a type="button" class="btn btn-outline-primary btn-sm" href="/add-employee">Add employee</a>
+        <a class="btn btn-outline-primary btn-sm" href="/add-employee">Add employee</a>
         <a class="btn btn-outline-primary btn-sm" href="/roles">Roles</a>
     </div>
     <div>
@@ -43,19 +43,15 @@
                     <td th:text="${emp.gender}"></td>
                     <td>
                         <div class="dropdown" style="display:inline-block">
-                            <button class="btn btn-success btn-sm dropdown-toggle"
-                                    type="button"
-                                    data-bs-toggle="dropdown"
+                            <button class="btn btn-success btn-sm dropdown-toggle" data-bs-toggle="dropdown"
                                     aria-expanded="false"><i class="fa-solid fa-pen-to-square"></i> Update</button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" th:href="@{|/update-employee?id=${emp.employeeId}|}">Update info</a></li>
                                 <li><a class="dropdown-item" th:href="@{|/update-emp-account?id=${emp.employeeId}|}">Update account</a></li>
                             </ul>
                         </div>
-
-                        <a class="btn btn-danger btn-sm"
-                           th:attr="onclick=|confirmDelete('${emp.employeeId}')|"
-                           href="#"><i class="fa-sharp fa-solid fa-trash"></i> Delete</a>
+                        <button class="btn btn-danger btn-sm" th:attr="onclick=|confirmDelete('${emp.employeeId}')|">
+                            <i class="fa-sharp fa-solid fa-trash"></i> Delete</button>
                     </td>
                 </tr>
             </tbody>
