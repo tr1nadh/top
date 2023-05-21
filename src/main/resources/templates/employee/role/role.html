@@ -34,13 +34,13 @@
             <div class="input-group mb-3">
               <input type="text" class="form-control" th:id="field-+${role.roleId}" name="name" th:value="${role.name}"
               disabled>
-              <a class="btn btn-outline-success" type="button"
-                 th:attr="onclick=|openUpdate('${role.roleId}')|"><i class="fa-solid fa-pen-to-square"></i> Update</a>
-              <a th:id="field-+${role.roleId}+-close" class="btn btn-outline-danger" type="button" style="display:none"
-                 th:attr="onclick=|closeUpdate('${role.roleId}')|">X</a>
-              <a class="btn btn-outline-danger" type="button"
-                 th:attr="onclick=|confirmDelete('/delete-role?id=${role.roleId}')|" href="#">
-                <i class="fa-sharp fa-solid fa-trash"></i> Delete</a>
+              <button class="btn btn-outline-success"
+                 th:attr="onclick=|openUpdate('${role.roleId}')|"><i class="fa-solid fa-pen-to-square"></i> Update</button>
+              <button th:id="field-+${role.roleId}+-close" class="btn btn-outline-danger" style="display:none"
+                 th:attr="onclick=|closeUpdate('${role.roleId}')|">X</button>
+              <button class="btn btn-outline-danger"
+                 th:attr="onclick=|confirmDelete('/delete-role?id=${role.roleId}')|">
+                <i class="fa-sharp fa-solid fa-trash"></i> Delete</button>
             </div>
             </form>
           </td>

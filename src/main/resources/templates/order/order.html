@@ -230,9 +230,9 @@
                         <a class="btn btn-danger btn-sm" th:if="${order.orderStatus == 'PENDING'}"
                            th:href="@{/cancel-order?id={id}(id=${order.orderId})}" title="Cancel">
                             <i class="fa-solid fa-ban"></i> Cancel</a>
-                        <a class="btn btn-danger btn-sm" th:if="${order.orderStatus == 'CANCELLED'}"
-                           th:attr="onclick=|confirmDelete('/delete-order?id=${order.orderId}')|" href="#">
-                            <i class="fa-solid fa-trash"></i> Delete</a>
+                        <button class="btn btn-danger btn-sm" th:if="${order.orderStatus == 'CANCELLED'}"
+                           th:attr="onclick=|confirmDelete('/delete-order?id=${order.orderId}')|">
+                            <i class="fa-solid fa-trash"></i> Delete</button>
                         <a class="btn btn-warning btn-sm" th:if="${order.orderStatus != 'PENDING'}"
                            th:href="@{/move-order-pending?id={id}(id=${order.orderId})}">
                             <i class="fa-solid fa-arrow-turn-up fa-rotate-90"></i> Move to pending

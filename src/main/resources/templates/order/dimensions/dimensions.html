@@ -34,13 +34,13 @@
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" th:id="field-+${dimension.id}" name="name" th:value="${dimension.name}"
                                            disabled>
-                                    <a class="btn btn-outline-success" type="button" th:attr="onclick=|openUpdate('${dimension.id}')|">
-                                        <i class="fa-solid fa-pen-to-square"></i> Update</a>
-                                    <a th:id="field-+${dimension.id}+-close" class="btn btn-outline-danger" type="button" style="display:none"
-                                       th:attr="onclick=|closeUpdate('${dimension.id}')|">X</a>
-                                    <a class="btn btn-outline-danger" type="button"
-                                       th:attr="onclick=|confirmDelete('/delete-dimensions?id=${dimension.id}')|" href="#">
-                                        <i class="fa-sharp fa-solid fa-trash"></i> Delete</a>
+                                    <button class="btn btn-outline-success" th:attr="onclick=|openUpdate('${dimension.id}')|">
+                                        <i class="fa-solid fa-pen-to-square"></i> Update</button>
+                                    <button th:id="field-+${dimension.id}+-close" class="btn btn-outline-danger" style="display:none"
+                                       th:attr="onclick=|closeUpdate('${dimension.id}')|">X</button>
+                                    <button class="btn btn-outline-danger"
+                                       th:attr="onclick=|confirmDelete('/delete-dimensions?id=${dimension.id}')|">
+                                        <i class="fa-sharp fa-solid fa-trash"></i> Delete</button>
                                 </div>
                             </form>
                         </td>
