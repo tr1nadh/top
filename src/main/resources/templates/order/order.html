@@ -156,9 +156,10 @@
                                                 th:text="${status}"
                                         ></option>
                                     </select>
-                                    <button class="btn btn-outline-danger"
+                                    <a class="btn btn-outline-danger" role="button"
                                             th:attr="onClick=|swapElements('update-order-${order.orderId}-ss-head','update-order-${order.orderId}-service-status')|"
-                                    >X</button>
+                                       href="#"
+                                    >X</a>
                                 </div>
                             </form>
                         </div>
