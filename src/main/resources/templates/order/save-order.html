@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Save order</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Save order</title>
   <link th:replace="~{general.html :: b-css}">
   <script th:replace="~{general.html :: b-js}"></script>
   <style>
@@ -13,9 +14,10 @@
 </head>
 <body>
 <div th:replace="~{general.html :: navbar}"></div>
-<div class="container-xxl">
+<div class="container d-flex justify-content-center">
   <div class="d-flex justify-content-center">
-    <div class="border w-75 p-3">
+    <div class="row g-3 d-flex flex-column align-items-center">
+      <div class="col-xxl-8 col-xl-10 col-md-12 border p-3">
         <div>
             <h2 class="text-center mb-3">Save employee</h2>
         </div>
@@ -45,7 +47,7 @@
                 </select>
               <label for="emp-select">Handle by</label>
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-lg-6 col-md-12 mb-3">
               <div class="input-group">
                 <label class="input-group-text" for="service-select">Service</label>
                   <select class="form-select" id="service-select" th:field="*{service.serviceType}">
@@ -56,7 +58,7 @@
                   <a class="btn btn-outline-primary" href="/service-types">Service types</a>
               </div>
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-lg-6 col-md-12 mb-3">
               <div class="input-group">
                   <label class="input-group-text" for="dimensions-select">Dimensions</label>
                   <select class="form-select" id="dimensions-select" th:field="*{service.dimensions}">
@@ -82,12 +84,13 @@
               <label for="service-charges">Service charges</label>
               <p th:if="${#fields.hasErrors('service.serviceCharges')}" th:errorclass="error" th:errors="*{service.serviceCharges}"></p>
             </div>
-            <div class="col-md-2">
+            <div>
               <input class="btn btn-outline-primary" type="submit" value="Save">
               <a class="btn btn-outline-danger" href="/orders">Cancel</a>
             </div>
           </form>
         </div>
+      </div>
     </div>
   </div>
 </div>

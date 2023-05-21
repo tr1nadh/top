@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Save employee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Save employee</title>
   <link th:replace="~{general.html :: b-css}">
   <link th:replace="~{general.html :: fa-css}">
   <script th:replace="~{general.html :: b-js}"></script>
@@ -19,9 +20,9 @@
 </head>
 <body>
 <div th:replace="~{general.html :: navbar}"></div>
-<div class="container-xxl">
-  <div class="d-flex justify-content-center">
-    <div class="border w-50 p-3">
+<div class="container d-flex justify-content-center">
+  <div class="row g-3 d-flex flex-column align-items-center">
+    <div class="col-lg-8 border p-3">
       <div>
         <h2 class="text-center mb-3">Save employee</h2>
       </div>
@@ -80,13 +81,9 @@
               <p th:if="${#fields.hasErrors('account.password')}" th:errorclass="error" th:errors="*{account.password}"></p>
             </div>
           </div>
-          <div class="col-md-4 row g-3 mb-3">
-            <div class="col-md-4">
-              <input class="btn btn-outline-primary" type="submit" value="Save">
-            </div>
-            <div class="col-md-4">
-              <a class="btn btn-outline-danger" href="/employees">Cancel</a>
-            </div>
+          <div>
+            <input class="btn btn-outline-primary" type="submit" value="Save">
+            <a class="btn btn-outline-danger" href="/employees">Cancel</a>
           </div>
         </form>
       </div>

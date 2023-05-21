@@ -9,12 +9,12 @@
 </head>
 <body>
 <div th:replace="~{general.html :: navbar}"></div>
-<div class="container-xxl w-25">
-    <div class="row g-3 d-flex justify-content-center">
+<div class="container d-flex justify-content-center">
+    <div class="row g-3 d-flex flex-column align-items-center">
         <div>
             <h2 class="text-center">Dimensions</h2>
         </div>
-        <div class="col-md-12 mb-3">
+        <div>
             <form action="#" th:action="@{/save-dimensions}" th:object="${dimensionsObj}" method="post">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="New dimension" th:field="*{name}">
@@ -22,7 +22,7 @@
                     <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
                 </div>
             </form>
-        </div>
+        </div> <br>
         <div>
             <table>
                 <tbody>
