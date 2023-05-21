@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roles</title>
   <link th:replace="~{general.html :: b-css}">
+  <link th:replace="~{general.html :: fa-css}">
   <script th:replace="~{general.html :: b-js}"></script>
 </head>
 <body>
@@ -18,7 +19,7 @@
       <form action="#" th:action="@{/save-role}" th:object="${role}" method="post">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="New role name" th:field="*{name}">
-          <button class="btn btn-outline-primary" type="submit">Add</button>
+          <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-plus"></i> Add</button>
           <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
         </div>
       </form>
@@ -33,10 +34,11 @@
               <input type="text" class="form-control" th:id="field-+${role.roleId}" name="name" th:value="${role.name}"
               disabled>
               <a class="btn btn-outline-success" type="button"
-                 th:attr="onclick=|openUpdate('${role.roleId}')|">Update</a>
+                 th:attr="onclick=|openUpdate('${role.roleId}')|"><i class="fa-solid fa-pen-to-square"></i> Update</a>
               <a th:id="field-+${role.roleId}+-close" class="btn btn-outline-danger" type="button" style="display:none"
                  th:attr="onclick=|closeUpdate('${role.roleId}')|">X</a>
-              <a class="btn btn-outline-danger" type="button" th:attr="onclick=|confirmDelete('${role.roleId}')|" href="#">Delete</a>
+              <a class="btn btn-outline-danger" type="button" th:attr="onclick=|confirmDelete('${role.roleId}')|" href="#">
+                <i class="fa-sharp fa-solid fa-trash"></i> Delete</a>
             </div>
             </form>
           </td>
@@ -45,7 +47,7 @@
       </table>
     </div>
     <div>
-      <a class="btn btn-outline-secondary" href="/employees">Back</a>
+      <a class="btn btn-outline-secondary" href="/employees"><i class="fa-solid fa-arrow-left"></i> Back</a>
     </div>
   </div>
 </div>

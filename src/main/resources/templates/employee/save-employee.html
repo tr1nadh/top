@@ -58,9 +58,9 @@
           </div>
           <div class="col-md-4">
               <input type="radio" class="btn-check" id="male-gender" th:field="*{gender}" th:value="Male" checked>
-              <label class="btn btn-outline-primary" for="male-gender">Male</label>
+              <label class="btn btn-outline-primary" for="male-gender"><i class="fa-solid fa-mars"></i> Male</label>
               <input type="radio" class="btn-check" id="female-gender" th:field="*{gender}" th:value="Female">
-              <label class="btn btn-outline-primary" for="female-gender">Female</label>
+              <label class="btn btn-outline-primary" for="female-gender"><i class="fa-solid fa-venus"></i> Female</label>
             <p th:if="${#fields.hasErrors('gender')}" th:errorclass="error" th:errors="*{gender}"></p>
           </div>
           <div class="col-md-12 form-check">
@@ -82,8 +82,8 @@
             </div>
           </div>
           <div>
-            <input class="btn btn-outline-primary" type="submit" value="Save">
-            <a class="btn btn-outline-danger" href="/employees">Cancel</a>
+            <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+            <a class="btn btn-outline-danger" href="/employees"><i class="fa-solid fa-ban"></i> Cancel</a>
           </div>
         </form>
       </div>

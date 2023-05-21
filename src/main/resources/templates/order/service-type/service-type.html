@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Service types</title>
   <link th:replace="~{general.html :: b-css}">
+  <link th:replace="~{general.html :: fa-css}">
   <script th:replace="~{general.html :: b-js}"></script>
 </head>
 <body>
@@ -18,7 +19,7 @@
       <form action="#" th:action="@{/save-service-type}" th:object="${serviceType}" method="post">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="New service type" th:field="*{name}">
-          <button class="btn btn-outline-primary" type="submit">Save</button>
+          <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-plus"></i> Add</button>
           <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
         </div>
       </form>
@@ -32,10 +33,12 @@
             <div class="input-group mb-3">
               <input type="text" class="form-control" th:id="field-+${serviceType.id}" name="name" th:value="${serviceType.name}"
                      disabled>
-              <a class="btn btn-outline-success" type="button" th:attr="onclick=|openUpdate('${serviceType.id}')|">Update</a>
+              <a class="btn btn-outline-success" type="button" th:attr="onclick=|openUpdate('${serviceType.id}')|">
+                <i class="fa-solid fa-pen-to-square"></i> Update</a>
               <a th:id="field-+${serviceType.id}+-close" class="btn btn-outline-danger" type="button" style="display:none"
                  th:attr="onclick=|closeUpdate('${serviceType.id}')|">X</a>
-              <a class="btn btn-outline-danger" type="button" th:attr="onclick=|confirmDelete('${serviceType.id}')|" href="#">Delete</a>
+              <a class="btn btn-outline-danger" type="button" th:attr="onclick=|confirmDelete('${serviceType.id}')|" href="#">
+                <i class="fa-sharp fa-solid fa-trash"></i> Delete</a>
             </div>
             </form>
           </td>
@@ -44,7 +47,7 @@
       </table>
     </div>
     <div>
-      <a class="btn btn-outline-secondary" href="/orders">Back</a>
+      <a class="btn btn-outline-secondary" href="/orders"><i class="fa-solid fa-arrow-left"></i> Back</a>
     </div>
   </div>
 </div>

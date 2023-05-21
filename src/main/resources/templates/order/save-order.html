@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Save order</title>
   <link th:replace="~{general.html :: b-css}">
+  <link th:replace="~{general.html :: fa-css}">
   <script th:replace="~{general.html :: b-js}"></script>
   <style>
     .error {
@@ -85,8 +86,8 @@
               <p th:if="${#fields.hasErrors('service.serviceCharges')}" th:errorclass="error" th:errors="*{service.serviceCharges}"></p>
             </div>
             <div>
-              <input class="btn btn-outline-primary" type="submit" value="Save">
-              <a class="btn btn-outline-danger" href="/orders">Cancel</a>
+              <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+              <a class="btn btn-outline-danger" href="/orders"><i class="fa-solid fa-ban"></i> Cancel</a>
             </div>
           </form>
         </div>
