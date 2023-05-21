@@ -6,13 +6,6 @@
     <link th:replace="~{general.html :: b-css}">
     <link th:replace="~{general.html :: fa-css}">
     <script th:replace="~{general.html :: b-js}"></script>
-    <style>
-        .toggle {display: none;}
-        .toggleHead {
-            color: blue;
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
 <div th:replace="~{general.html :: navbar}"></div>
@@ -151,7 +144,7 @@
                            href="#" style="display: block;">
                         </a>
                         <!--  Service status update form  -->
-                        <div th:id="update-order-+${order.orderId}+-service-status" class="toggle" style="display: none;">
+                        <div th:id="update-order-+${order.orderId}+-service-status" style="display: none;">
                             <form th:action="@{/update-order-service-status}" th:object="${order}" method="post">
                                 <input type="hidden" name="orderId" th:value="${order.orderId}">
                                 <div class="input-group input-group-sm">

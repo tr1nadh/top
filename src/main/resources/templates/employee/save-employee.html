@@ -4,19 +4,10 @@
     <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Save employee</title>
+  <link th:replace="~{general.html :: top-styles}">
   <link th:replace="~{general.html :: b-css}">
   <link th:replace="~{general.html :: fa-css}">
   <script th:replace="~{general.html :: b-js}"></script>
-  <style>
-    .error {
-      color: red;
-    }
-    .toggle {display: none;}
-    .toggleHead {
-      color: blue;
-      cursor: pointer;
-    }
-  </style>
 </head>
 <body>
 <div th:replace="~{general.html :: navbar}"></div>
@@ -68,7 +59,7 @@
                    onchange="toggleData('account-details')">
             <label class="form-check-label" for="hasAccount">Add account</label>
           </div>
-          <div id="account-details" class="col-md-12 row g-3 toggle">
+          <div id="account-details" class="col-md-12 row g-3" style="display: none;">
             <div class="col-md-12 form-floating">
               <input type="text" class="form-control" th:field="*{account.username}" id="username"
                      placeholder="Venkatappa">
