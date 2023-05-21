@@ -6,6 +6,7 @@
   <title>Service types</title>
   <link th:replace="~{general.html :: b-css}">
   <link th:replace="~{general.html :: fa-css}">
+  <script th:replace="~{general.html :: top-js}"></script>
   <script th:replace="~{general.html :: b-js}"></script>
 </head>
 <body>
@@ -37,7 +38,8 @@
                 <i class="fa-solid fa-pen-to-square"></i> Update</a>
               <a th:id="field-+${serviceType.id}+-close" class="btn btn-outline-danger" type="button" style="display:none"
                  th:attr="onclick=|closeUpdate('${serviceType.id}')|">X</a>
-              <a class="btn btn-outline-danger" type="button" th:attr="onclick=|confirmDelete('${serviceType.id}')|" href="#">
+              <a class="btn btn-outline-danger" type="button"
+                 th:attr="onclick=|confirmDelete('/delete-service-type?id=${serviceType.id}')|" href="#">
                 <i class="fa-sharp fa-solid fa-trash"></i> Delete</a>
             </div>
             </form>
@@ -51,29 +53,5 @@
     </div>
   </div>
 </div>
-<script>
-  function openUpdate(id) {
-    let inputField = document.getElementById('field-' + id);
-    let closeBtn = document.getElementById('field-' + id + '-close');
-    let isDisabled = inputField.disabled;
-    if (isDisabled === true) {
-      inputField.removeAttribute('disabled');
-      closeBtn.style.display = 'block';
-    }
-  }
-
-  function closeUpdate(id) {
-    document.getElementById('field-' + id).setAttribute('disabled','disabled');
-    document.getElementById('field-' + id + '-close').style.display = 'none';
-  }
-
-  function confirmDelete(id) {
-    let text = "Are you sure you want to delete?";
-    let link = "/delete-service-type?id=" + id;
-    if (confirm(text) == true) {
-      window.location.replace(link);
-    }
-  }
-</script>
 </body>
 </html>

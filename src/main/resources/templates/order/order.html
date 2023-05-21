@@ -5,6 +5,7 @@
     <title>Orders</title>
     <link th:replace="~{general.html :: b-css}">
     <link th:replace="~{general.html :: fa-css}">
+    <script th:replace="~{general.html :: top-js}"></script>
     <script th:replace="~{general.html :: b-js}"></script>
 </head>
 <body>
@@ -229,7 +230,7 @@
                            th:href="@{/cancel-order?id={id}(id=${order.orderId})}" title="Cancel">
                             <i class="fa-solid fa-ban"></i> Cancel</a>
                         <a class="btn btn-danger btn-sm" th:if="${order.orderStatus == 'CANCELLED'}"
-                           th:attr="onclick=|confirmDelete('${order.orderId}')|" href="#">
+                           th:attr="onclick=|confirmDelete('/delete-order?id=${order.orderId}')|" href="#">
                             <i class="fa-solid fa-trash"></i> Delete</a>
                         <a class="btn btn-warning btn-sm" th:if="${order.orderStatus != 'PENDING'}"
                            th:href="@{/move-order-pending?id={id}(id=${order.orderId})}">
@@ -241,28 +242,5 @@
         </table>
     </div>
 </div>
-<script>
-    function swapElements(id1, id2) {
-        toggleData(id1);
-        toggleData(id2);
-    }
-
-    function toggleData(id) {
-        let displayData = document.getElementById(id).style.display;
-        if (displayData === 'block') {
-            document.getElementById(id).style.display = 'none';
-        } else {
-            document.getElementById(id).style.display = 'block';
-        }
-    }
-
-    function confirmDelete(id) {
-        let text = "Are you sure you want to delete?";
-        let link = "/delete-order?id=" + id;
-        if (confirm(text) == true) {
-          window.location.replace(link);
-        }
-    }
-</script>
 </body>
 </html>

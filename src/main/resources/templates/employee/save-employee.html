@@ -7,6 +7,7 @@
   <link th:replace="~{general.html :: top-styles}">
   <link th:replace="~{general.html :: b-css}">
   <link th:replace="~{general.html :: fa-css}">
+  <script th:replace="~{general.html :: top-js}"></script>
   <script th:replace="~{general.html :: b-js}"></script>
 </head>
 <body>
@@ -84,14 +85,6 @@
 <script>
     if (document.getElementById('hasAccount').checked) {
       document.getElementById('account-details').style.display = 'block';
-    }
-    function toggleData(id) {
-        let displayData = document.getElementById(id).style.display;
-        if (displayData === 'block') {
-            document.getElementById(id).style.display = 'none';
-        } else {
-            document.getElementById(id).style.display = 'block';
-        }
     }
 </script>
 </body>

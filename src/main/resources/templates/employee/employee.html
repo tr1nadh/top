@@ -5,6 +5,7 @@
     <title>Employees</title>
     <link th:replace="~{general.html :: b-css}">
     <link th:replace="~{general.html :: fa-css}">
+    <script th:replace="~{general.html :: top-js}"></script>
     <script th:replace="~{general.html :: b-js}"></script>
 </head>
 <body>
@@ -42,7 +43,8 @@
                                 <li><a class="dropdown-item" th:href="@{|/update-emp-account?id=${emp.employeeId}|}">Update account</a></li>
                             </ul>
                         </div>
-                        <button class="btn btn-danger btn-sm" th:attr="onclick=|confirmDelete('${emp.employeeId}')|">
+                        <button class="btn btn-danger btn-sm"
+                                th:attr="onclick=|confirmDelete('/delete-employee?id=${emp.employeeId}')|">
                             <i class="fa-sharp fa-solid fa-trash"></i> Delete</button>
                     </td>
                 </tr>
@@ -50,24 +52,5 @@
         </table>
     </div>
 </div>
-<script>
-    function toggleData(id) {
-        let displayData = document.getElementById(id).style.display;
-        if (displayData === 'block') {
-            document.getElementById(id).style.display = 'none';
-        } else {
-            document.getElementById(id).style.display = 'block';
-        }
-    }
-
-    function confirmDelete(id) {
-        let text = "Are you sure you want to delete?";
-        let link = "/delete-employee?id=" + id;
-        if (confirm(text) == true) {
-          window.location.replace(link);
-        }
-    }
-
-</script>
 </body>
 </html>
