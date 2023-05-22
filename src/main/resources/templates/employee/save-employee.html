@@ -19,65 +19,9 @@
         <h2 class="text-center mb-3">Save employee</h2>
       </div>
       <div>
-        <form class="row g-3" action="#" th:action="@{/save-employee}" th:object="${employee}" method="post">
-          <input type="hidden" th:field="*{employeeId}">
-          <div class="col-md-6 form-floating mb-3">
-            <input type="text" class="form-control" id="fullName" th:field="*{fullName}" placeholder="Venkatappa Raju">
-            <label for="fullName">Full name</label>
-            <p th:if="${#fields.hasErrors('fullName')}" th:errorclass="error" th:errors="*{fullName}"></p>
-          </div>
-          <div class="col-md-6 form-floating mb-3">
-            <input type="number" class="form-control" id="phoneNumber" placeholder="9848032919" th:field="*{phoneNo}">
-            <label for="phoneNumber">Phone number</label>
-            <p th:if="${#fields.hasErrors('phoneNo')}" th:errorclass="error" th:errors="*{phoneNo}"></p>
-          </div>
-          <div class="col-md-12 form-floating mb-3">
-            <input type="email" class="form-control" id="emailAddress" placeholder="venkatapparaju@email.com" th:field="*{emailAddress}">
-            <label for="emailAddress">Email address</label>
-            <p th:if="${#fields.hasErrors('emailAddress')}" th:errorclass="error" th:errors="*{emailAddress}"></p>
-          </div>
-          <div class="col-md-8">
-            <div class="input-group mb-3">
-              <label class="input-group-text" for="select-role">Role</label>
-              <select class="form-select" id="select-role" th:field="*{role}">
-                <option th:each="role : ${roles}"
-                        th:value="${role.roleId}"
-                        th:text="${role.name}"
-                ></option>
-              </select>
-              <a class="btn btn-outline-primary" href="/add-role" role="button">Add new role</a>
-            </div>
-          </div>
-          <div class="col-md-4">
-              <input type="radio" class="btn-check" id="male-gender" th:field="*{gender}" th:value="Male" checked>
-              <label class="btn btn-outline-primary" for="male-gender"><i class="fa-solid fa-mars"></i> Male</label>
-              <input type="radio" class="btn-check" id="female-gender" th:field="*{gender}" th:value="Female">
-              <label class="btn btn-outline-primary" for="female-gender"><i class="fa-solid fa-venus"></i> Female</label>
-            <p th:if="${#fields.hasErrors('gender')}" th:errorclass="error" th:errors="*{gender}"></p>
-          </div>
-          <div class="col-md-12 form-check">
-            <input name="hasAccount" th:value="*{hasAccount}" class="form-check-input" id="hasAccount" type="checkbox" autocomplete="off"
-                   onchange="toggleData('account-details')">
-            <label class="form-check-label" for="hasAccount">Add account</label>
-          </div>
-          <div id="account-details" class="col-md-12 row g-3" style="display: none;">
-            <div class="col-md-12 form-floating">
-              <input type="text" class="form-control" th:field="*{account.username}" id="username"
-                     placeholder="Venkatappa">
-              <label for="username">Username</label>
-              <p th:if="${#fields.hasErrors('account.username')}" th:errorclass="error" th:errors="*{account.username}"></p>
-            </div>
-            <div class="col-md-12 form-floating">
-              <input type="password" class="form-control" th:field="*{account.password}" id="password" placeholder="password">
-              <label for="password">Password</label>
-              <p th:if="${#fields.hasErrors('account.password')}" th:errorclass="error" th:errors="*{account.password}"></p>
-            </div>
-          </div>
-          <div>
-            <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-            <a class="btn btn-outline-danger" href="/employees"><i class="fa-solid fa-ban"></i> Cancel</a>
-          </div>
-        </form>
+        <div
+                th:replace="~{frags/emp-frags.html :: emp-save-form(isAccountAllowed='true', isBtnSAllowed='true',
+                  actionLink='/save-employee')}"></div>
       </div>
     </div>
   </div>
