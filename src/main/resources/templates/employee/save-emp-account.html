@@ -3,19 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Save employee account</title>
+    <link th:replace="~{general.html :: top-styles}">
+    <link th:replace="~{general.html :: b-css}">
+    <link th:replace="~{general.html :: fa-css}">
+    <script th:replace="~{general.html :: top-js}"></script>
+    <script th:replace="~{general.html :: b-js}"></script>
 </head>
 <body>
-<div th:insert="~{general.html :: navbar}"></div>
-<form action="#" th:action="@{/save-emp-account}" th:object="${account}" method="post">
-    <input type="hidden" th:field="*{accountId}">
-    <input type="hidden" th:value="${employeeId}" name="employeeId">
-    <label>Username: <input type="text" th:field="*{username}"></label> <br>
-    <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"></p>
-    <label>Password: <input type="password" th:field="*{password}"></label> <br>
-    <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>
-
-    <input type="submit" value="save">
-</form>
-<a style="cursor: pointer; color: blue" href="/employees">Back</a>
+<div th:replace="~{general.html :: navbar}"></div>
+<div class="container d-flex justify-content-center">
+    <div class="row g-3 d-flex flex-column align-items-center">
+        <div class="col-lg-8 border p-3">
+            <div>
+                <h2 class="text-center mb-3">Save account</h2>
+            </div>
+            <div>
+                <form class="row g-3" action="#" th:action="@{/save-emp-account}" th:object="${account}" method="post">
+                    <input type="hidden" th:field="*{accountId}">
+                    <input type="hidden" th:value="${employeeId}" name="employeeId">
+                    <div class="col-md-12 row g-3">
+                        <div class="col-md-12 form-floating">
+                            <input type="text" class="form-control" th:field="*{username}" id="username"
+                                   placeholder="Venkatappa">
+                            <label for="username">Username</label>
+                            <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"></p>                        </div>
+                        <div class="col-md-12 form-floating">
+                            <input type="password" class="form-control" th:field="*{password}" id="password" placeholder="password">
+                            <label for="password">Password</label>
+                            <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                        <a class="btn btn-outline-danger" href="/employees"><i class="fa-solid fa-ban"></i> Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
