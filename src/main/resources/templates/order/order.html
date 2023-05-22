@@ -30,7 +30,7 @@
             </div>
         </form>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive-sm">
         <table class="table table-hover border">
             <thead>
                 <tr>
@@ -106,11 +106,23 @@
                         <!-- Modal ends -->
                     </td>
                     <td>
-                        <!-- Modal trigger button -->
-                        <a class="text-decoration-none" role="button" data-bs-toggle="modal"
-                           th:attr="data-bs-target=|#service-${order.orderId}-details|"
-                           th:text="${order.service.serviceType.name}">
-                        </a>
+                        <div class="btn-group" th:if="${order.orderStatus == 'PENDING'}">
+                            <!-- Modal trigger button -->
+                            <button class="btn btn-sm" data-bs-toggle="modal"
+                                    th:classappend="
+                                    ${(order.service.serviceStatus == 'COMPLETED') ? 'btn-outline-success' : 'btn-outline-danger'}"
+                               th:attr="data-bs-target=|#service-${order.orderId}-details|"
+                               th:text="${order.service.serviceType.name}">
+                            </button>
+                            <button class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                    th:classappend="
+                                    ${(order.service.serviceStatus == 'COMPLETED') ? 'btn-success' : 'btn-danger'}"
+                                    data-bs-toggle="dropdown" aria-expanded="false"></button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Pending</a></li>
+                                <li><a class="dropdown-item" href="#">Completed</a></li>
+                            </ul>
+                        </div>
                         <!-- Modal -->
                         <div class="modal fade" th:id="service-+${order.orderId}+-details" tabindex="-1"
                              aria-hidden="true">
@@ -171,9 +183,13 @@
                         <div class="btn-group" th:if="${order.orderStatus == 'PENDING'}">
                             <!-- Modal trigger button -->
                             <button class="btn btn-sm btn-outline-primary" th:if="${order.orderStatus == 'PENDING'}"
+                                    th:classappend="
+                                    ${(order.payment.paymentStatus == 'PAID') ? 'btn-outline-success' : 'btn-outline-danger'}"
                                     data-bs-toggle="modal" th:attr="data-bs-target=|#update-order-${order.orderId}-amount|"
                                     th:text="${order.payment.amountPaid}"></button>
-                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split"
+                            <button class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                    th:classappend="
+                                    ${(order.payment.paymentStatus == 'PAID') ? 'btn-success' : 'btn-danger'}"
                                     data-bs-toggle="dropdown" aria-expanded="false"></button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Paid</a></li>
