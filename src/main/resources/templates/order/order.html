@@ -105,6 +105,10 @@
                         <!-- Modal ends -->
                     </td>
                     <td>
+                        <a th:if="${order.orderStatus != 'PENDING'}" class="text-decoration-none" role="button"
+                           data-bs-toggle="modal" th:attr="data-bs-target=|#service-${order.orderId}-details|"
+                                th:text="${order.service.serviceType.name}">
+                        </a>
                         <div class="btn-group" th:if="${order.orderStatus == 'PENDING'}">
                             <!-- Modal trigger button -->
                             <button class="btn btn-sm" data-bs-toggle="modal"
