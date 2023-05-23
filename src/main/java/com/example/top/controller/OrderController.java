@@ -81,7 +81,7 @@ public class OrderController extends AController {
     public RedirectView updateOrderServiceStatus(UpdateOrderServiceStatusDto updateOrder, RedirectAttributes attributes) {
         orderService.update.updateServiceStatus(updateOrder.getOrderId(), updateOrder.getServiceStatus());
 
-        attributes.addFlashAttribute("alertMessage", "Order '" + updateOrder.getOrderId() + "' service status changed to " + updateOrder.getServiceStatus());
+        attributes.addFlashAttribute("alertMessage", "Order '" + updateOrder.getOrderId() + "' service status changed to '" + updateOrder.getServiceStatus() + "'");
         return new RedirectView("/orders");
     }
 
@@ -119,7 +119,7 @@ public class OrderController extends AController {
     public RedirectView moveOrderToPending(Long id, RedirectAttributes attributes) {
         orderService.moveOrderToPending(id);
 
-        attributes.addFlashAttribute("alertMessage", "Order " + id + " Moved to Pending");
+        attributes.addFlashAttribute("alertMessage", "Order '" + id + "' moved to 'PENDING'");
         return new RedirectView("/orders");
     }
 
@@ -127,7 +127,7 @@ public class OrderController extends AController {
     public RedirectView changeServiceStatus(Long id, String serviceStatus, RedirectAttributes attributes) {
         orderService.update.updateServiceStatus(id, serviceStatus);
 
-        attributes.addFlashAttribute("alertMessage", "Order " + id + " Service status changed to " + serviceStatus);
+        attributes.addFlashAttribute("alertMessage", "Order '" + id + "' service status changed to '" + serviceStatus + "'");
         return new RedirectView("/orders");
     }
 
@@ -135,7 +135,7 @@ public class OrderController extends AController {
     public RedirectView changePaymentStatus(Long id, String paymentStatus, RedirectAttributes attributes) {
         orderService.update.updatePaymentStatus(id, paymentStatus);
 
-        attributes.addFlashAttribute("alertMessage", "Order " + id + " Payment status changed to " + paymentStatus);
+        attributes.addFlashAttribute("alertMessage", "Order '" + id + "' payment status changed to '" + paymentStatus + "'");
         return new RedirectView("/orders");
     }
 
