@@ -33,3 +33,12 @@
           document.getElementById(id).style.display = 'block';
       }
   }
+
+  function showAlertToast(alertMessage) {
+      document.getElementById('alertMessage').innerHTML = alertMessage;
+      const alertToast = document.getElementById('alertToast')
+      const toastBootstrap = bootstrap.Toast.getOrCreateInstance(alertToast)
+      document.addEventListener('DOMContentLoaded', () => {
+          toastBootstrap.show()
+      })
+  }

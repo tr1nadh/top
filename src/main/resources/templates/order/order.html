@@ -235,5 +235,14 @@
         </table>
     </div>
 </div>
+<div th:replace="~{frags/general-frags.html :: alertToast}"></div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+    let alertMessage = /*[[${alertMessage}]]*/
+    if (alertMessage) {
+        showAlertToast(alertMessage);
+    }
+  /*]]>*/
+</script>
 </body>
 </html>

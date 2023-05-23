@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Arrays;
@@ -43,12 +44,13 @@ public class OrderController extends AController {
     }
 
     @PostMapping("/save-order")
-    public ModelAndView saveOrder(@Valid @ModelAttribute("order") OrderDto order, BindingResult bindingResult) {
+    public ModelAndView saveOrder(@Valid @ModelAttribute("order") OrderDto order, BindingResult bindingResult, RedirectAttributes attributes) {
         if (bindingResult.hasErrors()) return getRenderView(order);
 
         orderService.crud.saveOrder(OrderMapper.map(order));
 
-        return getAlertView("Order saved", "/orders");
+        attributes.addFlashAttribute("alertMessage", "Order successfully saved");
+        return new ModelAndView("redirect:/orders");
     }
 
     private ModelAndView getRenderView(Object order) {
@@ -76,68 +78,80 @@ public class OrderController extends AController {
     }
 
     @PostMapping("/update-order-service-status")
-    public ModelAndView updateOrderServiceStatus(UpdateOrderServiceStatusDto updateOrder) {
+    public RedirectView updateOrderServiceStatus(UpdateOrderServiceStatusDto updateOrder, RedirectAttributes attributes) {
         orderService.update.updateServiceStatus(updateOrder.getOrderId(), updateOrder.getServiceStatus());
 
-        return getAlertView("Service status updated", "/orders");
+        attributes.addFlashAttribute("alertMessage", "Order '" + updateOrder.getOrderId() + "' service status changed to " + updateOrder.getServiceStatus());
+        return new RedirectView("/orders");
     }
 
     @PostMapping("/add-order-amount")
-    public ModelAndView addOrderAmount(@Valid AddAmountToOrderDto updateOrder, BindingResult bindingResult) {
+    public RedirectView addOrderAmount(@Valid AddAmountToOrderDto updateOrder, BindingResult bindingResult, RedirectAttributes attributes) {
         if (bindingResult.hasErrors()) {
             var error = bindingResult.getFieldError("addAmount");
-            return getAlertView(error.getDefaultMessage(), "/orders");
+
+            attributes.addFlashAttribute("alertMessage", error.getDefaultMessage());
+            return new RedirectView("/orders");
         }
 
         orderService.update.addAmount(updateOrder.getOrderId(), updateOrder.getAddAmount());
 
-        return getAlertView("Amount added", "/orders");
+        attributes.addFlashAttribute("alertMessage", "Amount '" + updateOrder.getAddAmount() + "' added to order '" + updateOrder.getOrderId() + "'");
+        return new RedirectView("/orders");
     }
 
     @PostMapping("/remove-order-amount")
-    public ModelAndView removeOrderAmount(@Valid RemoveOrderAmountDto updateOrder, BindingResult bindingResult) {
+    public RedirectView removeOrderAmount(@Valid RemoveOrderAmountDto updateOrder, BindingResult bindingResult, RedirectAttributes attributes) {
         if (bindingResult.hasErrors()) {
             var error = bindingResult.getFieldError("removeAmount");
-            return getAlertView(error.getDefaultMessage(), "/orders");
+
+            attributes.addFlashAttribute("alertMessage", error.getDefaultMessage());
+            return new RedirectView("/orders");
         }
 
         orderService.update.removeAmount(updateOrder.getOrderId(), updateOrder.getRemoveAmount());
 
-        return getAlertView("Amount removed", "/orders");
+        attributes.addFlashAttribute("alertMessage", "Amount '" + updateOrder.getRemoveAmount() + "' removed from order '" + updateOrder.getOrderId() + "'");
+        return new RedirectView("/orders");
     }
 
     @GetMapping("/move-order-pending")
-    public ModelAndView moveOrderToPending(Long id) {
+    public RedirectView moveOrderToPending(Long id, RedirectAttributes attributes) {
         orderService.moveOrderToPending(id);
 
-        return getAlertView("Order moved to pending", "/orders");
+        attributes.addFlashAttribute("alertMessage", "Order " + id + " Moved to Pending");
+        return new RedirectView("/orders");
     }
 
     @PostMapping("/change-service-status")
-    public RedirectView changeServiceStatus(Long id, String serviceStatus) {
+    public RedirectView changeServiceStatus(Long id, String serviceStatus, RedirectAttributes attributes) {
         orderService.update.updateServiceStatus(id, serviceStatus);
 
+        attributes.addFlashAttribute("alertMessage", "Order " + id + " Service status changed to " + serviceStatus);
         return new RedirectView("/orders");
     }
 
     @PostMapping("/change-payment-status")
-    public RedirectView changePaymentStatus(Long id, String paymentStatus) {
+    public RedirectView changePaymentStatus(Long id, String paymentStatus, RedirectAttributes attributes) {
         orderService.update.updatePaymentStatus(id, paymentStatus);
 
+        attributes.addFlashAttribute("alertMessage", "Order " + id + " Payment status changed to " + paymentStatus);
         return new RedirectView("/orders");
     }
 
     @GetMapping("/cancel-order")
-    public ModelAndView cancelOrder(Long id) {
+    public RedirectView cancelOrder(Long id, RedirectAttributes attributes) {
         orderService.cancelOrder(id);
 
-        return getAlertView("Order cancelled", "/orders");
+        attributes.addFlashAttribute("alertMessage", "Order '" + id + "' has been cancelled");
+        return new RedirectView("/orders");
     }
 
     @GetMapping("/delete-order")
-    public ModelAndView deleteOrder(Long id) {
+    public RedirectView deleteOrder(Long id, RedirectAttributes attributes) {
         orderService.crud.deleteOrder(id);
 
-        return new ModelAndView("redirect:/orders");
+        attributes.addFlashAttribute("alertMessage", "Order '" + id + "' has been deleted");
+        return new RedirectView("/orders");
     }
 }
