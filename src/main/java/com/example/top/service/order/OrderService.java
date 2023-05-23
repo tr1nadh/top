@@ -1,6 +1,7 @@
 package com.example.top.service.order;
 
 import com.example.top.enums.OrderStatus;
+import com.example.top.enums.PaymentStatus;
 import com.example.top.enums.ServiceStatus;
 import com.example.top.repository.OrderRepository;
 import lombok.extern.java.Log;
@@ -45,6 +46,7 @@ public class OrderService {
         var dbOrder = optDbOrder.get();
         dbOrder.setOrderStatus(OrderStatus.CANCELLED.toString());
         dbOrder.getPayment().setAmountPaid(0);
+        dbOrder.getPayment().setPaymentStatus(PaymentStatus.UNPAID.toString());
         repository.save(dbOrder);
 
         log.info("Order with the id '" + id + "' has been cancelled");
