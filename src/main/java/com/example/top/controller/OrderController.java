@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Arrays;
 
@@ -113,17 +114,17 @@ public class OrderController extends AController {
     }
 
     @PostMapping("/change-service-status")
-    public ModelAndView changeServiceStatus(Long id, String serviceStatus) {
+    public RedirectView changeServiceStatus(Long id, String serviceStatus) {
         orderService.update.updateServiceStatus(id, serviceStatus);
 
-        return getAlertView("Service status changed", "/orders");
+        return new RedirectView("/orders");
     }
 
     @PostMapping("/change-payment-status")
-    public ModelAndView changePaymentStatus(Long id, String paymentStatus) {
+    public RedirectView changePaymentStatus(Long id, String paymentStatus) {
         orderService.update.updatePaymentStatus(id, paymentStatus);
 
-        return getAlertView("Payment status changed", "/orders");
+        return new RedirectView("/orders");
     }
 
     @GetMapping("/cancel-order")
