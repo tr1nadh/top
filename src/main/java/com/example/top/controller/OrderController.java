@@ -119,6 +119,13 @@ public class OrderController extends AController {
         return getAlertView("Service status changed", "/orders");
     }
 
+    @PostMapping("/change-payment-status")
+    public ModelAndView changePaymentStatus(Long id, String paymentStatus) {
+        orderService.update.updatePaymentStatus(id, paymentStatus);
+
+        return getAlertView("Payment status changed", "/orders");
+    }
+
     @GetMapping("/cancel-order")
     public ModelAndView cancelOrder(Long id) {
         orderService.cancelOrder(id);
