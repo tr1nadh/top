@@ -112,6 +112,13 @@ public class OrderController extends AController {
         return getAlertView("Order moved to pending", "/orders");
     }
 
+    @PostMapping("/change-service-status")
+    public ModelAndView changeServiceStatus(Long id, String serviceStatus) {
+        orderService.update.updateServiceStatus(id, serviceStatus);
+
+        return getAlertView("Service status changed", "/orders");
+    }
+
     @GetMapping("/cancel-order")
     public ModelAndView cancelOrder(Long id) {
         orderService.cancelOrder(id);

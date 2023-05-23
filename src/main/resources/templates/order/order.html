@@ -38,7 +38,6 @@
                     <th>Customer</th>
                     <th>Handle by</th>
                     <th>Service</th>
-                    <th>Service status</th>
                     <th>Total amount</th>
                     <th>Amount paid</th>
                     <th>Order status</th>
@@ -119,8 +118,11 @@
                                     ${(order.service.serviceStatus == 'COMPLETED') ? 'btn-success' : 'btn-danger'}"
                                     data-bs-toggle="dropdown" aria-expanded="false"></button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Pending</a></li>
-                                <li><a class="dropdown-item" href="#">Completed</a></li>
+                                <form class="row g-3" action="#" th:action="@{/change-service-status}" th:object="${order}" method="post">
+                                    <li><input type="hidden" name="id" th:value="*{orderId}"></li>
+                                    <li><input class="dropdown-item" type="submit" name="serviceStatus" value="PENDING"></li>
+                                    <li><input class="dropdown-item" type="submit" name="serviceStatus" value="COMPLETED"></li>
+                                </form>
                             </ul>
                         </div>
                         <!-- Modal -->
@@ -147,35 +149,6 @@
                             </div>
                         </div>
                         <!-- Modal ends -->
-                    </td>
-                    <td>
-                        <p th:if="${order.orderStatus != 'PENDING'}" th:text="${order.service.serviceStatus}"></p>
-                        <a th:id="update-order-+${order.orderId}+-ss-head" class="text-decoration-none"
-                           th:if="${order.orderStatus == 'PENDING'}"
-                           th:attr="onClick=|swapElements('update-order-${order.orderId}-ss-head','update-order-${order.orderId}-service-status')|"
-                           th:text="${order.service.serviceStatus}"
-                           href="#" style="display: block;">
-                        </a>
-                        <!--  Service status update form  -->
-                        <div th:id="update-order-+${order.orderId}+-service-status" style="display: none;">
-                            <form th:action="@{/update-order-service-status}" th:object="${order}" method="post">
-                                <input type="hidden" name="orderId" th:value="${order.orderId}">
-                                <div class="input-group input-group-sm">
-                                    <select class="form-select border border-primary" name="serviceStatus" onchange="this.form.submit()">
-                                        <option selected disabled value="Select">Select</option>
-                                        <option th:each="status : ${serviceStatus}"
-                                                th:value="${status}"
-                                                th:text="${status}"
-                                        ></option>
-                                    </select>
-                                    <a class="btn btn-outline-danger" role="button"
-                                            th:attr="onClick=|swapElements('update-order-${order.orderId}-ss-head','update-order-${order.orderId}-service-status')|"
-                                       href="#"
-                                    >X</a>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- End -->
                     </td>
                     <td th:text="${order.payment.totalAmount}"></td>
                     <td>
