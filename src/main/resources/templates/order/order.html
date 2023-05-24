@@ -234,7 +234,7 @@
                         </td>
                         <td th:text="${order.orderStatus}"></td>
                         <td>
-                            <a class="btn btn-success btn-sm" th:href="@{/update-order?id={id}(id=${order.orderId})}"
+                            <a class="btn btn-success btn-sm" th:href="@{update-order?id={id}(id=${order.orderId})}"
                                th:if="${order.orderStatus == 'PENDING'}" title="Update">
                                 <i class="fa-solid fa-pen-to-square"></i> Update</a>
                             <a class="btn btn-danger btn-sm" th:if="${order.orderStatus == 'PENDING'}"
