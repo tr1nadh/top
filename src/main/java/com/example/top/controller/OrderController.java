@@ -53,7 +53,7 @@ public class OrderController extends AController {
         orderService.crud.saveOrder(OrderMapper.map(order));
 
         attributes.addFlashAttribute("alertMessage", "Order successfully saved");
-        return new ModelAndView("redirect:/orders");
+        return new ModelAndView("redirect:pending");
     }
 
     private ModelAndView getRenderView(Object order) {
@@ -172,7 +172,7 @@ public class OrderController extends AController {
         orderService.update.updateServiceStatus(updateOrder.getOrderId(), updateOrder.getServiceStatus());
 
         attributes.addFlashAttribute("alertMessage", "Order '" + updateOrder.getOrderId() + "' service status changed to '" + updateOrder.getServiceStatus() + "'");
-        return new RedirectView("/orders");
+        return new RedirectView("pending");
     }
 
     @PostMapping("/add-order-amount")
@@ -181,13 +181,13 @@ public class OrderController extends AController {
             var error = bindingResult.getFieldError("addAmount");
 
             attributes.addFlashAttribute("alertMessage", error.getDefaultMessage());
-            return new RedirectView("/orders");
+            return new RedirectView("pending");
         }
 
         orderService.update.addAmount(updateOrder.getOrderId(), updateOrder.getAddAmount());
 
         attributes.addFlashAttribute("alertMessage", "Amount '" + updateOrder.getAddAmount() + "' added to order '" + updateOrder.getOrderId() + "'");
-        return new RedirectView("/orders");
+        return new RedirectView("pending");
     }
 
     @PostMapping("/remove-order-amount")
@@ -196,13 +196,13 @@ public class OrderController extends AController {
             var error = bindingResult.getFieldError("removeAmount");
 
             attributes.addFlashAttribute("alertMessage", error.getDefaultMessage());
-            return new RedirectView("/orders");
+            return new RedirectView("pending");
         }
 
         orderService.update.removeAmount(updateOrder.getOrderId(), updateOrder.getRemoveAmount());
 
         attributes.addFlashAttribute("alertMessage", "Amount '" + updateOrder.getRemoveAmount() + "' removed from order '" + updateOrder.getOrderId() + "'");
-        return new RedirectView("/orders");
+        return new RedirectView("pending");
     }
 
     @GetMapping("/move-order-pending")
@@ -210,7 +210,7 @@ public class OrderController extends AController {
         orderService.moveOrderToPending(id);
 
         attributes.addFlashAttribute("alertMessage", "Order '" + id + "' moved to 'PENDING'");
-        return new RedirectView("/orders");
+        return new RedirectView("pending");
     }
 
     @PostMapping("/change-service-status")
@@ -218,7 +218,7 @@ public class OrderController extends AController {
         orderService.update.updateServiceStatus(id, serviceStatus);
 
         attributes.addFlashAttribute("alertMessage", "Order '" + id + "' service status changed to '" + serviceStatus + "'");
-        return new RedirectView("/orders");
+        return new RedirectView("pending");
     }
 
     @PostMapping("/change-payment-status")
@@ -226,7 +226,7 @@ public class OrderController extends AController {
         orderService.update.updatePaymentStatus(id, paymentStatus);
 
         attributes.addFlashAttribute("alertMessage", "Order '" + id + "' payment status changed to '" + paymentStatus + "'");
-        return new RedirectView("/orders");
+        return new RedirectView("pending");
     }
 
     @GetMapping("/cancel-order")
@@ -234,7 +234,7 @@ public class OrderController extends AController {
         orderService.cancelOrder(id);
 
         attributes.addFlashAttribute("alertMessage", "Order '" + id + "' has been cancelled");
-        return new RedirectView("/orders");
+        return new RedirectView("pending");
     }
 
     @GetMapping("/delete-order")
@@ -242,6 +242,6 @@ public class OrderController extends AController {
         orderService.crud.deleteOrder(id);
 
         attributes.addFlashAttribute("alertMessage", "Order '" + id + "' has been deleted");
-        return new RedirectView("/orders");
+        return new RedirectView("pending");
     }
 }
