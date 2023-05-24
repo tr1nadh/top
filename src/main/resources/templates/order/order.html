@@ -136,7 +136,7 @@
                                         ${(order.service.serviceStatus == 'COMPLETED') ? 'btn-success' : 'btn-danger'}"
                                         data-bs-toggle="dropdown" aria-expanded="false"></button>
                                 <ul class="dropdown-menu">
-                                    <form action="#" th:action="@{/change-service-status}" th:object="${order}" method="post">
+                                    <form action="#" th:action="@{change-service-status}" th:object="${order}" method="post">
                                         <li><input type="hidden" name="id" th:value="*{orderId}"></li>
                                         <li><input class="dropdown-item" type="submit" name="serviceStatus" value="PENDING"></li>
                                         <li><input class="dropdown-item" type="submit" name="serviceStatus" value="COMPLETED"></li>
@@ -183,7 +183,7 @@
                                         ${(order.payment.paymentStatus == 'PAID') ? 'btn-success' : 'btn-danger'}"
                                         data-bs-toggle="dropdown" aria-expanded="false"></button>
                                 <ul class="dropdown-menu">
-                                    <form action="#" th:action="@{/change-payment-status}" th:object="${order}" method="post">
+                                    <form action="#" th:action="@{change-payment-status}" th:object="${order}" method="post">
                                         <li><input type="hidden" name="id" th:value="*{orderId}"></li>
                                         <li><input class="dropdown-item" type="submit" name="paymentStatus" value="PAID"></li>
                                         <li><input class="dropdown-item" type="submit" name="paymentStatus" value="UNPAID"></li>
@@ -200,7 +200,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <!-- Add amount update form -->
-                                            <form th:action="@{/add-order-amount}" th:object="${order}" method="post">
+                                            <form th:action="@{add-order-amount}" th:object="${order}" method="post">
                                                 <input type="hidden" name="orderId" th:value="${order.orderId}">
                                                 <div class="input-group mb-3">
                                                     <label>
@@ -212,7 +212,7 @@
                                             </form>
                                             <!-- End -->
                                             <!-- Remove amount update form -->
-                                            <form th:action="@{/remove-order-amount}" th:object="${order}" method="post">
+                                            <form th:action="@{remove-order-amount}" th:object="${order}" method="post">
                                                 <input type="hidden" name="orderId" th:value="${order.orderId}">
                                                 <div class="input-group mb-3">
                                                     <label>
@@ -238,13 +238,13 @@
                                th:if="${order.orderStatus == 'PENDING'}" title="Update">
                                 <i class="fa-solid fa-pen-to-square"></i> Update</a>
                             <a class="btn btn-danger btn-sm" th:if="${order.orderStatus == 'PENDING'}"
-                               th:href="@{/cancel-order?id={id}(id=${order.orderId})}" title="Cancel">
+                               th:href="@{cancel-order?id={id}(id=${order.orderId})}" title="Cancel">
                                 <i class="fa-solid fa-ban"></i> Cancel</a>
                             <button class="btn btn-danger btn-sm" th:if="${order.orderStatus == 'CANCELLED'}"
                                th:attr="onclick=|confirmDelete('/delete-order?id=${order.orderId}')|">
                                 <i class="fa-solid fa-trash"></i> Delete</button>
                             <a class="btn btn-warning btn-sm" th:if="${order.orderStatus != 'PENDING'}"
-                               th:href="@{/move-order-pending?id={id}(id=${order.orderId})}">
+                               th:href="@{move-order-pending?id={id}(id=${order.orderId})}">
                                 <i class="fa-solid fa-arrow-turn-up fa-rotate-90"></i> Move to pending
                             </a>
                         </td>
