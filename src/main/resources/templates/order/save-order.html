@@ -19,7 +19,7 @@
             <h2 class="text-center mb-3">Save employee</h2>
         </div>
         <div>
-          <form class="row g-3" action="#" th:action="@{/save-order}" th:object="${order}" method="post">
+          <form class="row g-3" action="#" th:action="@{save-order}" th:object="${order}" method="post">
             <input type="hidden" th:field="*{orderId}">
             <div class="col-md-6 form-floating mb-3">
               <input type="text" class="form-control" id="customer-name" placeholder="Customer name" th:field="*{customer.name}">
@@ -83,7 +83,7 @@
             </div>
             <div>
               <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-              <a class="btn btn-outline-danger" href="/orders"><i class="fa-solid fa-ban"></i> Cancel</a>
+              <a class="btn btn-outline-danger" href="pending"><i class="fa-solid fa-ban"></i> Cancel</a>
             </div>
           </form>
         </div>
