@@ -5,9 +5,6 @@ import com.example.top.dto.order.OrderDto;
 import com.example.top.dto.order.RemoveOrderAmountDto;
 import com.example.top.dto.order.UpdateOrderServiceStatusDto;
 import com.example.top.entity.order.Order;
-import com.example.top.enums.OrderStatus;
-import com.example.top.enums.PaymentStatus;
-import com.example.top.enums.ServiceStatus;
 import com.example.top.service.DimensionsService;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.ServiceTypeService;
@@ -25,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-
-import java.util.Arrays;
 
 @Controller
 @RequestMapping("/orders")
@@ -71,10 +66,6 @@ public class OrderController extends AController {
     public ModelAndView getOrders(String search, String orderStatus) {
         var mv = new ModelAndView();
         mv.addObject("orders", orderService.params.getOrdersByParams(search, orderStatus));
-        mv.addObject("order", new Order());
-        mv.addObject("serviceStatus", Arrays.stream(ServiceStatus.values()).toList());
-        mv.addObject("paymentStatus", Arrays.stream(PaymentStatus.values()).toList());
-        mv.addObject("orderStatus", Arrays.stream(OrderStatus.values()).toList());
         mv.setViewName("order/order");
 
         return mv;
@@ -86,10 +77,6 @@ public class OrderController extends AController {
 
         var mv = new ModelAndView();
         mv.addObject("orders", orderService.params.getPendingOrders());
-        mv.addObject("order", new Order());
-        mv.addObject("serviceStatus", Arrays.stream(ServiceStatus.values()).toList());
-        mv.addObject("paymentStatus", Arrays.stream(PaymentStatus.values()).toList());
-        mv.addObject("orderStatus", Arrays.stream(OrderStatus.values()).toList());
         mv.addObject("active", "pending");
         mv.setViewName("order/order");
 
@@ -99,10 +86,6 @@ public class OrderController extends AController {
     public ModelAndView getPendingOrdersWithCustomerNameContaining(String search) {
         var mv = new ModelAndView();
         mv.addObject("orders", orderService.params.findPendingOrdersWithCustomerNameContaining(search));
-        mv.addObject("order", new Order());
-        mv.addObject("serviceStatus", Arrays.stream(ServiceStatus.values()).toList());
-        mv.addObject("paymentStatus", Arrays.stream(PaymentStatus.values()).toList());
-        mv.addObject("orderStatus", Arrays.stream(OrderStatus.values()).toList());
         mv.addObject("active", "pending");
         mv.setViewName("order/order");
 
@@ -115,10 +98,6 @@ public class OrderController extends AController {
 
         var mv = new ModelAndView();
         mv.addObject("orders", orderService.params.getCompletedOrders());
-        mv.addObject("order", new Order());
-        mv.addObject("serviceStatus", Arrays.stream(ServiceStatus.values()).toList());
-        mv.addObject("paymentStatus", Arrays.stream(PaymentStatus.values()).toList());
-        mv.addObject("orderStatus", Arrays.stream(OrderStatus.values()).toList());
         mv.addObject("active", "completed");
         mv.setViewName("order/order");
 
@@ -128,10 +107,6 @@ public class OrderController extends AController {
     public ModelAndView getCompletedOrdersWithCustomerNameContaining(String search) {
         var mv = new ModelAndView();
         mv.addObject("orders", orderService.params.findCompletedOrdersWithCustomerNameContaining(search));
-        mv.addObject("order", new Order());
-        mv.addObject("serviceStatus", Arrays.stream(ServiceStatus.values()).toList());
-        mv.addObject("paymentStatus", Arrays.stream(PaymentStatus.values()).toList());
-        mv.addObject("orderStatus", Arrays.stream(OrderStatus.values()).toList());
         mv.addObject("active", "completed");
         mv.setViewName("order/order");
 
@@ -144,10 +119,6 @@ public class OrderController extends AController {
 
         var mv = new ModelAndView();
         mv.addObject("orders", orderService.params.getCancelledOrders());
-        mv.addObject("order", new Order());
-        mv.addObject("serviceStatus", Arrays.stream(ServiceStatus.values()).toList());
-        mv.addObject("paymentStatus", Arrays.stream(PaymentStatus.values()).toList());
-        mv.addObject("orderStatus", Arrays.stream(OrderStatus.values()).toList());
         mv.addObject("active", "cancelled");
         mv.setViewName("order/order");
 
@@ -157,10 +128,6 @@ public class OrderController extends AController {
     public ModelAndView getCancelledOrdersWithCustomerNameContaining(String search) {
         var mv = new ModelAndView();
         mv.addObject("orders", orderService.params.findCancelledOrdersWithCustomerNameContaining(search));
-        mv.addObject("order", new Order());
-        mv.addObject("serviceStatus", Arrays.stream(ServiceStatus.values()).toList());
-        mv.addObject("paymentStatus", Arrays.stream(PaymentStatus.values()).toList());
-        mv.addObject("orderStatus", Arrays.stream(OrderStatus.values()).toList());
         mv.addObject("active", "cancelled");
         mv.setViewName("order/order");
 
