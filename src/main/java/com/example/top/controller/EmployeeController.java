@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
+@RequestMapping("/employees")
 public class EmployeeController extends AController {
 
     @Autowired
@@ -47,12 +50,14 @@ public class EmployeeController extends AController {
     }
 
     @PostMapping("/save-employee")
-    public ModelAndView saveEmployee(@Valid @ModelAttribute("employee") EmployeeDto employee, BindingResult bindingResult) {
+    public ModelAndView saveEmployee(@Valid @ModelAttribute("employee") EmployeeDto employee, BindingResult bindingResult,
+                                     RedirectAttributes attributes) {
         if (bindingResult.hasErrors() && !isAccountNull(employee, bindingResult)) return getAddView(employee);
 
         empService.saveEmployee(EmployeeMapper.map(employee));
 
-        return getAlertView("Employee saved", "/employees");
+        attributes.addFlashAttribute("alertMessage", "Employee saved");
+        return new ModelAndView("redirect:view");
     }
 
     private boolean isAccountNull(EmployeeDto employee, BindingResult bindingResult) {
@@ -85,12 +90,14 @@ public class EmployeeController extends AController {
     }
 
     @PostMapping("/save-emp-info")
-    public ModelAndView saveEmployeeInfo(@Valid @ModelAttribute("employee") EmployeeDto employee, BindingResult bindingResult) {
+    public ModelAndView saveEmployeeInfo(@Valid @ModelAttribute("employee") EmployeeDto employee, BindingResult bindingResult,
+                                         RedirectAttributes attributes) {
         if (bindingResult.hasErrors()) return getUpdateView(employee);
 
         empService.saveEmployee(EmployeeMapper.mapInfo(employee));
 
-        return getAlertView("Employee saved", "/employees");
+        attributes.addFlashAttribute("alertMessage", "Employee saved");
+        return new ModelAndView("redirect:view");
     }
 
     private ModelAndView getUpdateView(Object employee) {
@@ -103,7 +110,8 @@ public class EmployeeController extends AController {
     }
 
     @PostMapping("/save-emp-account")
-    public ModelAndView saveAccount(@Valid @ModelAttribute("account") UpdateAccountDto account, BindingResult bindingResult) {
+    public ModelAndView saveAccount(@Valid @ModelAttribute("account") UpdateAccountDto account, BindingResult bindingResult,
+                                    RedirectAttributes attributes) {
         if (bindingResult.hasErrors()) {
             var mv = new ModelAndView();
             mv.addObject("account", account);
@@ -114,10 +122,11 @@ public class EmployeeController extends AController {
 
         empService.saveAccount(account.getEmployeeId(), Mapper.map(account, new Account()));
 
-        return getAlertView("Account saved", "/employees");
+        attributes.addFlashAttribute("alertMessage", "Account saved");
+        return new ModelAndView("redirect:view");
     }
 
-    @RequestMapping("/employees")
+    @RequestMapping("/view")
     public ModelAndView getEmployees() {
         var mv = new ModelAndView();
         mv.addObject("employees", empService.findAllEmployees());
@@ -127,9 +136,10 @@ public class EmployeeController extends AController {
     }
 
     @GetMapping("/delete-employee")
-    public ModelAndView deleteEmployee(Long id) {
+    public RedirectView deleteEmployee(Long id, RedirectAttributes attributes) {
         empService.deleteEmployee(id);
 
-        return new ModelAndView("redirect:/employees");
+        attributes.addFlashAttribute("alertMessage", "Employee deleted");
+        return new RedirectView("redirect:view");
     }
 }
