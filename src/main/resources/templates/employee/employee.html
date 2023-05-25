@@ -13,8 +13,8 @@
 <div th:replace="~{frags/general-frags.html :: navbar}"></div>
 <div class="container-lg">
     <div class="mb-3">
-        <a class="btn btn-outline-primary btn-sm" href="/add-employee">Add employee</a>
-        <a class="btn btn-outline-primary btn-sm" href="/roles">Roles</a>
+        <a class="btn btn-outline-primary btn-sm" href="add-employee">Add employee</a>
+        <a class="btn btn-outline-primary btn-sm" href="roles/view">Roles</a>
     </div>
     <div class="table-responsive">
         <table class="table table-hover border">
@@ -40,12 +40,12 @@
                             <button class="btn btn-success btn-sm dropdown-toggle" data-bs-toggle="dropdown"
                                     aria-expanded="false"><i class="fa-solid fa-pen-to-square"></i> Update</button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" th:href="@{|/update-employee?id=${emp.employeeId}|}">Update info</a></li>
-                                <li><a class="dropdown-item" th:href="@{|/update-emp-account?id=${emp.employeeId}|}">Update account</a></li>
+                                <li><a class="dropdown-item" th:href="@{|update-employee?id=${emp.employeeId}|}">Update info</a></li>
+                                <li><a class="dropdown-item" th:href="@{|update-emp-account?id=${emp.employeeId}|}">Update account</a></li>
                             </ul>
                         </div>
                         <button class="btn btn-danger btn-sm"
-                                th:attr="onclick=|confirmDelete('/delete-employee?id=${emp.employeeId}')|">
+                                th:attr="onclick=|confirmDelete('delete-employee?id=${emp.employeeId}')|">
                             <i class="fa-sharp fa-solid fa-trash"></i> Delete</button>
                     </td>
                 </tr>
@@ -53,5 +53,14 @@
         </table>
     </div>
 </div>
+<div th:replace="~{frags/general-frags.html :: alertToast}"></div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+    let alertMessage = /*[[${alertMessage}]]*/
+    if (alertMessage) {
+        showAlertToast(alertMessage);
+    }
+  /*]]>*/
+</script>
 </body>
 </html>
