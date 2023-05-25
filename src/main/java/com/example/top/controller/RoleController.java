@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("employees/roles")
@@ -54,9 +55,9 @@ public class RoleController extends AController {
     }
 
     @GetMapping("/delete-role")
-    public ModelAndView deleteRole(Long id) {
+    public RedirectView deleteRole(Long id) {
         service.deleteRole(id);
 
-        return new ModelAndView("redirect:/roles");
+        return new RedirectView("view");
     }
 }
