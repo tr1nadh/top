@@ -56,7 +56,8 @@ public class EmployeeController extends AController {
 
         empService.saveEmployee(EmployeeMapper.map(employee));
 
-        attributes.addFlashAttribute("alertMessage", "Employee saved");
+        var message = "Employee with the id '" + employee.getEmployeeId() + "' has been saved";
+        attributes.addFlashAttribute("alertMessage", message);
         return new ModelAndView("redirect:view");
     }
 
@@ -96,7 +97,8 @@ public class EmployeeController extends AController {
 
         empService.saveEmployee(EmployeeMapper.mapInfo(employee));
 
-        attributes.addFlashAttribute("alertMessage", "Employee saved");
+        var message = "Employee with the id '" + employee.getEmployeeId() + "' has been saved";
+        attributes.addFlashAttribute("alertMessage", message);
         return new ModelAndView("redirect:view");
     }
 
@@ -122,7 +124,8 @@ public class EmployeeController extends AController {
 
         empService.saveAccount(account.getEmployeeId(), Mapper.map(account, new Account()));
 
-        attributes.addFlashAttribute("alertMessage", "Account saved");
+        var message = "Account with the username '" + account.getUsername() + "' has been saved";
+        attributes.addFlashAttribute("alertMessage", message);
         return new ModelAndView("redirect:view");
     }
 
@@ -139,7 +142,8 @@ public class EmployeeController extends AController {
     public RedirectView deleteEmployee(Long id, RedirectAttributes attributes) {
         empService.deleteEmployee(id);
 
-        attributes.addFlashAttribute("alertMessage", "Employee deleted");
-        return new RedirectView("redirect:view");
+        var message = "Employee with the id '" + id + "' has been deleted";
+        attributes.addFlashAttribute("alertMessage", message);
+        return new RedirectView("view");
     }
 }
