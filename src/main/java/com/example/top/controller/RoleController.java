@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("employees/roles")
 public class RoleController extends AController {
 
     @Autowired
@@ -29,11 +30,9 @@ public class RoleController extends AController {
     public ModelAndView saveRole(@Valid @ModelAttribute("role") RoleDto role, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return getRenderView(role);
 
-        var toMapping = (role.getRoleId() == null) ? "/add-role" : "/roles";
-
         service.saveRole(Mapper.map(role, new Role()));
 
-        return getAlertView("Role saved", toMapping);
+        return getAlertView("Role saved", "view");
     }
 
     private ModelAndView getRenderView(Object role) {
@@ -44,7 +43,7 @@ public class RoleController extends AController {
         return mv;
     }
 
-    @RequestMapping("/roles")
+    @RequestMapping("/view")
     public ModelAndView getRoles() {
         var mv = new ModelAndView();
         mv.addObject("roles", service.findAllRoles());
