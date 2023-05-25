@@ -30,19 +30,37 @@
         <tbody>
         <tr th:each="role : ${roles}">
           <td>
-            <form action="#" th:action="@{save-role}" th:object="${role}" method="post">
             <div class="input-group mb-3">
-              <input type="text" class="form-control" th:id="field-+${role.roleId}" name="name" th:value="${role.name}"
-              disabled>
-              <button class="btn btn-outline-success"
-                 th:attr="onclick=|openUpdate('${role.roleId}')|"><i class="fa-solid fa-pen-to-square"></i> Update</button>
-              <button th:id="field-+${role.roleId}+-close" class="btn btn-outline-danger" style="display:none"
-                 th:attr="onclick=|closeUpdate('${role.roleId}')|">X</button>
+              <input type="text" class="form-control" th:value="${role.name}" disabled>
+              <button class="btn btn-outline-success" data-bs-toggle="modal" type="button"
+                      th:attr="data-bs-target=|#role-${role.roleId}-update-modal|">
+                <i class="fa-solid fa-pen-to-square"></i> Update</button>
               <button class="btn btn-outline-danger"
-                 th:attr="onclick=|confirmDelete('delete-role?id=${role.roleId}')|">
+                      th:attr="onclick=|confirmDelete('delete-role?id=${role.roleId}')|">
                 <i class="fa-sharp fa-solid fa-trash"></i> Delete</button>
             </div>
-            </form>
+              <!-- Modal -->
+              <div class="modal fade" tabindex="-1" th:id="role-+${role.roleId}+-update-modal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5">Update role</h1>
+                    </div>
+                    <div class="modal-body">
+                      <form th:id="role-+${role.roleId}+-update-form" action="#" th:action="@{save-role}" method="post">
+                        <input type="hidden" name="roleId" th:value="${role.roleId}">
+                        <input type="text" class="form-control" th:id="field-+${role.roleId}" name="name" th:value="${role.name}">
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button class="btn btn-primary" type="submit"
+                      th:attr="onClick=|submitForm('role-${role.roleId}-update-form')|">Update</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Modal ends -->
           </td>
         </tr>
         </tbody>
