@@ -24,7 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
-@RequestMapping("/orders")
+@RequestMapping({"/","/orders"})
 public class OrderController extends AController {
 
     @Autowired
@@ -71,7 +71,7 @@ public class OrderController extends AController {
         return mv;
     }
 
-    @GetMapping({"/pending"})
+    @GetMapping({"/", "/pending"})
     public ModelAndView getPendingOrders(String search) {
         if (GeneralUtil.isQualifiedString(search)) return getPendingOrdersWithCustomerNameContaining(search);
 
