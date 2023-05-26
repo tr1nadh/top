@@ -29,7 +29,9 @@ public class RoleController extends AController {
 
     @PostMapping("/save-role")
     public ModelAndView saveRole(@Valid @ModelAttribute("role") RoleDto role, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) return getRenderView(role);
+        if (bindingResult.hasErrors()) {
+            return getAlertView(bindingResult.getFieldError("name").getDefaultMessage(),"view");
+        }
 
         service.saveRole(Mapper.map(role, new Role()));
 
@@ -39,7 +41,7 @@ public class RoleController extends AController {
     private ModelAndView getRenderView(Object role) {
         var mv = new ModelAndView();
         mv.addObject("role", role);
-        mv.setViewName("employee/role/save-role");
+        mv.setViewName("employee/role/role");
 
         return mv;
     }
