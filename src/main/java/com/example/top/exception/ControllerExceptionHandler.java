@@ -13,20 +13,12 @@ public class ControllerExceptionHandler extends AController {
 
     @ExceptionHandler(RuntimeException.class)
     public ModelAndView handleException(RuntimeException ex) {
-        var mv = new ModelAndView();
-        mv.addObject("message", ex.getMessage());
-        mv.setViewName("error");
-
-        return mv;
+        return getAlertView(ex.getMessage());
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ModelAndView handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-        var mv = new ModelAndView();
-        mv.addObject("message", getCustomErrorMessage(ex.getMostSpecificCause().getMessage()));
-        mv.setViewName("error");
-
-        return mv;
+        return getAlertView(getCustomErrorMessage(ex.getMostSpecificCause().getMessage()));
     }
 
     private String getCustomErrorMessage(String errorMessage) {
