@@ -20,6 +20,7 @@
         <table class="table table-hover border">
             <thead class="table-light">
                 <tr>
+                    <th>Id</th>
                     <th>FullName</th>
                     <th>Role</th>
                     <th>PhoneNo</th>
@@ -30,6 +31,7 @@
             </thead>
             <tbody>
                 <tr th:each="emp : ${employees}">
+                    <td th:text="${emp.employeeId}"></td>
                     <td th:text="${emp.fullName}"></td>
                     <td th:text="${emp.role.name}"></td>
                     <td th:text="${emp.phoneNo}"></td>
