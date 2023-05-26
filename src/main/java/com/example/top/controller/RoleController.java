@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
@@ -28,14 +29,17 @@ public class RoleController extends AController {
     }
 
     @PostMapping("/save-role")
-    public ModelAndView saveRole(@Valid @ModelAttribute("role") RoleDto role, BindingResult bindingResult) {
+    public RedirectView saveRole(@Valid @ModelAttribute("role") RoleDto role, BindingResult bindingResult,
+                                 RedirectAttributes attributes) {
         if (bindingResult.hasErrors()) {
-            return getAlertView(bindingResult.getFieldError("name").getDefaultMessage(),"view");
+            attributes.addFlashAttribute("alertMessage", bindingResult.getFieldError("name").getDefaultMessage());
+            return new RedirectView("view");
         }
 
         service.saveRole(Mapper.map(role, new Role()));
 
-        return getAlertView("Role saved", "view");
+        attributes.addFlashAttribute("alertMessage", "Role '" + role.getName() + "' has been saved");
+        return new RedirectView("view");
     }
 
     private ModelAndView getRenderView(Object role) {
@@ -57,9 +61,11 @@ public class RoleController extends AController {
     }
 
     @GetMapping("/delete-role")
-    public RedirectView deleteRole(Long id) {
-        service.deleteRole(id);
+    public RedirectView deleteRole(Long id, RedirectAttributes attributes) {
+        var role = service.deleteRole(id);
 
+        var message = "Role '" + role.getName() + "' has been deleted";
+        attributes.addFlashAttribute("alertMessage", message);
         return new RedirectView("view");
     }
 }

@@ -45,7 +45,7 @@ public class RoleService {
         return role;
     }
 
-    public void deleteRole(Long id) {
+    public Role deleteRole(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
         var optRole = repository.findById(id);
@@ -55,5 +55,6 @@ public class RoleService {
         repository.deleteById(id);
 
         log.info("Role '" + optRole.get().getName() + "' has been deleted");
+        return optRole.get();
     }
 }
