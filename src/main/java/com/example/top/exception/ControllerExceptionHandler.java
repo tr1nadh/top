@@ -4,7 +4,8 @@ import com.example.top.controller.AController;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Objects;
 
@@ -12,13 +13,15 @@ import java.util.Objects;
 public class ControllerExceptionHandler extends AController {
 
     @ExceptionHandler(RuntimeException.class)
-    public ModelAndView handleException(RuntimeException ex) {
-        return getAlertView(ex.getMessage());
+    public RedirectView handleException(RuntimeException ex, RedirectAttributes attributes) {
+        attributes.addFlashAttribute("alertMessage", ex.getMessage());
+        return new RedirectView("error");
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ModelAndView handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-        return getAlertView(getCustomErrorMessage(ex.getMostSpecificCause().getMessage()));
+    public RedirectView handleDataIntegrityViolationException(DataIntegrityViolationException ex, RedirectAttributes attributes) {
+        attributes.addFlashAttribute("alertMessage", getCustomErrorMessage(ex.getMostSpecificCause().getMessage()));
+        return new RedirectView("error");
     }
 
     private String getCustomErrorMessage(String errorMessage) {
