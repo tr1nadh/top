@@ -44,7 +44,7 @@ public class DimensionsService {
         return dimensions;
     }
 
-    public void deleteDimensions(Long id) {
+    public Dimensions deleteDimensions(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
         var dimensions = repository.findById(id);
@@ -54,5 +54,6 @@ public class DimensionsService {
         repository.deleteById(id);
 
         log.info("Dimensions '" + dimensions.get().getName() + "' has been deleted");
+        return dimensions.get();
     }
 }
