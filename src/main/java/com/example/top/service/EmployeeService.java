@@ -65,7 +65,15 @@ public class EmployeeService {
 
     public List<Employee> findAllEmployees() {
         var employees = repository
-                .findByRoleNameNotIn(List.of("Admin", "Developer"), PageRequest.of(0, 10));
+                .findByRoleNameNotIn(List.of("Admin", "Developer"));
+
+        log.info("Successfully retrieved all employees");
+        return employees;
+    }
+
+    public List<Employee> findAllEmployees(int page) {
+        var employees = repository
+                .findByRoleNameNotIn(List.of("Admin", "Developer"), PageRequest.of(page, 10));
 
         log.info("Successfully retrieved all employees");
         return employees;
