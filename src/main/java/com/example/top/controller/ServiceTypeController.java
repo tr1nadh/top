@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
+@RequestMapping("/orders/service-types")
 public class ServiceTypeController extends AController {
 
     @Autowired
@@ -26,12 +29,20 @@ public class ServiceTypeController extends AController {
     }
 
     @PostMapping("/save-service-type")
-    public ModelAndView saveServiceType(@Valid @ModelAttribute("serviceType") ServiceTypeDto type, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) return getRenderView(type);
+    public RedirectView saveServiceType(@Valid @ModelAttribute("serviceType") ServiceTypeDto type, BindingResult bindingResult,
+                                        RedirectAttributes attributes) {
+        if (bindingResult.hasErrors()) {
+            attributes.addFlashAttribute("alertMessage", bindingResult.getFieldError("name").getDefaultMessage());
+            return new RedirectView("view");
+        }
+
 
         service.saveServiceType(Mapper.map(type, new ServiceType()));
 
-        return getAlertView("Service type saved", "/service-types");
+        var end = (type.getId() == null) ? "saved" : "updated";
+        var message = "Service type '" + type.getName() + "' has been " + end;
+        attributes.addFlashAttribute("alertMessage", message);
+        return new RedirectView("view");
     }
 
     private ModelAndView getRenderView(Object type) {
@@ -42,7 +53,7 @@ public class ServiceTypeController extends AController {
         return mv;
     }
 
-    @RequestMapping("/service-types")
+    @RequestMapping("/view")
     public ModelAndView getServiceTypes() {
         var mv = new ModelAndView();
         mv.addObject("serviceTypes", service.findAllServiceTypes());
@@ -53,9 +64,17 @@ public class ServiceTypeController extends AController {
     }
 
     @GetMapping("/delete-service-type")
-    public ModelAndView deleteServiceType(Long id) {
-        service.deleteServiceType(id);
+    public RedirectView deleteServiceType(Long id, RedirectAttributes attributes) {
+        var type = service.deleteServiceType(id);
 
-        return new ModelAndView("redirect:/service-types");
+        var message = "Service type '" + type.getName() + "' has been deleted";
+        attributes.addFlashAttribute("alertMessage", message);
+        return new RedirectView("view");
+    }
+
+    @RequestMapping("/error")
+    public ModelAndView error(String alertMessage, RedirectAttributes attributes) {
+        attributes.addFlashAttribute("alertMessage", alertMessage);
+        return new ModelAndView("forward:view");
     }
 }
