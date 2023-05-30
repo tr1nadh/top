@@ -9,29 +9,53 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
+@RequestMapping("/account")
 public class AccountController extends AController {
 
     @Autowired
     private AccountService service;
 
-    @PostMapping("/update-emp-username")
-    public ModelAndView updateEmployeeUsername(@Valid @ModelAttribute("updateEmp")
-                                               UpdateEmpUsernameDto updateEmp, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) service.updateUsername(updateEmp.getOldUsername(), updateEmp.getNewUsername());
+    @RequestMapping("/settings")
+    public String renderSettings() {
+        return "settings";
+    }
 
-        return getAlertView("Username changed", updateEmp.getFromMapping());
+    @PostMapping("/update-emp-username")
+    public RedirectView updateEmployeeUsername(@Valid @ModelAttribute("updateEmpUsername") UpdateEmpUsernameDto updateEmp,
+                                               BindingResult bindingResult, RedirectAttributes attributes) {
+        if (bindingResult.hasErrors()) {
+            attributes.addFlashAttribute("alertMessage", bindingResult.getFieldError().getDefaultMessage());
+            return new RedirectView("settings");
+        }
+
+        service.updateUsername(updateEmp.getNewUsername());
+
+        attributes.addFlashAttribute("alertMessage", "Username successfully changed");
+        return new RedirectView("settings");
     }
 
     @PostMapping("/update-emp-password")
-    public ModelAndView updateEmployeePassword(@Valid @ModelAttribute("updateEmp")
-                                               UpdateEmpPasswordDto updateEmp, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors())
-            service.updatePassword(updateEmp.getUsername(),
-                    updateEmp.getOldPassword(), updateEmp.getNewPassword());
+    public ModelAndView updateEmployeePassword(@Valid @ModelAttribute("updateEmpPassword") UpdateEmpPasswordDto updateEmp,
+                                               BindingResult bindingResult, RedirectAttributes attributes) {
+        if (bindingResult.hasErrors()) {
+            attributes.addFlashAttribute("alertMessage", bindingResult.getFieldError().getDefaultMessage());
+            return new ModelAndView("redirect:settings");
+        }
 
-        return getAlertView("Password changed", updateEmp.getFromMapping());
+        service.updatePassword(updateEmp.getOldPassword(), updateEmp.getNewPassword());
+
+        return getAlertView("Password changed successfully, please login again.", "/login");
+    }
+
+    @RequestMapping("/error")
+    public ModelAndView error(String alertMessage, RedirectAttributes attributes) {
+        attributes.addFlashAttribute("alertMessage", alertMessage);
+        return new ModelAndView("forward:settings");
     }
 }
