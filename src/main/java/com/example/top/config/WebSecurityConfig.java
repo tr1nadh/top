@@ -1,6 +1,6 @@
 package com.example.top.config;
 
-import com.example.top.securitydetails.EmployeeDetailsService;
+import com.example.top.security.userdetails.EmployeeDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -38,7 +38,6 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests()
-                .requestMatchers("/employees").hasAuthority("Admin")
                 .anyRequest()
                 .authenticated()
                 .and()
