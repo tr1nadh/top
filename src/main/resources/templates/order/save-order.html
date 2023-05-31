@@ -1,95 +1,110 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Save order</title>
-  <link th:replace="~{frags/general-frags.html :: top-styles}">
-  <link th:replace="~{frags/general-frags.html :: b-css}">
-  <link th:replace="~{frags/general-frags.html :: fa-css}">
-  <script th:replace="~{frags/general-frags.html :: b-js}"></script>
+  <!--  Top css  -->
+  <link th:replace="~{frags/general-frags.html :: top-styles-css}">
+
+  <!-- Bootstrap css -->
+  <link th:replace="~{frags/general-frags.html :: bs-min-css}">
+
+  <!-- Font awesome css -->
+  <link th:replace="~{frags/general-frags.html :: fa-all-min-css}">
 </head>
 <body>
-<div th:replace="~{frags/general-frags.html :: navbar}"></div>
-<div class="container d-flex justify-content-center">
-  <div class="d-flex justify-content-center">
-    <div class="row g-3 d-flex flex-column align-items-center">
-      <div class="col-xxl-8 col-xl-10 col-md-12 border p-3">
-        <div>
-            <h2 class="text-center mb-3">Save employee</h2>
-        </div>
-        <div>
-          <form class="row g-3" action="#" th:action="@{save-order}" th:object="${order}" method="post">
-            <input type="hidden" th:field="*{orderId}">
-            <div class="col-md-6 form-floating mb-3">
-              <input type="text" class="form-control" id="customer-name" placeholder="Customer name" th:field="*{customer.name}">
-              <label for="customer-name">Customer name</label>
-              <p th:if="${#fields.hasErrors('customer.name')}" th:errorclass="error" th:errors="*{customer.name}"></p>
-            </div>
-            <div class="col-md-6 form-floating mb-3">
-              <input type="number" class="form-control" id="customer-number" placeholder="Customer number" th:field="*{customer.phoneNo}">
-              <label for="customer-number">Customer phoneNo</label>
-              <p th:if="${#fields.hasErrors('customer.phoneNo')}" th:errorclass="error" th:errors="*{customer.phoneNo}"></p>
-            </div>
-            <div class="col-md-6 form-floating mb-3">
-              <input type="email" class="form-control" id="customer-email" placeholder="Customer email" th:field="*{customer.emailAddress}">
-              <label for="customer-email">Customer email address</label>
-              <p th:if="${#fields.hasErrors('customer.emailAddress')}" th:errorclass="error" th:errors="*{customer.emailAddress}"></p>
-            </div>
-            <div class="col-md-6 form-floating mb-3">
-                <select class="form-select" id="emp-select" th:field="*{handleBy}">
-                  <option th:each="employee : ${employees}"
-                          th:value="${employee.employeeId}"
-                          th:text="${employee.fullName}"></option>
-                </select>
-              <label for="emp-select">Handle by</label>
-            </div>
-            <div class="col-lg-6 col-md-12 mb-3">
-              <div class="input-group">
-                <label class="input-group-text" for="service-select">Service</label>
-                  <select class="form-select" id="service-select" th:field="*{service.serviceType}">
-                    <option th:each="serviceType : ${serviceTypes}"
-                            th:value="${serviceType.id}"
-                            th:text="${serviceType.name}"></option>
-                  </select>
-                  <a class="btn btn-outline-primary" href="service-types/view">Service types</a>
+  <!-- Header -->
+  <header th:replace="~{frags/general-frags.html :: header}"></header>
+
+  <!-- Main -->
+  <main class="container d-flex justify-content-center">
+    <div class="d-flex justify-content-center">
+      <div class="row g-3 d-flex flex-column align-items-center">
+        <div class="col-xxl-8 col-xl-10 col-md-12 border p-3">
+
+          <!-- Main header -->
+          <div><h2 class="text-center mb-3">Save employee</h2></div>
+
+          <!-- Form -->
+          <div>
+            <form class="row g-3" action="#" th:action="@{save-order}" th:object="${order}" method="post">
+              <input type="hidden" th:field="*{orderId}">
+              <div class="col-md-6 form-floating mb-3">
+                <input type="text" class="form-control" id="customer-name" placeholder="Customer name" th:field="*{customer.name}">
+                <label for="customer-name">Customer name</label>
+                <p th:if="${#fields.hasErrors('customer.name')}" th:errorclass="error" th:errors="*{customer.name}"></p>
               </div>
-            </div>
-            <div class="col-lg-6 col-md-12 mb-3">
-              <div class="input-group">
-                  <label class="input-group-text" for="dimensions-select">Dimensions</label>
-                  <select class="form-select" id="dimensions-select" th:field="*{service.dimensions}">
-                    <option th:each="dimension : ${dimensions}"
-                            th:value="${dimension.id}"
-                            th:text="${dimension.name}"></option>
-                  </select>
-                  <a class="btn btn-outline-primary" href="dimensions/view">Dimensions</a>
+              <div class="col-md-6 form-floating mb-3">
+                <input type="number" class="form-control" id="customer-number" placeholder="Customer number" th:field="*{customer.phoneNo}">
+                <label for="customer-number">Customer phoneNo</label>
+                <p th:if="${#fields.hasErrors('customer.phoneNo')}" th:errorclass="error" th:errors="*{customer.phoneNo}"></p>
               </div>
-            </div>
-            <div class="col-md-4 form-floating mb-3">
-              <input type="number" class="form-control" id="quantity" placeholder="Quantity" th:field="*{service.quantity}">
-              <label for="quantity">Quantity</label>
-              <p th:if="${#fields.hasErrors('service.quantity')}" th:errorclass="error" th:errors="*{service.quantity}"></p>
-            </div>
-            <div class="col-md-4 form-floating mb-3">
-              <input type="number" class="form-control" id="printing-charges" placeholder="Printing charges" th:field="*{service.printingCharges}">
-              <label for="printing-charges">Printing charges</label>
-              <p th:if="${#fields.hasErrors('service.printingCharges')}" th:errorclass="error" th:errors="*{service.printingCharges}"></p>
-            </div>
-            <div class="col-md-4 form-floating mb-3">
-              <input type="number" class="form-control" id="service-charges" placeholder="Service charges" th:field="*{service.serviceCharges}">
-              <label for="service-charges">Service charges</label>
-              <p th:if="${#fields.hasErrors('service.serviceCharges')}" th:errorclass="error" th:errors="*{service.serviceCharges}"></p>
-            </div>
-            <div>
-              <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-              <a class="btn btn-outline-danger" href="pending"><i class="fa-solid fa-ban"></i> Cancel</a>
-            </div>
-          </form>
+              <div class="col-md-6 form-floating mb-3">
+                <input type="email" class="form-control" id="customer-email" placeholder="Customer email" th:field="*{customer.emailAddress}">
+                <label for="customer-email">Customer email address</label>
+                <p th:if="${#fields.hasErrors('customer.emailAddress')}" th:errorclass="error" th:errors="*{customer.emailAddress}"></p>
+              </div>
+              <div class="col-md-6 form-floating mb-3">
+                  <select class="form-select" id="emp-select" th:field="*{handleBy}">
+                    <option th:each="employee : ${employees}"
+                            th:value="${employee.employeeId}"
+                            th:text="${employee.fullName}"></option>
+                  </select>
+                <label for="emp-select">Handle by</label>
+              </div>
+              <div class="col-lg-6 col-md-12 mb-3">
+                <div class="input-group">
+                  <label class="input-group-text" for="service-select">Service</label>
+                    <select class="form-select" id="service-select" th:field="*{service.serviceType}">
+                      <option th:each="serviceType : ${serviceTypes}"
+                              th:value="${serviceType.id}"
+                              th:text="${serviceType.name}"></option>
+                    </select>
+                    <a class="btn btn-outline-primary" href="service-types/view">Service types</a>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-12 mb-3">
+                <div class="input-group">
+                    <label class="input-group-text" for="dimensions-select">Dimensions</label>
+                    <select class="form-select" id="dimensions-select" th:field="*{service.dimensions}">
+                      <option th:each="dimension : ${dimensions}"
+                              th:value="${dimension.id}"
+                              th:text="${dimension.name}"></option>
+                    </select>
+                    <a class="btn btn-outline-primary" href="dimensions/view">Dimensions</a>
+                </div>
+              </div>
+              <div class="col-md-4 form-floating mb-3">
+                <input type="number" class="form-control" id="quantity" placeholder="Quantity" th:field="*{service.quantity}">
+                <label for="quantity">Quantity</label>
+                <p th:if="${#fields.hasErrors('service.quantity')}" th:errorclass="error" th:errors="*{service.quantity}"></p>
+              </div>
+              <div class="col-md-4 form-floating mb-3">
+                <input type="number" class="form-control" id="printing-charges" placeholder="Printing charges" th:field="*{service.printingCharges}">
+                <label for="printing-charges">Printing charges</label>
+                <p th:if="${#fields.hasErrors('service.printingCharges')}" th:errorclass="error" th:errors="*{service.printingCharges}"></p>
+              </div>
+              <div class="col-md-4 form-floating mb-3">
+                <input type="number" class="form-control" id="service-charges" placeholder="Service charges" th:field="*{service.serviceCharges}">
+                <label for="service-charges">Service charges</label>
+                <p th:if="${#fields.hasErrors('service.serviceCharges')}" th:errorclass="error" th:errors="*{service.serviceCharges}"></p>
+              </div>
+              <div>
+                <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                <a class="btn btn-outline-danger" href="pending"><i class="fa-solid fa-ban"></i> Cancel</a>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </main>
+
+  <!-- Footer -->
+  <footer th:replace="~{frags/general-frags.html :: footer}"></footer>
+
+  <!-- Bottom script and js -->
+  <div th:replace="~{frags/general-frags.html :: bottom-script-n-js}"></div>
 </body>
 </html>

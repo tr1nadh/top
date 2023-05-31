@@ -4,83 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dimensions</title>
-    <link th:replace="~{frags/general-frags.html :: b-css}">
-    <link th:replace="~{frags/general-frags.html :: fa-css}">
-    <script th:replace="~{frags/general-frags.html :: top-js}"></script>
-    <script th:replace="~{frags/general-frags.html :: b-js}"></script>
+    <!--  Top css  -->
+    <link th:replace="~{frags/general-frags.html :: top-styles-css}">
+
+    <!-- Bootstrap css -->
+    <link th:replace="~{frags/general-frags.html :: bs-min-css}">
+
+    <!-- Font awesome css -->
+    <link th:replace="~{frags/general-frags.html :: fa-all-min-css}">
 </head>
 <body>
-<div th:replace="~{frags/general-frags.html :: navbar}"></div>
-<div class="container d-flex justify-content-center">
-    <div class="row g-3 d-flex flex-column align-items-center">
-        <div>
-            <h2 class="text-center">Dimensions</h2>
-        </div>
-        <div>
-            <form action="#" th:action="@{save-dimensions}" th:object="${dimensionsObj}" method="post">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="New dimension" th:field="*{name}">
-                    <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-plus"></i> Add</button>
-                    <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
-                </div>
-            </form>
-        </div> <br>
-        <div>
-            <table>
-                <tbody>
-                    <tr th:each="dimension : ${dimensions}">
-                        <td>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" th:value="${dimension.name}" disabled>
-                                <button class="btn btn-outline-success" data-bs-toggle="modal" type="button"
-                                        th:attr="data-bs-target=|#dimensions-${dimension.id}-update-modal|">
-                                    <i class="fa-solid fa-pen-to-square"></i> Update</button>
-                                <button class="btn btn-outline-danger"
-                                        th:attr="onclick=|confirmDelete('delete-dimensions?id=${dimension.id}')|">
-                                    <i class="fa-sharp fa-solid fa-trash"></i> Delete</button>
-                            </div>
-                            <!-- Modal -->
-                            <div class="modal fade" tabindex="-1" th:id="dimensions-+${dimension.id}+-update-modal" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5">Update dimensions</h1>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form th:id="dimensions-+${dimension.id}+-update-form" action="#" th:action="@{save-dimensions}"
-                                                  th:object="${dimensionsObj}" method="post">
-                                                <input type="hidden" name="id" th:value="${dimension.id}">
-                                                <input type="text" class="form-control" th:id="field-+${dimension.id}" name="name"
-                                                       th:value="${dimension.name}">
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button class="btn btn-primary" type="submit"
-                                                    th:attr="onClick=|submitForm('dimensions-${dimension.id}-update-form')|">Update</button>
+    <!-- Header -->
+    <header th:replace="~{frags/general-frags.html :: header}"></header>
+
+    <!-- Main -->
+    <main class="container d-flex justify-content-center">
+        <div class="row g-3 d-flex flex-column align-items-center">
+
+            <!-- Main header -->
+            <div><h2 class="text-center">Dimensions</h2></div>
+
+            <!-- Add dimensions -->
+            <div>
+                <form action="#" th:action="@{save-dimensions}" th:object="${dimensionsObj}" method="post">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="New dimension" th:field="*{name}">
+                        <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-plus"></i> Add</button>
+                        <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Table -->
+            <div>
+                <table>
+                    <tbody>
+                        <tr th:each="dimension : ${dimensions}">
+                            <td>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" th:value="${dimension.name}" disabled>
+
+                                    <!-- Dimensions update modal trigger button -->
+                                    <button class="btn btn-outline-success" data-bs-toggle="modal" type="button"
+                                            th:attr="data-bs-target=|#dimensions-${dimension.id}-update-modal|">
+                                        <i class="fa-solid fa-pen-to-square"></i> Update</button>
+                                    <button class="btn btn-outline-danger"
+                                            th:attr="onclick=|confirmDelete('delete-dimensions?id=${dimension.id}')|">
+                                        <i class="fa-sharp fa-solid fa-trash"></i> Delete</button>
+                                </div>
+
+                                <!-- Dimensions update modal -->
+                                <div class="modal fade" tabindex="-1" th:id="dimensions-+${dimension.id}+-update-modal" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5">Update dimensions</h1>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form th:id="dimensions-+${dimension.id}+-update-form" action="#" th:action="@{save-dimensions}"
+                                                      th:object="${dimensionsObj}" method="post">
+                                                    <input type="hidden" name="id" th:value="${dimension.id}">
+                                                    <input type="text" class="form-control" th:id="field-+${dimension.id}" name="name"
+                                                           th:value="${dimension.name}">
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button class="btn btn-primary" type="submit"
+                                                        th:attr="onClick=|submitForm('dimensions-${dimension.id}-update-form')|">Update</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Modal ends -->
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Back -->
+            <div>
+                <button class="btn btn-outline-secondary" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            </div>
         </div>
-        <div>
-            <button class="btn btn-outline-secondary" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i> Back</button>
-        </div>
-    </div>
-</div>
-<div th:replace="~{frags/general-frags.html :: alertToast}"></div>
-<script th:inline="javascript">
-/*<![CDATA[*/
-    let alertMessage = /*[[${alertMessage}]]*/
-    if (alertMessage) {
-        showAlertToast(alertMessage);
-    }
-  /*]]>*/
-</script>
+    </main>
+
+    <!-- Footer -->
+    <footer th:replace="~{frags/general-frags.html :: footer}"></footer>
+
+    <!-- Bottom script and js -->
+    <div th:replace="~{frags/general-frags.html :: bottom-script-n-js}"></div>
 </body>
 </html>
