@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <link th:replace="~{frags/general-frags.html :: b-css}">
+    <script th:replace="~{frags/general-frags.html :: top-js}"></script>
+    <script th:replace="~{frags/general-frags.html :: b-js}"></script>
+</head>
+<body>
+<p th:text="${message}"></p>
+<div th:replace="~{frags/general-frags.html :: alertToast}"></div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+    let alertMessage = /*[[${alertMessage}]]*/
+    if (alertMessage) {
+        showAlertToast(alertMessage);
+        setTimeout(() => {
+          window.location = /*[[${toUrl}]]*/
+        }, 1000);
+    }
+  /*]]>*/
+</script>
+</body>
+</html>
