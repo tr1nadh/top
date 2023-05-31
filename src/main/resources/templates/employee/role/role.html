@@ -1,95 +1,93 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://thymeleaf.org">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roles</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roles</title>
+  <!--  Top css  -->
+  <link th:replace="~{frags/general-frags.html :: top-styles-css}">
 
-    <!--  Top css  -->
-    <link th:replace="~{frags/general-frags.html :: top-styles-css}">
+  <!-- Bootstrap css -->
+  <link th:replace="~{frags/general-frags.html :: bs-min-css}">
 
-    <!-- Bootstrap css -->
-    <link th:replace="~{frags/general-frags.html :: bs-min-css}">
+  <!-- Font awesome css -->
+  <link th:replace="~{frags/general-frags.html :: fa-all-min-css}">
+</head>
+<body>
+  <!-- Header -->
+  <header th:replace="~{frags/general-frags.html :: header}"></header>
 
-    <!-- Font awesome css -->
-    <link th:replace="~{frags/general-frags.html :: fa-all-min-css}">
-  </head>
-  <body>
+  <!-- Main -->
+  <main class="container d-flex justify-content-center">
+    <div class="row g-3 d-flex flex-column align-items-center">
 
-    <!-- Header -->
-    <header th:replace="~{frags/general-frags.html :: header}"></header>
+      <!-- Main header -->
+      <div><h2 class="text-center">Roles</h2></div>
 
-    <!-- Main -->
-    <main class="container d-flex justify-content-center">
-      <div class="row g-3 d-flex flex-column align-items-center">
+      <!-- Add role -->
+      <div class="mb-3">
+        <form action="#" th:action="@{save-role}" th:object="${role}" method="post">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="New role name" th:field="*{name}">
+            <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-plus"></i> Add</button>
+          </div>
+        </form>
+      </div>
 
-        <!-- Main header -->
-        <div><h2 class="text-center">Roles</h2></div>
+      <!-- Roles table -->
+      <div>
+        <table>
+          <tbody>
+            <tr th:each="role : ${roles}">
+              <td>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" th:value="${role.name}" disabled>
+                  <button class="btn btn-outline-success" data-bs-toggle="modal" type="button"
+                          th:attr="data-bs-target=|#role-${role.roleId}-update-modal|">
+                    <i class="fa-solid fa-pen-to-square"></i> Update</button>
+                  <button class="btn btn-outline-danger"
+                          th:attr="onclick=|confirmDelete('delete-role?id=${role.roleId}')|">
+                    <i class="fa-sharp fa-solid fa-trash"></i> Delete</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-        <!-- Add role -->
-        <div class="mb-3">
-          <form action="#" th:action="@{save-role}" th:object="${role}" method="post">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="New role name" th:field="*{name}">
-              <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-plus"></i> Add</button>
-            </div>
+      <!-- Back -->
+      <div>
+        <button class="btn btn-outline-secondary" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer th:replace="~{frags/general-frags.html :: footer}"></footer>
+
+  <!-- Role update modal -->
+  <div class="modal fade" tabindex="-1" th:id="role-+${role.roleId}+-update-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Update role</h1>
+        </div>
+        <div class="modal-body">
+          <form th:id="role-+${role.roleId}+-update-form" action="#" th:action="@{save-role}" method="post">
+            <input type="hidden" name="roleId" th:value="${role.roleId}">
+            <input type="text" class="form-control" th:id="field-+${role.roleId}" name="name" th:value="${role.name}">
           </form>
         </div>
-
-        <!-- Roles table -->
-        <div>
-          <table>
-            <tbody>
-              <tr th:each="role : ${roles}">
-                <td>
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" th:value="${role.name}" disabled>
-                    <button class="btn btn-outline-success" data-bs-toggle="modal" type="button"
-                            th:attr="data-bs-target=|#role-${role.roleId}-update-modal|">
-                      <i class="fa-solid fa-pen-to-square"></i> Update</button>
-                    <button class="btn btn-outline-danger"
-                            th:attr="onclick=|confirmDelete('delete-role?id=${role.roleId}')|">
-                      <i class="fa-sharp fa-solid fa-trash"></i> Delete</button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Back -->
-        <div>
-          <button class="btn btn-outline-secondary" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i> Back</button>
-        </div>
-      </div>
-    </main>
-
-    <!-- Footer -->
-    <footer th:replace="~{frags/general-frags.html :: footer}"></footer>
-
-    <!-- Role update modal -->
-    <div class="modal fade" tabindex="-1" th:id="role-+${role.roleId}+-update-modal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5">Update role</h1>
-          </div>
-          <div class="modal-body">
-            <form th:id="role-+${role.roleId}+-update-form" action="#" th:action="@{save-role}" method="post">
-              <input type="hidden" name="roleId" th:value="${role.roleId}">
-              <input type="text" class="form-control" th:id="field-+${role.roleId}" name="name" th:value="${role.name}">
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button class="btn btn-primary" type="submit"
-                    th:attr="onClick=|submitForm('role-${role.roleId}-update-form')|">Update</button>
-          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button class="btn btn-primary" type="submit"
+                  th:attr="onClick=|submitForm('role-${role.roleId}-update-form')|">Update</button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Bottom script and js -->
-    <div th:replace="~{frags/general-frags.html :: bottom-script-n-js}"></div>
-  </body>
+  <!-- Bottom script and js -->
+  <div th:replace="~{frags/general-frags.html :: bottom-script-n-js}"></div>
+</body>
 </html>
