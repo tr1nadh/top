@@ -10,6 +10,7 @@ import com.example.top.util.mapper.EmployeeMapper;
 import com.example.top.util.mapper.Mapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/employees")
+@PreAuthorize("hasRole('Admin')")
 public class EmployeeController extends AController {
 
     @Autowired
