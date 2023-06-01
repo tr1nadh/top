@@ -70,7 +70,6 @@
                             <th>Service</th>
                             <th>Total amount</th>
                             <th>Amount paid</th>
-                            <th>Order status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -248,7 +247,6 @@
                                     </div>
                                 </div>
                             </td>
-                            <td th:text="${order.orderStatus}"></td>
                             <td>
                                 <a class="btn btn-success btn-sm" th:href="@{update-order?id={id}(id=${order.orderId})}"
                                    th:if="${order.orderStatus == 'PENDING'}" title="Update">
