@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://thymeleaf.org">
+<html lang="en" xmlns:th="https://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,12 +41,14 @@
                 <label for="customer-number">Customer phoneNo</label>
                 <p th:if="${#fields.hasErrors('customer.phoneNo')}" th:errorclass="error" th:errors="*{customer.phoneNo}"></p>
               </div>
-              <div class="col-md-6 form-floating mb-3">
+              <div class="form-floating mb-3"
+                   th:classappend="${(#authorization.expression('hasAnyRole(''ADMIN'', ''DEVELOPER'')'))
+                   ? 'col-md-6' : 'col-md-12'}">
                 <input type="email" class="form-control" id="customer-email" placeholder="Customer email" th:field="*{customer.emailAddress}">
                 <label for="customer-email">Customer email address</label>
                 <p th:if="${#fields.hasErrors('customer.emailAddress')}" th:errorclass="error" th:errors="*{customer.emailAddress}"></p>
               </div>
-              <div class="col-md-6 form-floating mb-3">
+              <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_DEVELOPER')" class="col-md-6 form-floating mb-3">
                   <select class="form-select" id="emp-select" th:field="*{handleBy}">
                     <option th:each="employee : ${employees}"
                             th:value="${employee.employeeId}"

@@ -13,6 +13,7 @@ import com.example.top.util.GeneralUtil;
 import com.example.top.util.mapper.OrderMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -135,6 +136,7 @@ public class OrderController extends AController {
     }
 
     @PostMapping("/update-order-service-status")
+    @PreAuthorize("!hasRole('ADMIN')")
     public RedirectView updateOrderServiceStatus(UpdateOrderServiceStatusDto updateOrder, RedirectAttributes attributes) {
         orderService.update.updateServiceStatus(updateOrder.getOrderId(), updateOrder.getServiceStatus());
 

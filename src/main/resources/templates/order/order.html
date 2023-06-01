@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://thymeleaf.org">
+<html lang="en" xmlns:th="https://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Orders</title>
@@ -65,7 +66,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Customer</th>
-                            <th>Handle by</th>
+                            <th sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_DEVELOPER')">Handle by</th>
                             <th>Service</th>
                             <th>Total amount</th>
                             <th>Amount paid</th>
@@ -103,7 +104,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>
+                            <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_DEVELOPER')">
                                 <!-- Show employee details modal trigger button -->
                                 <a class="text-decoration-none" role="button" data-bs-toggle="modal"
                                    th:attr="data-bs-target=|#employee-${order.orderId}-details|"
@@ -132,11 +133,12 @@
                                 </div>
                             </td>
                             <td>
-                                <a th:if="${order.orderStatus != 'PENDING'}" class="text-decoration-none" role="button"
+                                <a th:if="${(#authorization.expression('hasRole(''ADMIN'')') and (order.orderStatus == 'PENDING')) or (order.orderStatus != 'PENDING')}"
+                                class="text-decoration-none" role="button"
                                    data-bs-toggle="modal" th:attr="data-bs-target=|#service-${order.orderId}-details|"
                                         th:text="${order.service.serviceType.name}">
                                 </a>
-                                <div class="btn-group" th:if="${order.orderStatus == 'PENDING'}">
+                                <div sec:authorize="!hasRole('ROLE_ADMIN')" class="btn-group" th:if="${order.orderStatus == 'PENDING'}">
 
                                     <!-- Show service details modal trigger button -->
                                     <button class="btn btn-sm" data-bs-toggle="modal"

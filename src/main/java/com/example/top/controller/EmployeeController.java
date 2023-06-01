@@ -20,7 +20,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/employees")
-@PreAuthorize("hasRole('Admin')")
+@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
 public class EmployeeController extends AController {
 
     @Autowired
