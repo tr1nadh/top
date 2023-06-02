@@ -15,11 +15,11 @@ public class OrderService {
     @Autowired
     private OrderRepository repository;
     @Autowired
-    public OrderParamsService params;
-    @Autowired
     public OrderUpdateService update;
     @Autowired
     public OrderCRUDService crud;
+    @Autowired
+    public OrderFindService find;
 
     public void moveOrderToPending(Long id) {
         if (id == null) throw new IllegalArgumentException("'orderId' cannot be null");

@@ -66,37 +66,28 @@ public class OrderController extends AController {
         return mv;
     }
 
-    @GetMapping("/orders")
-    public ModelAndView getOrders(String search, String orderStatus) {
-        var mv = new ModelAndView();
-        mv.addObject("orders", orderService.params.getOrdersByParams(search, orderStatus));
-        mv.setViewName("order/order");
-
-        return mv;
-    }
-
     @GetMapping({"/", "/pending"})
     public ModelAndView getPendingOrders(String search) {
         if (GeneralUtil.isQualifiedString(search))
-            return getOrdersViewByOrderStatus(orderService.params.findPendingOrdersWithCustomerNameContaining(search), "pending");
+            return getOrdersViewByOrderStatus(orderService.find.findOrdersBy(OrderStatus.PENDING, search), "pending");
 
-        return getOrdersViewByOrderStatus(orderService.params.findOrders(OrderStatus.PENDING), "pending");
+        return getOrdersViewByOrderStatus(orderService.find.findOrdersBy(OrderStatus.PENDING), "pending");
     }
 
     @GetMapping("/completed")
     public ModelAndView getCompletedOrders(String search) {
         if (GeneralUtil.isQualifiedString(search))
-            return getOrdersViewByOrderStatus(orderService.params.findCompletedOrdersWithCustomerNameContaining(search), "completed");
+            return getOrdersViewByOrderStatus(orderService.find.findOrdersBy(OrderStatus.COMPLETED, search), "completed");
 
-        return getOrdersViewByOrderStatus(orderService.params.findOrders(OrderStatus.COMPLETED), "completed");
+        return getOrdersViewByOrderStatus(orderService.find.findOrdersBy(OrderStatus.COMPLETED), "completed");
     }
 
     @GetMapping("/cancelled")
     public ModelAndView getCancelledOrders(String search) {
         if (GeneralUtil.isQualifiedString(search))
-            return getOrdersViewByOrderStatus(orderService.params.findCancelledOrdersWithCustomerNameContaining(search), "cancelled");
+            return getOrdersViewByOrderStatus(orderService.find.findOrdersBy(OrderStatus.CANCELLED, search), "cancelled");
 
-        return getOrdersViewByOrderStatus(orderService.params.findOrders(OrderStatus.CANCELLED), "cancelled");
+        return getOrdersViewByOrderStatus(orderService.find.findOrdersBy(OrderStatus.CANCELLED), "cancelled");
     }
 
     private ModelAndView getOrdersViewByOrderStatus(List<Order> orders, String active) {
