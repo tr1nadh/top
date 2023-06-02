@@ -13,7 +13,7 @@ public class OrderMapper {
         var order = new Order();
         order.setOrderId(orderDto.getOrderId());
         order.setCustomer(Mapper.map(orderDto.getCustomer(), new Customer()));
-        order.setHandleBy(Mapper.map(orderDto.getHandleBy(), new Employee()));
+        if (orderDto.getHandleBy() != null) order.setHandleBy(Mapper.map(orderDto.getHandleBy(), new Employee()));
         order.setService(Mapper.map(orderDto.getService(), new Service()));
         order.setPayment(new Payment());
 
