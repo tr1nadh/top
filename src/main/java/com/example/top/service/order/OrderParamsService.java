@@ -23,24 +23,16 @@ public class OrderParamsService {
         return orders;
     }
 
-    public List<Order> getPendingOrders() {
-        return orderFindService.findOrdersByOrderStatus(OrderStatus.PENDING.toString());
+    public List<Order> findOrders(OrderStatus status) {
+        return orderFindService.findOrdersByOrderStatus(status.toString());
     }
 
     public List<Order> findPendingOrdersWithCustomerNameContaining(String name) {
         return orderFindService.findOrdersByOrderStatusAndCustomerNameContaining(OrderStatus.PENDING.toString(), name);
     }
 
-    public List<Order> getCompletedOrders() {
-        return orderFindService.findOrdersByOrderStatus(OrderStatus.COMPLETED.toString());
-    }
-
     public List<Order> findCompletedOrdersWithCustomerNameContaining(String name) {
         return orderFindService.findOrdersByOrderStatusAndCustomerNameContaining(OrderStatus.COMPLETED.toString(), name);
-    }
-
-    public List<Order> getCancelledOrders() {
-        return orderFindService.findOrdersByOrderStatus(OrderStatus.CANCELLED.toString());
     }
 
     public List<Order> findCancelledOrdersWithCustomerNameContaining(String name) {
