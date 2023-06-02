@@ -69,25 +69,25 @@ public class OrderController extends AController {
     @GetMapping({"/", "/pending"})
     public ModelAndView getPendingOrders(String search) {
         if (GeneralUtil.isQualifiedString(search))
-            return getOrdersViewByOrderStatus(orderService.find.findOrdersBy(OrderStatus.PENDING, search), "pending");
+            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.PENDING, search), "pending");
 
-        return getOrdersViewByOrderStatus(orderService.find.findOrdersBy(OrderStatus.PENDING), "pending");
+        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.PENDING), "pending");
     }
 
     @GetMapping("/completed")
     public ModelAndView getCompletedOrders(String search) {
         if (GeneralUtil.isQualifiedString(search))
-            return getOrdersViewByOrderStatus(orderService.find.findOrdersBy(OrderStatus.COMPLETED, search), "completed");
+            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.COMPLETED, search), "completed");
 
-        return getOrdersViewByOrderStatus(orderService.find.findOrdersBy(OrderStatus.COMPLETED), "completed");
+        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.COMPLETED), "completed");
     }
 
     @GetMapping("/cancelled")
     public ModelAndView getCancelledOrders(String search) {
         if (GeneralUtil.isQualifiedString(search))
-            return getOrdersViewByOrderStatus(orderService.find.findOrdersBy(OrderStatus.CANCELLED, search), "cancelled");
+            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.CANCELLED, search), "cancelled");
 
-        return getOrdersViewByOrderStatus(orderService.find.findOrdersBy(OrderStatus.CANCELLED), "cancelled");
+        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.CANCELLED), "cancelled");
     }
 
     private ModelAndView getOrdersViewByOrderStatus(List<Order> orders, String active) {
