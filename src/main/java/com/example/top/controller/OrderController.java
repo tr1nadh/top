@@ -5,6 +5,7 @@ import com.example.top.dto.order.OrderDto;
 import com.example.top.dto.order.RemoveOrderAmountDto;
 import com.example.top.dto.order.UpdateOrderServiceStatusDto;
 import com.example.top.entity.order.Order;
+import com.example.top.enums.OrderStatus;
 import com.example.top.service.DimensionsService;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.ServiceTypeService;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping({"/","/orders"})
@@ -74,62 +77,32 @@ public class OrderController extends AController {
 
     @GetMapping({"/", "/pending"})
     public ModelAndView getPendingOrders(String search) {
-        if (GeneralUtil.isQualifiedString(search)) return getPendingOrdersWithCustomerNameContaining(search);
+        if (GeneralUtil.isQualifiedString(search))
+            return getOrdersViewByOrderStatus(orderService.params.findPendingOrdersWithCustomerNameContaining(search), "pending");
 
-        var mv = new ModelAndView();
-        mv.addObject("orders", orderService.params.getPendingOrders());
-        mv.addObject("active", "pending");
-        mv.setViewName("order/order");
-
-        return mv;
-    }
-
-    public ModelAndView getPendingOrdersWithCustomerNameContaining(String search) {
-        var mv = new ModelAndView();
-        mv.addObject("orders", orderService.params.findPendingOrdersWithCustomerNameContaining(search));
-        mv.addObject("active", "pending");
-        mv.setViewName("order/order");
-
-        return mv;
+        return getOrdersViewByOrderStatus(orderService.params.findOrders(OrderStatus.PENDING), "pending");
     }
 
     @GetMapping("/completed")
     public ModelAndView getCompletedOrders(String search) {
-        if (GeneralUtil.isQualifiedString(search)) return getCompletedOrdersWithCustomerNameContaining(search);
+        if (GeneralUtil.isQualifiedString(search))
+            return getOrdersViewByOrderStatus(orderService.params.findCompletedOrdersWithCustomerNameContaining(search), "completed");
 
-        var mv = new ModelAndView();
-        mv.addObject("orders", orderService.params.getCompletedOrders());
-        mv.addObject("active", "completed");
-        mv.setViewName("order/order");
-
-        return mv;
-    }
-
-    public ModelAndView getCompletedOrdersWithCustomerNameContaining(String search) {
-        var mv = new ModelAndView();
-        mv.addObject("orders", orderService.params.findCompletedOrdersWithCustomerNameContaining(search));
-        mv.addObject("active", "completed");
-        mv.setViewName("order/order");
-
-        return mv;
+        return getOrdersViewByOrderStatus(orderService.params.findOrders(OrderStatus.COMPLETED), "completed");
     }
 
     @GetMapping("/cancelled")
     public ModelAndView getCancelledOrders(String search) {
-        if (GeneralUtil.isQualifiedString(search)) return getCancelledOrdersWithCustomerNameContaining(search);
+        if (GeneralUtil.isQualifiedString(search))
+            return getOrdersViewByOrderStatus(orderService.params.findCancelledOrdersWithCustomerNameContaining(search), "cancelled");
 
-        var mv = new ModelAndView();
-        mv.addObject("orders", orderService.params.getCancelledOrders());
-        mv.addObject("active", "cancelled");
-        mv.setViewName("order/order");
-
-        return mv;
+        return getOrdersViewByOrderStatus(orderService.params.findOrders(OrderStatus.CANCELLED), "cancelled");
     }
 
-    public ModelAndView getCancelledOrdersWithCustomerNameContaining(String search) {
+    private ModelAndView getOrdersViewByOrderStatus(List<Order> orders, String active) {
         var mv = new ModelAndView();
-        mv.addObject("orders", orderService.params.findCancelledOrdersWithCustomerNameContaining(search));
-        mv.addObject("active", "cancelled");
+        mv.addObject("orders", orders);
+        mv.addObject("active", active);
         mv.setViewName("order/order");
 
         return mv;
