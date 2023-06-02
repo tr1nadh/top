@@ -44,6 +44,7 @@ public class OrderCRUDService {
         var amountPaid = order.getPayment().getAmountPaid();
         order.getPayment().setAmountPaid(Math.max(amountPaid, prevAmountPaid));
         setPayableAmount(order);
+        setHandleBy(order);
     }
 
     private void setPayableAmount(Order order) {
