@@ -31,7 +31,7 @@ public class Service {
     private int printingCharges;
     private int serviceCharges;
     @Transient
-    private boolean anyPriceChanged;
+    private boolean anyChargesChanged;
     private String serviceStatus = "PENDING";
 
     public void setBookingDate(LocalDate bookingDate) {
@@ -41,12 +41,12 @@ public class Service {
     }
 
     public void setPrintingCharges(int printingCharges) {
-        anyPriceChanged = true;
+        anyChargesChanged = true;
         this.printingCharges = printingCharges;
     }
 
     public void setServiceCharges(int serviceCharges) {
-        anyPriceChanged = true;
+        anyChargesChanged = true;
         this.serviceCharges = serviceCharges;
     }
 }

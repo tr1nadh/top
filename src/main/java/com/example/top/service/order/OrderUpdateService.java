@@ -30,7 +30,7 @@ public class OrderUpdateService {
             throw new IllegalStateException("Cannot add more then required amount");
 
         dbOrder.getPayment().setAmountPaid(addedAmount);
-        updateAmountStatus(dbOrder);
+        updatePaymentStatus(dbOrder);
         repository.save(dbOrder);
     }
 
@@ -48,11 +48,11 @@ public class OrderUpdateService {
             throw new IllegalStateException("Cannot remove from 0");
 
         dbOrder.getPayment().setAmountPaid(removedAmount);
-        updateAmountStatus(dbOrder);
+        updatePaymentStatus(dbOrder);
         repository.save(dbOrder);
     }
 
-    public void updateServiceStatus(Long orderId, String serviceStatus) {
+    public void changeServiceStatus(Long orderId, String serviceStatus) {
         if (orderId == null) throw new IllegalArgumentException("'orderId' cannot be null");
 
         var optDbOrder = repository.findById(orderId);
@@ -67,7 +67,7 @@ public class OrderUpdateService {
         repository.save(dbOrder);
     }
 
-    public void updatePaymentStatus(Long orderId, String paymentStatus) {
+    public void changePaymentStatus(Long orderId, String paymentStatus) {
         if (orderId == null) throw new IllegalArgumentException("'orderId' cannot be null");
 
         var optDbOrder = repository.findById(orderId);
@@ -80,11 +80,11 @@ public class OrderUpdateService {
             if (paymentStatus.equals(PaymentStatus.PAID.toString())) payment.setAmountPaid(payment.getTotalAmount());
             else payment.setAmountPaid(0);
         }
-        updateAmountStatus(dbOrder);
+        updatePaymentStatus(dbOrder);
         repository.save(dbOrder);
     }
 
-    private void updateAmountStatus(Order dbOrder) {
+    private void updatePaymentStatus(Order dbOrder) {
         if (dbOrder.getPayment().getAmountPaid() == dbOrder.getPayment().getTotalAmount()) {
             dbOrder.getPayment().setPaymentStatus(PaymentStatus.PAID.toString());
             updateOrderStatus(dbOrder);

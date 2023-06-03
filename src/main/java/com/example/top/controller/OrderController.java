@@ -102,7 +102,7 @@ public class OrderController extends AController {
     @PostMapping("/update-order-service-status")
     @PreAuthorize("!hasRole('ADMIN')")
     public RedirectView updateOrderServiceStatus(UpdateOrderServiceStatusDto updateOrder, RedirectAttributes attributes) {
-        orderService.update.updateServiceStatus(updateOrder.getOrderId(), updateOrder.getServiceStatus());
+        orderService.update.changeServiceStatus(updateOrder.getOrderId(), updateOrder.getServiceStatus());
 
         attributes.addFlashAttribute("alertMessage", "Order '" + updateOrder.getOrderId() + "' service status changed to '" + updateOrder.getServiceStatus() + "'");
         return new RedirectView("pending");
@@ -148,7 +148,7 @@ public class OrderController extends AController {
 
     @PostMapping("/change-service-status")
     public RedirectView changeServiceStatus(Long id, String serviceStatus, RedirectAttributes attributes) {
-        orderService.update.updateServiceStatus(id, serviceStatus);
+        orderService.update.changeServiceStatus(id, serviceStatus);
 
         attributes.addFlashAttribute("alertMessage", "Order '" + id + "' service status changed to '" + serviceStatus + "'");
         return new RedirectView("pending");
@@ -156,7 +156,7 @@ public class OrderController extends AController {
 
     @PostMapping("/change-payment-status")
     public RedirectView changePaymentStatus(Long id, String paymentStatus, RedirectAttributes attributes) {
-        orderService.update.updatePaymentStatus(id, paymentStatus);
+        orderService.update.changePaymentStatus(id, paymentStatus);
 
         attributes.addFlashAttribute("alertMessage", "Order '" + id + "' payment status changed to '" + paymentStatus + "'");
         return new RedirectView("pending");

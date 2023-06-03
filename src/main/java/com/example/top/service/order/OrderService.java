@@ -47,7 +47,7 @@ public class OrderService extends ServiceHelper {
     }
 
     private void setPayableAmount(Order order) {
-        if (order.getService().isAnyPriceChanged()) {
+        if (order.getService().isAnyChargesChanged()) {
             var totalAmount = order.getService().getPrintingCharges() + order.getService().getServiceCharges();
             order.getPayment().setTotalAmount(totalAmount);
         }
