@@ -58,11 +58,7 @@ public class OrderCRUDService extends ServiceHelper {
 
     private void setHandleBy(Order order) {
         var empDetails = getCurrentLoggedInUserDetails();
-        var roleName = empDetails.getRole().getName();
-        if (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_DEVELOPER"))
-            return;
-
-        order.setHandleBy(empDetails);
+        if (order.getHandleBy() == null) order.setHandleBy(empDetails);
     }
 
     public Order getOrder(Long id) {
