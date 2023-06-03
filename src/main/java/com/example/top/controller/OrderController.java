@@ -42,14 +42,14 @@ public class OrderController extends AController {
 
     @GetMapping({"/add-order", "/update-order"})
     public ModelAndView renderOrder(Long id) {
-        return getRenderView((id == null) ? new Order() : orderService.crud.getOrder(id));
+        return getRenderView((id == null) ? new Order() : orderService.getOrder(id));
     }
 
     @PostMapping("/save-order")
     public ModelAndView saveOrder(@Valid @ModelAttribute("order") OrderDto order, BindingResult bindingResult, RedirectAttributes attributes) {
         if (bindingResult.hasErrors()) return getRenderView(order);
 
-        orderService.crud.saveOrder(OrderMapper.map(order));
+        orderService.saveOrder(OrderMapper.map(order));
 
         attributes.addFlashAttribute("alertMessage", "Order successfully saved");
         return new ModelAndView("redirect:pending");
@@ -172,7 +172,7 @@ public class OrderController extends AController {
 
     @GetMapping("/delete-order")
     public RedirectView deleteOrder(Long id, RedirectAttributes attributes) {
-        orderService.crud.deleteOrder(id);
+        orderService.deleteOrder(id);
 
         attributes.addFlashAttribute("alertMessage", "Order '" + id + "' has been deleted");
         return new RedirectView("pending");
