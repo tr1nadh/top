@@ -23,14 +23,6 @@ public class OrderFindService {
     @Autowired
     private AccountRepository accountRepository;
 
-    private List<Order> findOrdersBy(OrderStatus status) {
-        return repository.findOrdersByOrderStatus(status.toString());
-    }
-
-    private List<Order> findOrdersBy(OrderStatus status, String customerNameContaining) {
-        return repository.findOrdersByOrderStatusAndCustomerNameContaining(status.toString(), customerNameContaining);
-    }
-
     public List<Order> getPersonalizedOrdersBy(OrderStatus status) {
         var empDetails = getCurrentLoggedInUserDetails();
         var roleName = empDetails.getRole().getName();
@@ -49,6 +41,14 @@ public class OrderFindService {
         return repository.findOrdersByOrderStatusAndHandleByFullNameAndCustomerNameContaining(
                 status.toString(), empDetails.getFullName(), customerNameContaining
         );
+    }
+
+    private List<Order> findOrdersBy(OrderStatus status) {
+        return repository.findOrdersByOrderStatus(status.toString());
+    }
+
+    private List<Order> findOrdersBy(OrderStatus status, String customerNameContaining) {
+        return repository.findOrdersByOrderStatusAndCustomerNameContaining(status.toString(), customerNameContaining);
     }
 
     private Employee getCurrentLoggedInUserDetails() {
