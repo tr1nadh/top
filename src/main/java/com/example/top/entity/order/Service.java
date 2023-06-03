@@ -19,7 +19,7 @@ public class Service {
     )
     @JoinColumn(name = "service_type_id")
     private ServiceType serviceType;
-    private LocalDate bookingDate;
+    private LocalDate bookingDate = LocalDate.now();
     @OneToOne(
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
