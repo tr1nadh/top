@@ -4,7 +4,7 @@ import com.example.top.entity.order.Order;
 import com.example.top.enums.OrderStatus;
 import com.example.top.repository.AccountRepository;
 import com.example.top.repository.OrderRepository;
-import com.example.top.security.context.SecurityContext;
+import com.example.top.service.ServiceHelper;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @Log
-public class OrderFindService {
+public class OrderFindService extends ServiceHelper {
 
     @Autowired
     private OrderRepository repository;
@@ -21,7 +21,7 @@ public class OrderFindService {
     private AccountRepository accountRepository;
 
     public List<Order> getPersonalizedOrdersBy(OrderStatus status) {
-        var empDetails = SecurityContext.getCurrentLoggedInUserDetails();
+        var empDetails = getCurrentLoggedInUserDetails();
         var roleName = empDetails.getRole().getName();
         if (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_DEVELOPER"))
             return findOrdersBy(status);
@@ -30,7 +30,7 @@ public class OrderFindService {
     }
 
     public List<Order> getPersonalizedOrdersBy(OrderStatus status, String customerNameContaining) {
-        var empDetails = SecurityContext.getCurrentLoggedInUserDetails();
+        var empDetails = getCurrentLoggedInUserDetails();
         var roleName = empDetails.getRole().getName();
         if (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_DEVELOPER"))
             return findOrdersBy(status, customerNameContaining);

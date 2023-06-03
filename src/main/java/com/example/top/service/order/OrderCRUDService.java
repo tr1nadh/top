@@ -3,16 +3,14 @@ package com.example.top.service.order;
 import com.example.top.entity.order.Order;
 import com.example.top.repository.AccountRepository;
 import com.example.top.repository.OrderRepository;
-import com.example.top.security.context.SecurityContext;
+import com.example.top.service.ServiceHelper;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
 @Service
 @Log
-public class OrderCRUDService {
+public class OrderCRUDService extends ServiceHelper {
 
     @Autowired
     private OrderRepository repository;
@@ -53,14 +51,13 @@ public class OrderCRUDService {
 
     private void setDefaultValues(Order order) {
         var service = order.getService();
-        service.setBookingDate(LocalDate.now());
         var totalAmount = service.getPrintingCharges() + service.getServiceCharges();
         order.getPayment().setTotalAmount(totalAmount);
         setHandleBy(order);
     }
 
     private void setHandleBy(Order order) {
-        var empDetails = SecurityContext.getCurrentLoggedInUserDetails();
+        var empDetails = getCurrentLoggedInUserDetails();
         var roleName = empDetails.getRole().getName();
         if (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_DEVELOPER"))
             return;
