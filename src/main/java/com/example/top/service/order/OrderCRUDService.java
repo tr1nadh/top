@@ -1,14 +1,11 @@
 package com.example.top.service.order;
 
-import com.example.top.entity.employee.Employee;
 import com.example.top.entity.order.Order;
 import com.example.top.repository.AccountRepository;
 import com.example.top.repository.OrderRepository;
-import com.example.top.security.userdetails.EmployeeDetails;
+import com.example.top.security.context.SecurityContext;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -63,18 +60,12 @@ public class OrderCRUDService {
     }
 
     private void setHandleBy(Order order) {
-        var empDetails = getCurrentLoggedInUserDetails();
+        var empDetails = SecurityContext.getCurrentLoggedInUserDetails();
         var roleName = empDetails.getRole().getName();
         if (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_DEVELOPER"))
             return;
 
         order.setHandleBy(empDetails);
-    }
-
-    private Employee getCurrentLoggedInUserDetails() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        EmployeeDetails employeeDetails = (EmployeeDetails) authentication.getPrincipal();
-        return accountRepository.findAccountByUsername(employeeDetails.getUsername()).getEmployee();
     }
 
     public Order getOrder(Long id) {

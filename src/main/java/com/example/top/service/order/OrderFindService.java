@@ -1,15 +1,12 @@
 package com.example.top.service.order;
 
-import com.example.top.entity.employee.Employee;
 import com.example.top.entity.order.Order;
 import com.example.top.enums.OrderStatus;
 import com.example.top.repository.AccountRepository;
 import com.example.top.repository.OrderRepository;
-import com.example.top.security.userdetails.EmployeeDetails;
+import com.example.top.security.context.SecurityContext;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +21,7 @@ public class OrderFindService {
     private AccountRepository accountRepository;
 
     public List<Order> getPersonalizedOrdersBy(OrderStatus status) {
-        var empDetails = getCurrentLoggedInUserDetails();
+        var empDetails = SecurityContext.getCurrentLoggedInUserDetails();
         var roleName = empDetails.getRole().getName();
         if (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_DEVELOPER"))
             return findOrdersBy(status);
@@ -33,7 +30,7 @@ public class OrderFindService {
     }
 
     public List<Order> getPersonalizedOrdersBy(OrderStatus status, String customerNameContaining) {
-        var empDetails = getCurrentLoggedInUserDetails();
+        var empDetails = SecurityContext.getCurrentLoggedInUserDetails();
         var roleName = empDetails.getRole().getName();
         if (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_DEVELOPER"))
             return findOrdersBy(status, customerNameContaining);
@@ -49,11 +46,5 @@ public class OrderFindService {
 
     private List<Order> findOrdersBy(OrderStatus status, String customerNameContaining) {
         return repository.findOrdersByOrderStatusAndCustomerNameContaining(status.toString(), customerNameContaining);
-    }
-
-    private Employee getCurrentLoggedInUserDetails() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        EmployeeDetails employeeDetails = (EmployeeDetails) authentication.getPrincipal();
-        return accountRepository.findAccountByUsername(employeeDetails.getUsername()).getEmployee();
     }
 }
