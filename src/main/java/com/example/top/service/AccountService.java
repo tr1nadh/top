@@ -2,7 +2,7 @@ package com.example.top.service;
 
 import com.example.top.entity.employee.Account;
 import com.example.top.repository.AccountRepository;
-import com.example.top.security.userdetails.EmployeeDetails;
+import com.example.top.security.userdetails.EmployeeAccountDetails;
 import com.example.top.util.GeneralUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -59,9 +59,9 @@ public class AccountService {
         log.info("Account username successfully changed from '" + currentAccount.getUsername() + "' to '" + newUsername + "'");
     }
 
-    private EmployeeDetails getCurrentAccount() {
+    private EmployeeAccountDetails getCurrentAccount() {
         var auth = SecurityContextHolder.getContext().getAuthentication();
-        return (EmployeeDetails) auth.getPrincipal();
+        return (EmployeeAccountDetails) auth.getPrincipal();
     }
 
     private void updateUsernameInContext(String newUsername) {
