@@ -1,5 +1,6 @@
 package com.example.top.entity.employee;
 
+import com.example.top.enums.AccountRole;
 import com.example.top.util.GeneralUtil;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,6 +31,8 @@ public class Account {
 
     @Column(unique = true)
     private String password;
+
+    private String role = AccountRole.ROLE_EMPLOYEE.toString();
 
     @Transient
     private boolean passwordChanged;
