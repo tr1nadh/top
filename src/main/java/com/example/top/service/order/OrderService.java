@@ -61,8 +61,8 @@ public class OrderService extends ServiceHelper {
     }
 
     private void setHandleBy(Order order) {
-        var empDetails = getCurrentLoggedInUserDetails();
-        if (order.getHandleBy() == null) order.setHandleBy(empDetails);
+        var account = getCurrentLoggedInUserDetails();
+        if (order.getHandleBy() == null) order.setHandleBy(account.getEmployee());
     }
 
     public Order getOrder(Long id) {
