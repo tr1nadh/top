@@ -68,10 +68,4 @@ public class RoleController extends AController {
         attributes.addFlashAttribute("alertMessage", message);
         return new RedirectView("view");
     }
-
-    @RequestMapping("/error")
-    public ModelAndView error(String alertMessage, RedirectAttributes attributes) {
-        attributes.addFlashAttribute("alertMessage", alertMessage);
-        return new ModelAndView("forward:view");
-    }
 }

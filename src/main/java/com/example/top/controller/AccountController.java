@@ -52,10 +52,4 @@ public class AccountController extends AController {
 
         return getAlertView("Password changed successfully, please login again.", "/login");
     }
-
-    @RequestMapping("/error")
-    public ModelAndView error(String alertMessage, RedirectAttributes attributes) {
-        attributes.addFlashAttribute("alertMessage", alertMessage);
-        return new ModelAndView("forward:settings");
-    }
 }
