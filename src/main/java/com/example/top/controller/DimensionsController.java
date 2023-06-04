@@ -28,6 +28,14 @@ public class DimensionsController extends AController {
         return getRenderView((id == null) ? new Dimensions() : service.getDimensions(id));
     }
 
+    private ModelAndView getRenderView(Object dimensions) {
+        var mv = new ModelAndView();
+        mv.addObject("dimensions", dimensions);
+        mv.setViewName("order/dimensions/save-dimensions");
+
+        return mv;
+    }
+
     @PostMapping("/save-dimensions")
     public RedirectView saveDimensions(@Valid @ModelAttribute("dimensions") DimensionsDto dimensions, BindingResult bindingResult,
                                        RedirectAttributes attributes) {
@@ -42,14 +50,6 @@ public class DimensionsController extends AController {
         var message = "Dimensions '" + dimensions.getName() + "' has been " + end;
         attributes.addFlashAttribute("alertMessage", message);
         return new RedirectView("view");
-    }
-
-    private ModelAndView getRenderView(Object dimensions) {
-        var mv = new ModelAndView();
-        mv.addObject("dimensions", dimensions);
-        mv.setViewName("order/dimensions/save-dimensions");
-
-        return mv;
     }
 
     @RequestMapping("/view")

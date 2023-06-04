@@ -35,7 +35,7 @@ public class EmployeeController extends AController {
 
     @GetMapping("/update-employee")
     public ModelAndView renderUpdateEmployeeInfo(Long id) {
-        return getUpdateView(empService.getEmployee(id));
+        return getUpdateEmployeeView(empService.getEmployee(id));
     }
 
     @GetMapping("/update-emp-account")
@@ -92,7 +92,7 @@ public class EmployeeController extends AController {
     @PostMapping("/save-emp-info")
     public ModelAndView saveEmployeeInfo(@Valid @ModelAttribute("employee") EmployeeDto employee, BindingResult bindingResult,
                                          RedirectAttributes attributes) {
-        if (bindingResult.hasErrors()) return getUpdateView(employee);
+        if (bindingResult.hasErrors()) return getUpdateEmployeeView(employee);
 
         empService.saveEmployee(EmployeeMapper.mapInfo(employee));
 
@@ -101,7 +101,7 @@ public class EmployeeController extends AController {
         return new ModelAndView("redirect:view");
     }
 
-    private ModelAndView getUpdateView(Object employee) {
+    private ModelAndView getUpdateEmployeeView(Object employee) {
         var mv = new ModelAndView();
         mv.addObject("employee",  employee);
         mv.addObject("roles", roleService.findAllRoles());
