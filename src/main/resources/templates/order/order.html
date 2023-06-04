@@ -137,7 +137,7 @@
                                    data-bs-toggle="modal" th:attr="data-bs-target=|#service-${order.orderId}-details|"
                                         th:text="${order.service.serviceType.name}">
                                 </a>
-                                <div sec:authorize="!hasRole('ROLE_ADMIN')" class="btn-group" th:if="${order.orderStatus == 'PENDING'}">
+                                <div sec:authorize="hasRole('ROLE_EMPLOYEE')" class="btn-group" th:if="${order.orderStatus == 'PENDING'}">
 
                                     <!-- Show service details modal trigger button -->
                                     <button class="btn btn-sm" data-bs-toggle="modal"

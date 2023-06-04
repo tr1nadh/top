@@ -100,7 +100,7 @@ public class OrderController extends AController {
     }
 
     @PostMapping("/update-order-service-status")
-    @PreAuthorize("!hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE')")
     public RedirectView updateOrderServiceStatus(UpdateOrderServiceStatusDto updateOrder, RedirectAttributes attributes) {
         orderService.update.changeServiceStatus(updateOrder.getOrderId(), updateOrder.getServiceStatus());
 
