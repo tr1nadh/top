@@ -19,14 +19,23 @@ public class ControllerExceptionHandler extends AController {
 
     @ExceptionHandler(RuntimeException.class)
     public RedirectView handleException(RuntimeException ex, RedirectAttributes attributes) {
-        attributes.addFlashAttribute("alertMessage", ex.getMessage());
-        return new RedirectView(request.getHeader("Referer"));
+        return getRedirectView(attributes, ex.getMessage(), ex.getMessage());
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public RedirectView handleDataIntegrityViolationException(DataIntegrityViolationException ex, RedirectAttributes attributes) {
-        attributes.addFlashAttribute("alertMessage", getCustomErrorMessage(ex.getMostSpecificCause().getMessage()));
-        return new RedirectView(request.getHeader("Referer"));
+        return getRedirectView(attributes, ex.getMessage(), getCustomErrorMessage(ex.getMostSpecificCause().getMessage()));
+    }
+
+    private RedirectView getRedirectView(RedirectAttributes attributes, String errorMessage, String alertMessage) {
+        var referer = request.getHeader("Referer");
+        if (referer == null) {
+            attributes.addFlashAttribute("errorMessage", errorMessage);
+            return new RedirectView("error");
+        }
+
+        attributes.addFlashAttribute("alertMessage", alertMessage);
+        return new RedirectView(referer);
     }
 
     private String getCustomErrorMessage(String errorMessage) {
