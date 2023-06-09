@@ -17,8 +17,18 @@
     <header th:replace="~{frags/general-frags.html :: header}"></header>
 
     <!-- Main -->
-    <main>
-        <p th:text="${errorMessage}"></p>
+    <main class="container">
+        <div class="d-flex flex-column">
+            <!-- Error message -->
+            <div class="alert alert-danger" role="alert" th:text="${errorMessage}">
+                Unknown error
+            </div>
+
+            <div>
+                <button class="btn btn-outline-primary" onclick="history.back()">Back</button>
+                <a class="btn btn-outline-primary" href="/">Home</a>
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->
