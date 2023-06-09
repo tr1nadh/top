@@ -55,7 +55,8 @@ public class EmployeeController extends AController {
 
         empService.saveEmployee(EmployeeMapper.map(employee));
 
-        var message = "Employee with the id '" + employee.getEmployeeId() + "' has been saved";
+        var end = (employee.getEmployeeId() == null) ? "saved" : "updated";
+        var message = "Employee with the id '" + employee.getEmployeeId() + "' has been " + end;
         attributes.addFlashAttribute("alertMessage", message);
         return new ModelAndView("redirect:view");
     }

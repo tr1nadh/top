@@ -38,7 +38,8 @@ public class RoleController extends AController {
 
         service.saveRole(Mapper.map(role, new Role()));
 
-        attributes.addFlashAttribute("alertMessage", "Role '" + role.getName() + "' has been saved");
+        var end = (role.getRoleId() == null) ? "saved" : "updated";
+        attributes.addFlashAttribute("alertMessage", "Role '" + role.getName() + "' has been " + end);
         return new RedirectView("view");
     }
 
