@@ -40,6 +40,16 @@
       if (document.getElementById('hasAccount').checked) {
         document.getElementById('account-details').style.display = 'block';
       }
+
+      function toggleData(id) {
+        var element = document.getElementById(id);
+        var elementDisplay = element.style.display;
+        if (elementDisplay === 'none') {
+          element.style.display = 'block';
+        } else {
+          element.style.display = 'none';
+        }
+      }
   </script>
 
   <!-- Bottom script and js -->
