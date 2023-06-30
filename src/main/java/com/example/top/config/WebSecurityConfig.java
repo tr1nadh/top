@@ -46,7 +46,8 @@ public class WebSecurityConfig {
                 .formLogin()
                 .permitAll()
                 .and()
-                .logout(Customizer.withDefaults());
+                .logout(Customizer.withDefaults())
+                .rememberMe().alwaysRemember(true);
 
         return httpSecurity.build();
     }
