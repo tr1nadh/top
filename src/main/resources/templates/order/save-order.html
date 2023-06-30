@@ -32,12 +32,14 @@
             <form class="row g-3" action="#" th:action="@{save-order}" th:object="${order}" method="post">
               <input type="hidden" th:field="*{orderId}">
               <div class="col-md-6 form-floating mb-3">
-                <input type="text" class="form-control" id="customer-name" placeholder="Customer name" th:field="*{customer.name}">
+                <input type="text" class="form-control" id="customer-name" placeholder="Customer name" th:field="*{customer.name}"
+                required>
                 <label for="customer-name">Customer name</label>
                 <p th:if="${#fields.hasErrors('customer.name')}" th:errorclass="error" th:errors="*{customer.name}"></p>
               </div>
               <div class="col-md-6 form-floating mb-3">
-                <input type="number" class="form-control" id="customer-number" placeholder="Customer number" th:field="*{customer.phoneNo}">
+                <input type="number" class="form-control" id="customer-number" placeholder="Customer number" th:field="*{customer.phoneNo}"
+                required>
                 <label for="customer-number">Customer phoneNo</label>
                 <p th:if="${#fields.hasErrors('customer.phoneNo')}" th:errorclass="error" th:errors="*{customer.phoneNo}"></p>
               </div>
