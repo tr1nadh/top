@@ -46,8 +46,9 @@ public class DimensionsController extends AController {
 
         service.saveDimensions(Mapper.map(dimensions, new Dimensions()));
 
-        var end = (dimensions.getId() == null) ? "saved" : "updated";
-        var message = "Dimensions '" + dimensions.getName() + "' has been " + end;
+        var message = "";
+        if (dimensions.getId() == null) message = "New dimension has been added";
+        else message = "Dimension has been successfully renamed";
         attributes.addFlashAttribute("alertMessage", message);
         return new RedirectView("view");
     }

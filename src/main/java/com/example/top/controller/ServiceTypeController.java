@@ -39,8 +39,9 @@ public class ServiceTypeController extends AController {
 
         service.saveServiceType(Mapper.map(type, new ServiceType()));
 
-        var end = (type.getId() == null) ? "saved" : "updated";
-        var message = "Service type '" + type.getName() + "' has been " + end;
+        var message = "";
+        if (type.getId() == null) message = "New service type has been added";
+        else message = "Service type has been successfully renamed";
         attributes.addFlashAttribute("alertMessage", message);
         return new RedirectView("view");
     }
