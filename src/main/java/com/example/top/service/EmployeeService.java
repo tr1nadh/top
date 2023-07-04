@@ -110,7 +110,7 @@ public class EmployeeService {
         return account;
     }
 
-    public void deleteEmployee(Long id) {
+    public Employee deleteEmployee(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
         var optEmployee = repository.findById(id);
@@ -120,5 +120,6 @@ public class EmployeeService {
         repository.deleteById(id);
 
         log.info("Employee '" + optEmployee.get().getFullName() + "' has been deleted");
+        return optEmployee.get();
     }
 }

@@ -55,8 +55,9 @@ public class EmployeeController extends AController {
 
         empService.saveEmployee(EmployeeMapper.map(employee));
 
-        var end = (employee.getEmployeeId() == null) ? "saved" : "updated";
-        var message = "Employee with the id '" + employee.getEmployeeId() + "' has been " + end;
+        var message = "";
+        if (employee.getEmployeeId() == null) message = "New employee '"+ employee.getFullName() +"' has been successfully saved!";
+        else message = "Employee '"+ employee.getFullName() +"' has been successfully updated!";
         attributes.addFlashAttribute("alertMessage", message);
         return new ModelAndView("redirect:view");
     }
@@ -97,7 +98,7 @@ public class EmployeeController extends AController {
 
         empService.saveEmployee(EmployeeMapper.mapInfo(employee));
 
-        var message = "Employee with the id '" + employee.getEmployeeId() + "' has been saved";
+        var message = "Employee '"+ employee.getFullName() +"' has been successfully updated!";
         attributes.addFlashAttribute("alertMessage", message);
         return new ModelAndView("redirect:view");
     }
@@ -124,7 +125,9 @@ public class EmployeeController extends AController {
 
         empService.saveAccount(account.getEmployeeId(), Mapper.map(account, new Account()));
 
-        var message = "Account with the username '" + account.getUsername() + "' has been saved";
+        var message = "";
+        if (account.getAccountId() == null) message = "Account successfully created for username: '"+ account.getUsername() +"'";
+        else message = "Account details updated for username: '"+ account.getUsername() +"'";
         attributes.addFlashAttribute("alertMessage", message);
         return new ModelAndView("redirect:view");
     }
@@ -141,9 +144,9 @@ public class EmployeeController extends AController {
 
     @GetMapping("/delete-employee")
     public RedirectView deleteEmployee(Long id, RedirectAttributes attributes) {
-        empService.deleteEmployee(id);
+        var employee = empService.deleteEmployee(id);
 
-        var message = "Employee with the id '" + id + "' has been deleted";
+        var message = "Employee '"+ employee.getFullName() +"' has been successfully deleted!";
         attributes.addFlashAttribute("alertMessage", message);
         return new RedirectView("view");
     }

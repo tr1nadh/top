@@ -51,8 +51,10 @@ public class OrderController extends AController {
 
         orderService.saveOrder(OrderMapper.map(order));
 
-        var end = (order.getOrderId() == null) ? "saved" : "updated";
-        attributes.addFlashAttribute("alertMessage", "Order successfully " + end);
+        var message = "";
+        if (order.getOrderId() == null) message = "New order successfully saved!";
+        else message = "Order '"+ order.getOrderId() +"' has been successfully updated!";
+        attributes.addFlashAttribute("alertMessage", message);
         return new ModelAndView("redirect:pending");
     }
 
