@@ -25,7 +25,10 @@
         <div class="col-xxl-8 col-xl-10 col-md-12 border p-3">
 
           <!-- Main header -->
-          <div><h2 class="text-center mb-3">Save order</h2></div>
+          <div>
+            <h2 class="text-center mb-3" th:if="${order.orderId == null}">New order</h2>
+            <h2 class="text-center mb-3" th:if="${order.orderId != null}">Update order</h2>
+          </div>
 
           <!-- Form -->
           <div>
@@ -96,7 +99,10 @@
                 <p th:if="${#fields.hasErrors('service.serviceCharges')}" th:errorclass="error" th:errors="*{service.serviceCharges}"></p>
               </div>
               <div>
-                <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                <button class="btn btn-outline-primary" th:if="${order.orderId == null}" type="submit">
+                  <i class="fa-solid fa-floppy-disk"></i> Save</button>
+                <button class="btn btn-outline-primary" th:if="${order.orderId != null}" type="submit">
+                  <i class="fa-solid fa-floppy-disk"></i> Update</button>
                 <a class="btn btn-outline-danger" href="pending"><i class="fa-solid fa-ban"></i> Cancel</a>
               </div>
             </form>

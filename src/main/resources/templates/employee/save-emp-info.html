@@ -22,11 +22,11 @@
       <div class="col-lg-8 border p-3">
 
         <!-- Main header -->
-        <div><h2 class="text-center mb-3">Save employee info</h2></div>
+        <div><h2 class="text-center mb-3">Update employee info</h2></div>
 
         <!-- Form -->
         <div th:replace="~{frags/emp-frags.html :: emp-save-form(isAccountAllowed='false', isBtnSAllowed='true',
-                actionLink='save-emp-info')}"></div>
+                actionLink='save-emp-info', actionBtnName='Update')}"></div>
       </div>
     </div>
   </main>

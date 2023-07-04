@@ -28,7 +28,7 @@ public class EmployeeController extends AController {
     @Autowired
     private RoleService roleService;
 
-    @GetMapping("/add-employee")
+    @GetMapping("/new-employee")
     public ModelAndView renderAddEmployee() {
         return getAddView(new Employee());
     }

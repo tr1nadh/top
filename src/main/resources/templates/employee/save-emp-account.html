@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Save employee account</title>
+    <title>Create or Update employee account</title>
     <!--  Top css  -->
     <link th:replace="~{frags/general-frags.html :: top-styles-css}">
 
@@ -22,7 +22,7 @@
             <div class="col-lg-8 border p-3">
 
                 <!-- Main header -->
-                <div><h2 class="text-center mb-3">Save account</h2></div>
+                <div><h2 class="text-center mb-3">Create or Update account</h2></div>
 
                 <!-- Form -->
                 <div>
@@ -44,7 +44,8 @@
 
                         <!-- Save and Cancel -->
                         <div>
-                            <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                            <button class="btn btn-outline-primary" type="submit">
+                                <i class="fa-solid fa-floppy-disk"></i> Create/Update</button>
                             <a class="btn btn-outline-danger" href="view"><i class="fa-solid fa-ban"></i> Cancel</a>
                         </div>
                     </form>

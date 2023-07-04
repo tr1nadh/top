@@ -22,7 +22,7 @@
 
         <!-- Links -->
         <div class="mb-3">
-            <a class="btn btn-outline-primary btn-sm" href="add-employee">Add employee</a>
+            <a class="btn btn-outline-primary btn-sm" href="new-employee">New employee</a>
             <a class="btn btn-outline-primary btn-sm" href="roles/view">Roles</a>
         </div>
 
@@ -54,7 +54,8 @@
                                         aria-expanded="false"><i class="fa-solid fa-pen-to-square"></i> Update</button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" th:href="@{|update-employee?id=${emp.employeeId}|}">Update info</a></li>
-                                    <li><a class="dropdown-item" th:href="@{|update-emp-account?id=${emp.employeeId}|}">Add or Update account</a></li>
+                                    <li><a class="dropdown-item" th:href="@{|update-emp-account?id=${emp.employeeId}|}">
+                                        Create/Update account</a></li>
                                 </ul>
                             </div>
                             <button class="btn btn-danger btn-sm"

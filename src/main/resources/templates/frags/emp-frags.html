@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<div th:fragment="emp-save-form(isAccountAllowed, isBtnSAllowed, actionLink)">
+<div th:fragment="emp-save-form(isAccountAllowed, isBtnSAllowed, actionLink, actionBtnName)">
     <form class="row g-3" action="#" th:action="@{${actionLink}}" th:object="${employee}" method="post">
         <input type="hidden" th:field="*{employeeId}">
         <div class="col-md-6 form-floating mb-3">
@@ -33,7 +33,7 @@
                             th:text="${role.name}"
                     ></option>
                 </select>
-                <a class="btn btn-outline-primary" href="roles/view" role="button">Add new role</a>
+                <a class="btn btn-outline-primary" href="roles/view" role="button">Roles</a>
             </div>
         </div>
         <div class="col-md-4">
@@ -64,7 +64,8 @@
 
         <!-- Save and Cancel -->
         <div th:if="${isBtnSAllowed}">
-            <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+            <button class="btn btn-outline-primary" type="submit">
+                <i class="fa-solid fa-floppy-disk"></i> <span th:text="${actionBtnName}"></span></button>
             <a class="btn btn-outline-danger" href="view"><i class="fa-solid fa-ban"></i> Cancel</a>
         </div>
     </form>
