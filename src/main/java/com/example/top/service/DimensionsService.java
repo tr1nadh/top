@@ -36,7 +36,6 @@ public class DimensionsService {
         var dimensions = repository.findAll(PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id")));
 
         log.info("Successfully retrieved all dimensions");
-        System.out.println(dimensions.get().toList());
         return dimensions.get().toList();
     }
 
