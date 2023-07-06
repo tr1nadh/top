@@ -47,7 +47,7 @@
                 <!-- Service type update modal trigger button -->
                 <button class="btn btn-outline-success" data-bs-toggle="modal" type="button"
                         th:attr="data-bs-target=|#service-type-${serviceType.id}-update-modal|">
-                  <i class="fa-solid fa-pen-to-square"></i> Update</button>
+                  <i class="fa-solid fa-pen-to-square"></i> Edit</button>
                 <button class="btn btn-outline-danger"
                         th:attr="onclick=|confirmDelete('delete-service-type?id=${serviceType.id}')|">
                   <i class="fa-sharp fa-solid fa-trash"></i> Delete</button>
@@ -58,7 +58,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h1 class="modal-title fs-5">Update service type</h1>
+                      <h1 class="modal-title fs-5">Edit service type</h1>
                     </div>
                     <div class="modal-body">
                       <form th:id="service-type-+${serviceType.id}+-update-form" action="#" th:action="@{save-service-type}"
