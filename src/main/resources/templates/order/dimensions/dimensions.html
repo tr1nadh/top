@@ -90,6 +90,18 @@
         </div>
     </main>
 
+    <!-- Pagination -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${currentPage <= 0} ? 'disabled' : ''">
+                <a class="page-link" href="view?page=0">Start</a></li>
+            <li class="page-item" th:classappend="${currentPage <= 0} ? 'disabled' : ''">
+                <a class="page-link" th:href="'view?page=' + (${currentPage} - 1)">Previous</a></li>
+            <li class="page-item" th:classappend="${#lists.isEmpty(dimensions)} ? 'disabled' : ''">
+                <a class="page-link" th:href="'view?page=' + (${currentPage} + 1)">Next</a></li>
+        </ul>
+    </nav>
+
     <!-- Footer -->
     <footer th:replace="~{frags/general-frags.html :: footer}"></footer>
 

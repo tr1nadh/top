@@ -4,6 +4,8 @@ import com.example.top.entity.order.Dimensions;
 import com.example.top.repository.DimensionsRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +30,14 @@ public class DimensionsService {
 
         log.info("Successfully retrieved all dimensions");
         return dimensions;
+    }
+
+    public List<Dimensions> findAllDimensions(int page) {
+        var dimensions = repository.findAll(PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id")));
+
+        log.info("Successfully retrieved all dimensions");
+        System.out.println(dimensions.get().toList());
+        return dimensions.get().toList();
     }
 
     public Dimensions getDimensions(Long id) {
