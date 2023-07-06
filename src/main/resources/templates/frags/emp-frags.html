@@ -64,8 +64,10 @@
 
         <!-- Save and Cancel -->
         <div th:if="${isBtnSAllowed}">
-            <button class="btn btn-outline-primary" type="submit">
-                <i class="fa-solid fa-floppy-disk"></i> <span th:text="${actionBtnName}"></span></button>
+            <button class="btn btn-outline-primary" th:if="${actionBtnName == 'Save'}" type="submit">
+                <i class="fa-solid fa-floppy-disk"></i> Save</button>
+            <button class="btn btn-outline-success" th:if="${actionBtnName == 'Update'}" type="submit">
+                <i class="fa-solid fa-file-pen"></i> Update</button>
             <a class="btn btn-outline-danger" href="view"><i class="fa-solid fa-ban"></i> Cancel</a>
         </div>
     </form>
