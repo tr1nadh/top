@@ -4,6 +4,8 @@ import com.example.top.entity.employee.Role;
 import com.example.top.repository.RoleRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,14 @@ public class RoleService {
         repository.save(role);
 
         log.info("Role '" + role.getName() + "' is saved");
+    }
+
+    public List<Role> findAllRoles(int page) {
+        var roles = repository
+                .findByNameNotIn(excludeRoles, PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "roleId")));
+
+        log.info("Successfully retrieved all roles");
+        return roles;
     }
 
     public List<Role> findAllRoles() {
