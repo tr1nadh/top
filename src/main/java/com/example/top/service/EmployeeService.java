@@ -7,6 +7,7 @@ import com.example.top.repository.EmployeeRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -73,7 +74,8 @@ public class EmployeeService {
 
     public List<Employee> findAllEmployees(int page) {
         var employees = repository
-                .findByRoleNameNotIn(List.of("Admin", "Developer"), PageRequest.of(page, 10));
+                .findByRoleNameNotIn(List.of("Admin", "Developer"),
+                        PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "employeeId")));
 
         log.info("Successfully retrieved all employees");
         return employees;
