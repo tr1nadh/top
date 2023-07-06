@@ -4,6 +4,9 @@ import com.example.top.entity.order.ServiceType;
 import com.example.top.repository.ServiceTypeRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +28,14 @@ public class ServiceTypeService {
 
     public List<ServiceType> findAllServiceTypes() {
         var serviceTypes = repository.findAll();
+
+        log.info("Successfully retrieved all service types");
+        return serviceTypes;
+    }
+
+    public Page<ServiceType> findAllServiceTypes(int page) {
+        var serviceTypes = repository.findAll(
+                PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id")));
 
         log.info("Successfully retrieved all service types");
         return serviceTypes;
