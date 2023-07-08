@@ -6,6 +6,8 @@ import com.example.top.repository.OrderRepository;
 import com.example.top.service.ServiceHelper;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,31 +19,33 @@ public class OrderFindService extends ServiceHelper {
     @Autowired
     private OrderRepository repository;
 
-    public List<Order> getPersonalizedOrdersBy(OrderStatus status) {
+    public List<Order> getPersonalizedOrdersBy(OrderStatus status, int page) {
         var account = getCurrentLoggedInUserDetails();
         var roleName = account.getRole();
         if (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_DEVELOPER"))
-            return findOrdersBy(status);
+            return findOrdersBy(status, page);
 
         return repository.findOrdersByOrderStatusAndHandleByFullName(status.toString(), account.getEmployee().getFullName());
     }
 
-    public List<Order> getPersonalizedOrdersBy(OrderStatus status, String customerNameContaining) {
+    public List<Order> getPersonalizedOrdersBy(OrderStatus status, String customerNameContaining, int page) {
         var account = getCurrentLoggedInUserDetails();
         var roleName = account.getRole();
         if (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_DEVELOPER"))
-            return findOrdersBy(status, customerNameContaining);
+            return findOrdersBy(status, customerNameContaining, page);
 
         return repository.findOrdersByOrderStatusAndHandleByFullNameAndCustomerNameContaining(
                 status.toString(), account.getEmployee().getFullName(), customerNameContaining
         );
     }
 
-    private List<Order> findOrdersBy(OrderStatus status) {
-        return repository.findOrdersByOrderStatus(status.toString());
+    private List<Order> findOrdersBy(OrderStatus status, int page) {
+        return repository.findOrdersByOrderStatus(status.toString(),
+                PageRequest.of(page, 3, Sort.by(Sort.Direction.DESC, "orderId")));
     }
 
-    private List<Order> findOrdersBy(OrderStatus status, String customerNameContaining) {
-        return repository.findOrdersByOrderStatusAndCustomerNameContaining(status.toString(), customerNameContaining);
+    private List<Order> findOrdersBy(OrderStatus status, String customerNameContaining, int page) {
+        return repository.findOrdersByOrderStatusAndCustomerNameContaining(status.toString(), customerNameContaining,
+                PageRequest.of(page, 3, Sort.by(Sort.Direction.DESC, "orderId")));
     }
 }

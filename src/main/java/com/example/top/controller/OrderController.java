@@ -17,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -69,34 +66,38 @@ public class OrderController extends AController {
         return mv;
     }
 
-    @GetMapping({"/", "/pending"})
-    public ModelAndView getPendingOrders(String search) {
+    @GetMapping({"/", "/pending" ,"/pending/page/{page}"})
+    public ModelAndView getPendingOrders(String search, @PathVariable(required = false) Integer page) {
+        page = (page == null) ? 0 : page;
         if (GeneralUtil.isQualifiedString(search))
-            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.PENDING, search), "pending");
+            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.PENDING, search, page), "pending", page   );
 
-        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.PENDING), "pending");
+        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.PENDING, page), "pending", page);
     }
 
-    @GetMapping("/completed")
-    public ModelAndView getCompletedOrders(String search) {
+    @GetMapping({"/completed", "/completed/page/{page}"})
+    public ModelAndView getCompletedOrders(String search, @PathVariable(required = false) Integer page) {
+        page = (page == null) ? 0 : page;
         if (GeneralUtil.isQualifiedString(search))
-            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.COMPLETED, search), "completed");
+            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.COMPLETED, search, page), "completed", page);
 
-        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.COMPLETED), "completed");
+        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.COMPLETED, page), "completed", page);
     }
 
-    @GetMapping("/cancelled")
-    public ModelAndView getCancelledOrders(String search) {
+    @GetMapping({"/cancelled", "/cancelled/page/{page}"})
+    public ModelAndView getCancelledOrders(String search, @PathVariable(required = false) Integer page) {
+        page = (page == null) ? 0 : page;
         if (GeneralUtil.isQualifiedString(search))
-            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.CANCELLED, search), "cancelled");
+            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.CANCELLED, search, page), "cancelled", page);
 
-        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.CANCELLED), "cancelled");
+        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.CANCELLED, page), "cancelled", page);
     }
 
-    private ModelAndView getOrdersViewByOrderStatus(List<Order> orders, String active) {
+    private ModelAndView getOrdersViewByOrderStatus(List<Order> orders, String active, int page) {
         var mv = new ModelAndView();
         mv.addObject("orders", orders);
         mv.addObject("active", active);
+        mv.addObject("currentPage", page);
         mv.setViewName("order/order");
 
         return mv;

@@ -32,15 +32,15 @@
             <div>
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="pending"
+                        <a class="nav-link" aria-current="page" href="/orders/pending"
                            th:classappend="${(active == 'pending') ? 'active' : ''}">Pending</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="completed"
+                        <a class="nav-link" href="/orders/completed"
                            th:classappend="${(active == 'completed') ? 'active' : ''}">Completed</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="cancelled"
+                        <a class="nav-link" href="/orders/cancelled"
                            th:classappend="${(active == 'cancelled') ? 'active' : ''}">Cancelled</a>
                     </li>
                 </ul>
@@ -273,6 +273,18 @@
             </div>
         </div>
     </main>
+
+    <!-- Pagination -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${currentPage <= 0} ? 'disabled' : ''">
+                <a class="page-link" th:href="'/orders/' + ${active}">Start</a></li>
+            <li class="page-item" th:classappend="${currentPage <= 0} ? 'disabled' : ''">
+                <a class="page-link" th:href="'/orders/' + ${active} + '/page/' + (${currentPage} - 1)">Previous</a></li>
+            <li class="page-item" th:classappend="${#lists.isEmpty(orders)} ? 'disabled' : ''">
+                <a class="page-link" th:href="'/orders/' + ${active} + '/page/' + (${currentPage} + 1)">Next</a></li>
+        </ul>
+    </nav>
 
     <!-- Footer -->
     <footer th:replace="~{frags/general-frags.html :: footer}"></footer>
