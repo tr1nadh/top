@@ -51,7 +51,8 @@
                 <form>
                     <div class="input-group mb-3">
                         <input class="form-control border border-primary" type="text" name="search"
-                               placeholder="Search orders using customer name" autocomplete="on">
+                               th:attr="value=${search != null ? search : ''},
+                               placeholder=${search == null ? 'Search orders using customer name' : ''}" autocomplete="on">
                         <button class="btn btn-outline-primary" type="submit" value="Search">
                             <i class="fa-solid fa-magnifying-glass"></i> Search
                         </button>
@@ -278,11 +279,14 @@
     <nav>
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${currentPage <= 0} ? 'disabled' : ''">
-                <a class="page-link" th:href="'/orders/' + ${active}">Start</a></li>
+                <a class="page-link" th:href="'/orders/' + ${active} + ${search != null ? '?search=' + search: ''}">
+                    Start</a></li>
             <li class="page-item" th:classappend="${currentPage <= 0} ? 'disabled' : ''">
-                <a class="page-link" th:href="'/orders/' + ${active} + '/page/' + (${currentPage} - 1)">Previous</a></li>
+                <a class="page-link" th:href="'/orders/' + ${active} + '?' + ${search != null ? 'search=' + search + '&' : ''}
+                 + 'page=' + (${currentPage} - 1)">Previous</a></li>
             <li class="page-item" th:classappend="${#lists.isEmpty(orders)} ? 'disabled' : ''">
-                <a class="page-link" th:href="'/orders/' + ${active} + '/page/' + (${currentPage} + 1)">Next</a></li>
+                <a class="page-link" th:href="'/orders/' + ${active} + '?' + ${search != null ? 'search=' + search + '&' : ''}
+                 + 'page=' + (${currentPage} + 1)">Next</a></li>
         </ul>
     </nav>
 

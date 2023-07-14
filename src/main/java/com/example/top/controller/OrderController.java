@@ -66,37 +66,38 @@ public class OrderController extends AController {
         return mv;
     }
 
-    @GetMapping({"/", "/pending" ,"/pending/page/{page}"})
-    public ModelAndView getPendingOrders(String search, @PathVariable(required = false) Integer page) {
+    @GetMapping({"/", "/pending"})
+    public ModelAndView getPendingOrders(String search, @RequestParam(required = false) Integer page) {
         page = (page == null) ? 0 : page;
         if (GeneralUtil.isQualifiedString(search))
-            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.PENDING, search, page), "pending", page   );
+            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.PENDING, search, page), "pending", search, page);
 
-        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.PENDING, page), "pending", page);
+        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.PENDING, page), "pending", search, page);
     }
 
-    @GetMapping({"/completed", "/completed/page/{page}"})
-    public ModelAndView getCompletedOrders(String search, @PathVariable(required = false) Integer page) {
+    @GetMapping("/completed")
+    public ModelAndView getCompletedOrders(String search, @RequestParam(required = false) Integer page) {
         page = (page == null) ? 0 : page;
         if (GeneralUtil.isQualifiedString(search))
-            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.COMPLETED, search, page), "completed", page);
+            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.COMPLETED, search, page), "completed", search, page);
 
-        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.COMPLETED, page), "completed", page);
+        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.COMPLETED, page), "completed", search, page);
     }
 
-    @GetMapping({"/cancelled", "/cancelled/page/{page}"})
-    public ModelAndView getCancelledOrders(String search, @PathVariable(required = false) Integer page) {
+    @GetMapping("/cancelled")
+    public ModelAndView getCancelledOrders(String search, @RequestParam(required = false) Integer page) {
         page = (page == null) ? 0 : page;
         if (GeneralUtil.isQualifiedString(search))
-            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.CANCELLED, search, page), "cancelled", page);
+            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.CANCELLED, search, page), "cancelled", search, page);
 
-        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.CANCELLED, page), "cancelled", page);
+        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(OrderStatus.CANCELLED, page), "cancelled", search, page);
     }
 
-    private ModelAndView getOrdersViewByOrderStatus(List<Order> orders, String active, int page) {
+    private ModelAndView getOrdersViewByOrderStatus(List<Order> orders, String active, String search, int page) {
         var mv = new ModelAndView();
         mv.addObject("orders", orders);
         mv.addObject("active", active);
+        mv.addObject("search", search);
         mv.addObject("currentPage", page);
         mv.setViewName("order/order");
 
