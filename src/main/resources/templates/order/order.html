@@ -52,14 +52,14 @@
                     <div class="input-group mb-3">
                         <input id="search-field" class="form-control border border-primary" type="text" name="search"
                                th:attr="value=${search != null ? search : ''}"
-                               placeholder="Search orders using customer name" autocomplete="on">
+                        placeholder="Search orders using customer name" autocomplete="on">
+                        <button class="btn btn-outline-primary" type="submit" value="Search">
+                            <i class="fa-solid fa-magnifying-glass"></i> Search
+                        </button>
                         <button id="clear-btn" class="btn btn-outline-danger"
                         th:attr="style='display:' + ${(search == null || #strings.isEmpty(search)) ? 'none': 'block'}"
                         onclick="clearSearch()">
                             <i class="fa-solid fa-xmark"></i></button>
-                        <button class="btn btn-outline-primary" type="submit" value="Search">
-                            <i class="fa-solid fa-magnifying-glass"></i> Search
-                        </button>
                     </div>
                 </form>
             </div>
