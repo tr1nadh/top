@@ -50,10 +50,14 @@
             <div class="col-sm-4">
                 <form>
                     <div class="input-group mb-3">
-                        <input class="form-control border border-primary" type="text" name="search"
-                               th:attr="value=${search != null ? search : ''},
-                               placeholder=${search == null ? 'Search orders using customer name' : ''}" autocomplete="on">
-                        <button class="btn btn-outline-primary" type="submit" value="Search">
+                        <input id="search-field" class="form-control border border-primary" type="text" name="search"
+                               th:attr="value=${search != null ? search : ''}"
+                               placeholder="Search orders using customer name" autocomplete="on">
+                        <button id="clear-btn" class="btn btn-outline-danger"
+                        th:attr="style='display:' + ${(search == null || #strings.isEmpty(search)) ? 'none': 'block'}"
+                        onclick="clearSearch()">
+                            <i class="fa-solid fa-xmark"></i></button>
+                        <button class="btn btn-outline-primary" value="Search">
                             <i class="fa-solid fa-magnifying-glass"></i> Search
                         </button>
                     </div>
@@ -292,6 +296,13 @@
 
     <!-- Footer -->
     <footer th:replace="~{frags/general-frags.html :: footer}"></footer>
+
+    <script>
+        function clearSearch() {
+            let searchField = document.getElementById('search-field');
+            searchField.value = '';
+        }
+    </script>
 
     <!-- Bottom script and js -->
     <div th:replace="~{frags/general-frags.html :: bottom-script-n-js}"></div>
