@@ -24,8 +24,10 @@
             <!-- Links -->
             <div class="mb-3">
                 <a class="btn btn-outline-primary btn-sm" href="new-order">New order</a>
-                <a class="btn btn-outline-primary btn-sm" href="/orders/service-types/view">Service types</a>
-                <a class="btn btn-outline-primary btn-sm" href="/orders/dimensions/view">Dimensions</a>
+                <a class="btn btn-outline-primary btn-sm"
+                   onclick="popupWindow('http://localhost:8080/orders/service-types/view', 'Service types')">Service types</a>
+                <a class="btn btn-outline-primary btn-sm"
+                   onclick="popupWindow('http://localhost:8080/orders/dimensions/view', 'Dimensions')">Dimensions</a>
             </div>
 
             <!-- Nav tabs -->
@@ -303,6 +305,12 @@
             searchField.value = '';
             document.getElementById('clear-btn').style.display = 'none';
             document.getElementById('search-form').submit();
+        }
+        function popupWindow(url, name) {
+            let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+            width=600,height=800,left=200,top=100`;
+
+            window.open(url, name, params);
         }
     </script>
 

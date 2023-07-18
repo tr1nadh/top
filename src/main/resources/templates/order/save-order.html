@@ -69,7 +69,8 @@
                               th:value="${serviceType.id}"
                               th:text="${serviceType.name}"></option>
                     </select>
-                    <a class="btn btn-outline-primary" href="service-types/view">Service types</a>
+                    <a class="btn btn-outline-primary"
+                       onclick="popupWindow('http://localhost:8080/orders/service-types/view', 'Service types')">Service types</a>
                 </div>
               </div>
               <div class="col-lg-6 col-md-12 mb-3">
@@ -80,7 +81,8 @@
                               th:value="${dimension.id}"
                               th:text="${dimension.name}"></option>
                     </select>
-                    <a class="btn btn-outline-primary" href="dimensions/view">Dimensions</a>
+                    <a class="btn btn-outline-primary"
+                       onclick="popupWindow('http://localhost:8080/orders/dimensions/view', 'Dimensions')">Dimensions</a>
                 </div>
               </div>
               <div class="col-md-4 form-floating mb-3">
@@ -114,6 +116,15 @@
 
   <!-- Footer -->
   <footer th:replace="~{frags/general-frags.html :: footer}"></footer>
+
+  <script>
+    function popupWindow(url, name) {
+      let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+      width=600,height=800,left=200,top=100`;
+
+      window.open(url, name, params);
+    }
+  </script>
 
   <!-- Bottom script and js -->
   <div th:replace="~{frags/general-frags.html :: bottom-script-n-js}"></div>
