@@ -25,7 +25,7 @@ public class Employee {
     private Long employeeId;
 
     @Column(unique = true)
-    private String fullName;
+    private String name;
 
     @Column(unique = true)
     private String phoneNo;

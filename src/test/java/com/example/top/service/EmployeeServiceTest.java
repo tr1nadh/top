@@ -20,7 +20,7 @@ class EmployeeServiceTest {
         var role = roleRepository.findById(29L).get();
         for (var i = 2; i <= 20; i++) {
             var emp = new Employee();
-            emp.setFullName("emp" + i);
+            emp.setName("emp" + i);
             emp.setRole(role);
             emp.setPhoneNo("989898989" + i);
             emp.setEmailAddress("emp" + i + "@email.com");

@@ -17,7 +17,7 @@ public class EmployeeDto {
 
     private Long employeeId;
     @NotEmpty(message = "Full name cannot be empty")
-    private String fullName;
+    private String name;
 
     @Pattern(regexp="(^$|[0-9]{10})", message = "Phone no must be 10 digits")
     @NotEmpty(message = "Phone no cannot be empty")

@@ -29,7 +29,7 @@ public class EmployeeService {
 
         repository.save(checkPasswordChange(employee));
 
-        log.info("Employee '" + employee.getFullName() + "' has been saved" );
+        log.info("Employee '" + employee.getName() + "' has been saved" );
     }
 
     public Employee checkPasswordChange(Employee employee) {
@@ -91,7 +91,7 @@ public class EmployeeService {
         }
 
         var employee = optEmployee.get();
-        log.info("Employee '" + employee.getFullName() + "' has been retrieved");
+        log.info("Employee '" + employee.getName() + "' has been retrieved");
         return employee;
     }
 
@@ -121,7 +121,7 @@ public class EmployeeService {
 
         repository.deleteById(id);
 
-        log.info("Employee '" + optEmployee.get().getFullName() + "' has been deleted");
+        log.info("Employee '" + optEmployee.get().getName() + "' has been deleted");
         return optEmployee.get();
     }
 }

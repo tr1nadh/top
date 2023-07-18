@@ -56,8 +56,8 @@ public class EmployeeController extends AController {
         empService.saveEmployee(EmployeeMapper.map(employee));
 
         var message = "";
-        if (employee.getEmployeeId() == null) message = "New employee '"+ employee.getFullName() +"' has been successfully saved!";
-        else message = "Employee '"+ employee.getFullName() +"' has been successfully updated!";
+        if (employee.getEmployeeId() == null) message = "New employee '"+ employee.getName() +"' has been successfully saved!";
+        else message = "Employee '"+ employee.getName() +"' has been successfully updated!";
         attributes.addFlashAttribute("alertMessage", message);
         return new ModelAndView("redirect:view");
     }
@@ -98,7 +98,7 @@ public class EmployeeController extends AController {
 
         empService.saveEmployee(EmployeeMapper.mapInfo(employee));
 
-        var message = "Employee '"+ employee.getFullName() +"' has been successfully updated!";
+        var message = "Employee '"+ employee.getName() +"' has been successfully updated!";
         attributes.addFlashAttribute("alertMessage", message);
         return new ModelAndView("redirect:view");
     }
@@ -146,7 +146,7 @@ public class EmployeeController extends AController {
     public RedirectView deleteEmployee(Long id, RedirectAttributes attributes) {
         var employee = empService.deleteEmployee(id);
 
-        var message = "Employee '"+ employee.getFullName() +"' has been successfully deleted!";
+        var message = "Employee '"+ employee.getName() +"' has been successfully deleted!";
         attributes.addFlashAttribute("alertMessage", message);
         return new RedirectView("view");
     }
