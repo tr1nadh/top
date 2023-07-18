@@ -75,7 +75,7 @@ public class EmployeeService {
     public List<Employee> findAllEmployees(int page) {
         var employees = repository
                 .findByRoleNameNotIn(List.of("Admin", "Developer"),
-                        PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "employeeId")));
+                        PageRequest.of(page, 15, Sort.by(Sort.Direction.DESC, "employeeId")));
 
         log.info("Successfully retrieved all employees");
         return employees;

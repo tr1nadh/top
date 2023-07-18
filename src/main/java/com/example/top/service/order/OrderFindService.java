@@ -41,11 +41,11 @@ public class OrderFindService extends ServiceHelper {
 
     private List<Order> findOrdersBy(OrderStatus status, int page) {
         return repository.findOrdersByOrderStatus(status.toString(),
-                PageRequest.of(page, 3, Sort.by(Sort.Direction.DESC, "orderId")));
+                PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderId")));
     }
 
     private List<Order> findOrdersBy(OrderStatus status, String customerNameContaining, int page) {
         return repository.findOrdersByOrderStatusAndCustomerNameContaining(status.toString(), customerNameContaining,
-                PageRequest.of(page, 3, Sort.by(Sort.Direction.DESC, "orderId")));
+                PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderId")));
     }
 }
