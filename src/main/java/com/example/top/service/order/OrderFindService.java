@@ -25,7 +25,7 @@ public class OrderFindService extends ServiceHelper {
         if (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_DEVELOPER"))
             return findOrdersBy(status, page);
 
-        return repository.findOrdersByOrderStatusAndHandleByFullName(status.toString(), account.getEmployee().getName());
+        return repository.findOrdersByOrderStatusAndHandleByName(status.toString(), account.getEmployee().getName());
     }
 
     public List<Order> getPersonalizedOrdersBy(OrderStatus status, String customerNameContaining, int page) {
@@ -34,7 +34,7 @@ public class OrderFindService extends ServiceHelper {
         if (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_DEVELOPER"))
             return findOrdersBy(status, customerNameContaining, page);
 
-        return repository.findOrdersByOrderStatusAndHandleByFullNameAndCustomerNameContaining(
+        return repository.findOrdersByOrderStatusAndHandleByNameAndCustomerNameContaining(
                 status.toString(), account.getEmployee().getName(), customerNameContaining
         );
     }

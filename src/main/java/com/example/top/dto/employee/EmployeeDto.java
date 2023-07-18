@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class EmployeeDto {
 
     private Long employeeId;
-    @NotEmpty(message = "Full name cannot be empty")
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
 
     @Pattern(regexp="(^$|[0-9]{10})", message = "Phone no must be 10 digits")

@@ -34,14 +34,14 @@ class TopApplicationTests {
 
 	@Test
 	void getOrdersByOrderStatusAndHandleBy() {
-		for (var order : repository.findOrdersByOrderStatusAndHandleByFullName(OrderStatus.PENDING.toString(), "emp1")) {
+		for (var order : repository.findOrdersByOrderStatusAndHandleByName(OrderStatus.PENDING.toString(), "emp1")) {
 			System.out.println(order);
 		}
 	}
 
 	@Test
 	void getOrdersByOrderStatusAndHandleByAndCustomerNameContaining() {
-		for (var order : repository.findOrdersByOrderStatusAndHandleByFullNameAndCustomerNameContaining(
+		for (var order : repository.findOrdersByOrderStatusAndHandleByNameAndCustomerNameContaining(
 				OrderStatus.PENDING.toString(), "emp1", "May"
 		)) {
 			System.out.println(order);

@@ -12,7 +12,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findOrdersByOrderStatus(String status);
     List<Order> findOrdersByOrderStatus(String status, Pageable pageable);
     List<Order> findOrdersByOrderStatusAndCustomerNameContaining(String orderStatus, String name, Pageable pageable);
-    List<Order> findOrdersByOrderStatusAndHandleByFullName(String orderStatus, String name);
-    List<Order> findOrdersByOrderStatusAndHandleByFullNameAndCustomerNameContaining(String orderStatus,
-                                                                                    String handleByName, String customerName);
+    List<Order> findOrdersByOrderStatusAndHandleByName(String orderStatus, String name);
+    List<Order> findOrdersByOrderStatusAndHandleByNameAndCustomerNameContaining(String orderStatus,
+                                                                                String handleByName, String customerName);
 }

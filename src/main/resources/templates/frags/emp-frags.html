@@ -9,9 +9,9 @@
     <form class="row g-3" action="#" th:action="@{${actionLink}}" th:object="${employee}" method="post">
         <input type="hidden" th:field="*{employeeId}">
         <div class="col-md-6 form-floating mb-3">
-            <input type="text" class="form-control" id="fullName" th:field="*{fullName}" placeholder="Venkatappa Raju" required>
-            <label for="fullName">Full name</label>
-            <p th:if="${#fields.hasErrors('fullName')}" th:errorclass="error" th:errors="*{fullName}"></p>
+            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Venkatappa Raju" required>
+            <label for="name">Full name</label>
+            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
         </div>
         <div class="col-md-6 form-floating mb-3">
             <input type="number" class="form-control" id="phoneNumber" placeholder="9848032919" th:field="*{phoneNo}" required>

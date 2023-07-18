@@ -114,7 +114,7 @@
                                 <!-- Show employee details modal trigger button -->
                                 <a class="text-decoration-none" role="button" data-bs-toggle="modal"
                                    th:attr="data-bs-target=|#employee-${order.orderId}-details|"
-                                   th:text="${order.handleBy.fullName}"></a>
+                                   th:text="${order.handleBy.name}"></a>
 
                                 <!-- Show employee details modal -->
                                 <div class="modal fade" th:id="employee-+${order.orderId}+-details" tabindex="-1"
@@ -125,7 +125,7 @@
                                                 <h1 class="modal-title fs-5">Handle by employee details</h1>
                                             </div>
                                             <div class="modal-body">
-                                                <p class="d-inline">Full Name: <span th:text="${order.handleBy.fullName}"></span></p><br>
+                                                <p class="d-inline">Full Name: <span th:text="${order.handleBy.name}"></span></p><br>
                                                 <p class="d-inline">Gender: <span th:text="${order.handleBy.gender}"></span></p><br>
                                                 <p class="d-inline">Role: <span th:text="${order.handleBy.role.name}"></span></p><br>
                                                 <p class="d-inline">Phone no: <span th:text="${order.handleBy.phoneNo}"></span></p><br>

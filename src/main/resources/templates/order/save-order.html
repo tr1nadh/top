@@ -57,7 +57,7 @@
                   <select class="form-select" id="emp-select" th:field="*{handleBy}">
                     <option th:each="employee : ${employees}"
                             th:value="${employee.employeeId}"
-                            th:text="${employee.fullName}"></option>
+                            th:text="${employee.name}"></option>
                   </select>
                 <label for="emp-select">Handle by</label>
               </div>
