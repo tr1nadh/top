@@ -10,7 +10,6 @@ import com.example.top.service.DimensionsService;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.ServiceTypeService;
 import com.example.top.service.order.OrderService;
-import com.example.top.util.GeneralUtil;
 import com.example.top.util.mapper.OrderMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,12 +67,21 @@ public class OrderController extends AController {
     }
 
     @GetMapping({"/", "/{status}"})
-    public ModelAndView getOrdersByStatus(@PathVariable("status") String status,
+    public ModelAndView getOrdersByStatus(@PathVariable("status") String status, String search_in,
                                          String search, @RequestParam(required = false) Integer page) {
         page = (page == null) ? 0 : page;
-        if (GeneralUtil.isQualifiedString(search))
-            return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(getOrderStatusEnum(status), search, page),
-                    status, search, page);
+        if (search_in != null && search != null) {
+            List<Order> orders = null;
+            switch (search_in) {
+                case "name" -> orders = orderService.find.getPersonalizedOrdersBy(getOrderStatusEnum(status), search, page);
+                case "phoneNo" -> orders = orderService.find.getPersonalizedOrdersByPhoneNo(getOrderStatusEnum(status), search, page);
+                case "email" -> orders = orderService.find.getPersonalizedOrdersByEmailAddress(getOrderStatusEnum(status), search, page);
+            }
+
+            var mv = getOrdersViewByOrderStatus(orders, status, search, page);
+            mv.addObject("search_in", search_in);
+            return mv;
+        }
 
         return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(getOrderStatusEnum(status), page),
                 status, search, page);

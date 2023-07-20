@@ -49,9 +49,14 @@
             </div>
 
             <!-- Search -->
-            <div class="col-sm-4">
+            <div class="col-sm-5">
                 <form id="search-form">
                     <div class="input-group mb-3">
+                        <select class="form-select border border-primary" style="max-width: 10px" name="search_in">
+                            <option value="name">Name</option>
+                            <option value="phoneNo">PhoneNo</option>
+                            <option value="email">Email</option>
+                        </select>
                         <input id="search-field" class="form-control border border-primary" type="text" name="search"
                                th:attr="value=${search != null ? search : ''}"
                                placeholder="Search orders using customer name" autocomplete="on">

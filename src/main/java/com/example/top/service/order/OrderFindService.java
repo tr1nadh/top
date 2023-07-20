@@ -39,6 +39,28 @@ public class OrderFindService extends ServiceHelper {
         );
     }
 
+    public List<Order> getPersonalizedOrdersByPhoneNo(OrderStatus status, String phoneNo, int page) {
+        var account = getCurrentLoggedInUserDetails();
+        var roleName = account.getRole();
+        if (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_DEVELOPER"))
+            return findOrdersByPhoneNo(status, phoneNo, page);
+
+        return repository.findOrdersByOrderStatusAndHandleByNameAndCustomerPhoneNoContaining(
+                status.toString(), account.getEmployee().getName(), phoneNo
+        );
+    }
+
+    public List<Order> getPersonalizedOrdersByEmailAddress(OrderStatus status, String emailAddress, int page) {
+        var account = getCurrentLoggedInUserDetails();
+        var roleName = account.getRole();
+        if (roleName.equals("ROLE_ADMIN") || roleName.equals("ROLE_DEVELOPER"))
+            return findOrdersByEmail(status, emailAddress, page);
+
+        return repository.findOrdersByOrderStatusAndHandleByNameAndCustomerEmailAddressContaining(
+                status.toString(), account.getEmployee().getName(), emailAddress
+        );
+    }
+
     private List<Order> findOrdersBy(OrderStatus status, int page) {
         return repository.findOrdersByOrderStatus(status.toString(),
                 PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderId")));
@@ -46,6 +68,16 @@ public class OrderFindService extends ServiceHelper {
 
     private List<Order> findOrdersBy(OrderStatus status, String customerNameContaining, int page) {
         return repository.findOrdersByOrderStatusAndCustomerNameContaining(status.toString(), customerNameContaining,
+                PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderId")));
+    }
+
+    private List<Order> findOrdersByPhoneNo(OrderStatus status, String phoneNo, int page) {
+        return repository.findOrdersByOrderStatusAndCustomerPhoneNoContaining(status.toString(), phoneNo,
+                PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderId")));
+    }
+
+    private List<Order> findOrdersByEmail(OrderStatus status, String email, int page) {
+        return repository.findOrdersByOrderStatusAndCustomerEmailAddressContaining(status.toString(), email,
                 PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderId")));
     }
 }
