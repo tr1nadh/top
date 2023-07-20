@@ -14,12 +14,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findOrdersByOrderStatusAndCustomerNameContaining(String orderStatus, String customerNameContaining, Pageable pageable);
     List<Order> findOrdersByOrderStatusAndCustomerPhoneNoContaining(String orderStatus, String phoneNoContaining, Pageable pageable);
     List<Order> findOrdersByOrderStatusAndCustomerEmailAddressContaining(String orderStatus, String emailAddressContaining, Pageable pageable);
-    List<Order> findOrdersByOrderStatusAndHandleByName(String orderStatus, String name);
+    List<Order> findOrdersByOrderStatusAndHandleByName(String orderStatus, String name, Pageable pageable);
     List<Order> findOrdersByOrderStatusAndHandleByNameAndCustomerNameContaining(String orderStatus,
-                                                                                String handleByName, String customerNameContaining);
+                                                                                String handleByName, String customerNameContaining, Pageable pageable);
     List<Order> findOrdersByOrderStatusAndHandleByNameAndCustomerPhoneNoContaining(String orderStatus,
-                                                                                String handleByName, String phoneNoContaining);
+                                                                                String handleByName, String phoneNoContaining, Pageable pageable);
 
     List<Order> findOrdersByOrderStatusAndHandleByNameAndCustomerEmailAddressContaining(String orderStatus,
-                                                                                String handleByName, String emailAddressContaining);
+                                                                                String handleByName, String emailAddressContaining, Pageable pageable);
 }

@@ -22,55 +22,46 @@ public class OrderFindService extends ServiceHelper {
 
     public List<Order> getPersonalizedOrdersBy(OrderStatus status, int page) {
         var account = getCurrentLoggedInUserDetails();
-        if (excludeList.contains(account.getRole())) return findOrdersBy(status, page);
+        if (excludeList.contains(account.getRole()))
+            return repository.findOrdersByOrderStatus(status.toString(), getPageRequest(page));
 
-        return repository.findOrdersByOrderStatusAndHandleByName(status.toString(), account.getEmployee().getName());
+        return repository.findOrdersByOrderStatusAndHandleByName(
+                status.toString(), account.getEmployee().getName(), getPageRequest(page));
     }
 
     public List<Order> getPersonalizedOrdersByCustomerNameContaining(OrderStatus status, String customerNameContaining, int page) {
         var account = getCurrentLoggedInUserDetails();
-        if (excludeList.contains(account.getRole())) return findOrdersByCustomerNameContaining(status, customerNameContaining, page);
+        if (excludeList.contains(account.getRole()))
+            return repository.findOrdersByOrderStatusAndCustomerNameContaining(status.toString(), customerNameContaining,
+                    getPageRequest(page));
 
         return repository.findOrdersByOrderStatusAndHandleByNameAndCustomerNameContaining(
-                status.toString(), account.getEmployee().getName(), customerNameContaining
+                status.toString(), account.getEmployee().getName(), customerNameContaining, getPageRequest(page)
         );
     }
 
     public List<Order> getPersonalizedOrdersByPhoneNoContaining(OrderStatus status, String phoneNoContaining, int page) {
         var account = getCurrentLoggedInUserDetails();
-        if (excludeList.contains(account.getRole())) return findOrdersByPhoneNoContaining(status, phoneNoContaining, page);
+        if (excludeList.contains(account.getRole()))
+            return repository.findOrdersByOrderStatusAndCustomerPhoneNoContaining(status.toString(), phoneNoContaining,
+                    getPageRequest(page));
 
         return repository.findOrdersByOrderStatusAndHandleByNameAndCustomerPhoneNoContaining(
-                status.toString(), account.getEmployee().getName(), phoneNoContaining
+                status.toString(), account.getEmployee().getName(), phoneNoContaining, getPageRequest(page)
         );
     }
 
     public List<Order> getPersonalizedOrdersByEmailContaining(OrderStatus status, String emailContaining, int page) {
         var account = getCurrentLoggedInUserDetails();
-        if (excludeList.contains(account.getRole())) return findOrdersByEmailContaining(status, emailContaining, page);
+        if (excludeList.contains(account.getRole())) return repository.findOrdersByOrderStatusAndCustomerEmailAddressContaining(status.toString(), emailContaining,
+                getPageRequest(page));
 
         return repository.findOrdersByOrderStatusAndHandleByNameAndCustomerEmailAddressContaining(
-                status.toString(), account.getEmployee().getName(), emailContaining
+                status.toString(), account.getEmployee().getName(), emailContaining, getPageRequest(page)
         );
     }
 
-    private List<Order> findOrdersBy(OrderStatus status, int page) {
-        return repository.findOrdersByOrderStatus(status.toString(),
-                PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderId")));
-    }
-
-    private List<Order> findOrdersByCustomerNameContaining(OrderStatus status, String customerNameContaining, int page) {
-        return repository.findOrdersByOrderStatusAndCustomerNameContaining(status.toString(), customerNameContaining,
-                PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderId")));
-    }
-
-    private List<Order> findOrdersByPhoneNoContaining(OrderStatus status, String phoneNoContaining, int page) {
-        return repository.findOrdersByOrderStatusAndCustomerPhoneNoContaining(status.toString(), phoneNoContaining,
-                PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderId")));
-    }
-
-    private List<Order> findOrdersByEmailContaining(OrderStatus status, String emailContaining, int page) {
-        return repository.findOrdersByOrderStatusAndCustomerEmailAddressContaining(status.toString(), emailContaining,
-                PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderId")));
+    private PageRequest getPageRequest(int page) {
+        return PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderId"));
     }
 }

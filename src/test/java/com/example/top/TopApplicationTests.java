@@ -1,6 +1,5 @@
 package com.example.top;
 
-import com.example.top.enums.OrderStatus;
 import com.example.top.repository.OrderRepository;
 import com.example.top.service.RoleService;
 import com.example.top.service.order.OrderService;
@@ -31,21 +30,4 @@ class TopApplicationTests {
 			service.saveRole(role);
 		}
 	}
-
-	@Test
-	void getOrdersByOrderStatusAndHandleBy() {
-		for (var order : repository.findOrdersByOrderStatusAndHandleByName(OrderStatus.PENDING.toString(), "emp1")) {
-			System.out.println(order);
-		}
-	}
-
-	@Test
-	void getOrdersByOrderStatusAndHandleByAndCustomerNameContaining() {
-		for (var order : repository.findOrdersByOrderStatusAndHandleByNameAndCustomerNameContaining(
-				OrderStatus.PENDING.toString(), "emp1", "May"
-		)) {
-			System.out.println(order);
-		}
-	}
-
 }
