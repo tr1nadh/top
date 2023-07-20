@@ -73,9 +73,9 @@ public class OrderController extends AController {
         if (search_in != null && search != null) {
             List<Order> orders = null;
             switch (search_in) {
-                case "name" -> orders = orderService.find.getPersonalizedOrdersBy(getOrderStatusEnum(status), search, page);
-                case "phoneNo" -> orders = orderService.find.getPersonalizedOrdersByPhoneNo(getOrderStatusEnum(status), search, page);
-                case "email" -> orders = orderService.find.getPersonalizedOrdersByEmailAddress(getOrderStatusEnum(status), search, page);
+                case "name" -> orders = orderService.find.getPersonalizedOrdersByCustomerNameContaining(getOrderStatusEnum(status), search, page);
+                case "phoneNo" -> orders = orderService.find.getPersonalizedOrdersByPhoneNoContaining(getOrderStatusEnum(status), search, page);
+                case "email" -> orders = orderService.find.getPersonalizedOrdersByEmailContaining(getOrderStatusEnum(status), search, page);
             }
 
             var mv = getOrdersViewByOrderStatus(orders, status, search, page);
