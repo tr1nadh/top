@@ -52,14 +52,15 @@
             <div class="col-sm-5">
                 <form id="search-form">
                     <div class="input-group mb-3">
-                        <select class="form-select border border-primary" style="max-width: 10px" name="search_in">
-                            <option value="name">Name</option>
-                            <option value="phoneNo">PhoneNo</option>
-                            <option value="email">Email</option>
+                        <select class="form-select border border-primary" style="max-width: 10px" name="search_in" onchange="submit()">
+                            <option th:selected="${search_in == 'name'}" value="name">Name</option>
+                            <option th:selected="${search_in == 'phoneNo'}" value="phoneNo">PhoneNo</option>
+                            <option th:selected="${search_in == 'email'}" value="email">Email</option>
                         </select>
                         <input id="search-field" class="form-control border border-primary" type="text" name="search"
-                               th:attr="value=${search != null ? search : ''}"
-                               placeholder="Search orders using customer name" autocomplete="on">
+                               th:attr="value=${search != null ? search : ''},
+                               placeholder='Search orders using customer ' + ${search_in == null ? 'name' : search_in}"
+                               autocomplete="on">
                         <a id="clear-btn" class="btn btn-outline-danger"
                         th:attr="style='display:' + ${(search == null || #strings.isEmpty(search)) ? 'none': 'block'}"
                         onclick="clearSearch()">
