@@ -61,6 +61,10 @@ public class OrderFindService extends ServiceHelper {
         );
     }
 
+    public List<Order> findOrdersOrderStatusAndHandleBy(OrderStatus status, String handleBy, int page) {
+        return repository.findOrdersByOrderStatusAndHandleByName(status.toString(), handleBy, getPageRequest(page));
+    }
+
     public List<Order> getPersonalizedOrdersByServiceType(OrderStatus status, String serviceType, int page) {
         var account = getCurrentLoggedInUserDetails();
         if (specialRoles.contains((account.getRole()))) return repository.findOrdersByOrderStatusAndServiceServiceTypeName(
