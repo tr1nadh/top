@@ -18,11 +18,11 @@ public class OrderFindService extends ServiceHelper {
 
     @Autowired
     private OrderRepository repository;
-    private final List<String> excludeList = List.of("ROLE_ADMIN", "ROLE_DEVELOPER");
+    private final List<String> specialRoles = List.of("ROLE_ADMIN", "ROLE_DEVELOPER");
 
     public List<Order> getPersonalizedOrdersBy(OrderStatus status, int page) {
         var account = getCurrentLoggedInUserDetails();
-        if (excludeList.contains(account.getRole()))
+        if (specialRoles.contains(account.getRole()))
             return repository.findOrdersByOrderStatus(status.toString(), getPageRequest(page));
 
         return repository.findOrdersByOrderStatusAndHandleByName(
@@ -31,7 +31,7 @@ public class OrderFindService extends ServiceHelper {
 
     public List<Order> getPersonalizedOrdersByCustomerNameContaining(OrderStatus status, String customerNameContaining, int page) {
         var account = getCurrentLoggedInUserDetails();
-        if (excludeList.contains(account.getRole()))
+        if (specialRoles.contains(account.getRole()))
             return repository.findOrdersByOrderStatusAndCustomerNameContaining(status.toString(), customerNameContaining,
                     getPageRequest(page));
 
@@ -42,7 +42,7 @@ public class OrderFindService extends ServiceHelper {
 
     public List<Order> getPersonalizedOrdersByPhoneNoContaining(OrderStatus status, String phoneNoContaining, int page) {
         var account = getCurrentLoggedInUserDetails();
-        if (excludeList.contains(account.getRole()))
+        if (specialRoles.contains(account.getRole()))
             return repository.findOrdersByOrderStatusAndCustomerPhoneNoContaining(status.toString(), phoneNoContaining,
                     getPageRequest(page));
 
@@ -53,7 +53,7 @@ public class OrderFindService extends ServiceHelper {
 
     public List<Order> getPersonalizedOrdersByEmailContaining(OrderStatus status, String emailContaining, int page) {
         var account = getCurrentLoggedInUserDetails();
-        if (excludeList.contains(account.getRole())) return repository.findOrdersByOrderStatusAndCustomerEmailAddressContaining(status.toString(), emailContaining,
+        if (specialRoles.contains(account.getRole())) return repository.findOrdersByOrderStatusAndCustomerEmailAddressContaining(status.toString(), emailContaining,
                 getPageRequest(page));
 
         return repository.findOrdersByOrderStatusAndHandleByNameAndCustomerEmailAddressContaining(
@@ -63,7 +63,7 @@ public class OrderFindService extends ServiceHelper {
 
     public List<Order> getPersonalizedOrdersByServiceType(OrderStatus status, String serviceType, int page) {
         var account = getCurrentLoggedInUserDetails();
-        if (excludeList.contains((account.getRole()))) return repository.findOrdersByOrderStatusAndServiceServiceTypeName(
+        if (specialRoles.contains((account.getRole()))) return repository.findOrdersByOrderStatusAndServiceServiceTypeName(
                 status.toString(), serviceType, getPageRequest(page)
         );
 
