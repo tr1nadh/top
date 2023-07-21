@@ -16,7 +16,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
                                                                                 String handleByName, String customerNameContaining, Pageable pageable);
     List<Order> findOrdersByOrderStatusAndHandleByNameAndCustomerPhoneNoContaining(String orderStatus,
                                                                                 String handleByName, String phoneNoContaining, Pageable pageable);
-
     List<Order> findOrdersByOrderStatusAndHandleByNameAndCustomerEmailAddressContaining(String orderStatus,
                                                                                 String handleByName, String emailAddressContaining, Pageable pageable);
+    List<Order> findOrdersByOrderStatusAndServiceServiceTypeName(String orderStatus, String serviceType, Pageable pageable);
+    List<Order> findOrdersByOrderStatusAndHandleByNameAndServiceServiceTypeName(String orderStatus,
+                                                                                String handleByName,
+                                                                                String serviceType, Pageable pageable);
 }
