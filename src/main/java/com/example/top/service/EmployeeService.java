@@ -23,6 +23,7 @@ public class EmployeeService {
     private AccountRepository accountRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    private final List<String> excludeRoles = List.of("Admin", "Developer");
 
     public void saveEmployee(Employee employee) {
         if (employee == null) throw new IllegalArgumentException("'employee' cannot be null");
@@ -65,16 +66,14 @@ public class EmployeeService {
     }
 
     public List<Employee> findAllEmployees() {
-        var employees = repository
-                .findByRoleNameNotIn(List.of("Admin", "Developer"));
+        var employees = repository.findByRoleNameNotIn(excludeRoles);
 
         log.info("Successfully retrieved all employees");
         return employees;
     }
 
     public List<Employee> findAllEmployees(int page) {
-        var employees = repository
-                .findByRoleNameNotIn(List.of("Admin", "Developer"),
+        var employees = repository.findByRoleNameNotIn(excludeRoles,
                         PageRequest.of(page, 15, Sort.by(Sort.Direction.DESC, "employeeId")));
 
         log.info("Successfully retrieved all employees");
