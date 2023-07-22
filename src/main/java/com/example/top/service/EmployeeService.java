@@ -80,6 +80,21 @@ public class EmployeeService {
         return employees;
     }
 
+    public List<Employee> findEmployeesByNameContaining(String nameContaining, int page) {
+        return repository.findByRoleNameNotInAndNameContaining(excludeRoles,
+                nameContaining, PageRequest.of(page, 15, Sort.by(Sort.Direction.DESC, "employeeId")));
+    }
+
+    public List<Employee> findEmployeesByPhoneNoContaining(String phoneNoContaining, int page) {
+        return repository.findByRoleNameNotInAndPhoneNoContaining(excludeRoles, phoneNoContaining,
+                PageRequest.of(page, 15, Sort.by(Sort.Direction.DESC, "employeeId")));
+    }
+
+    public List<Employee> findEmployeesByEmailContaining(String emailContaining, int page) {
+        return repository.findByRoleNameNotInAndEmailAddressContaining(excludeRoles, emailContaining,
+                PageRequest.of(page, 15, Sort.by(Sort.Direction.DESC, "employeeId")));
+    }
+
     public Employee getEmployee(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 

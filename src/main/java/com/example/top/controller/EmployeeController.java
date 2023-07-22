@@ -18,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/employees")
 @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
@@ -133,12 +135,31 @@ public class EmployeeController extends AController {
     }
 
     @RequestMapping("/view")
-    public ModelAndView getEmployees(@RequestParam(defaultValue = "0") int page) {
+    public ModelAndView getEmployees(String search_in, String search,
+                                     @RequestParam(required = false) Integer page) {
+        page = (page == null) ? 0 : page;
+        if (search_in != null && search != null) {
+            List<Employee> employees = null;
+            switch (search_in) {
+                case "name" -> employees = empService.findEmployeesByNameContaining(search, page);
+                case "phoneNo" -> employees = empService.findEmployeesByPhoneNoContaining(search, page);
+                case "email" -> employees = empService.findEmployeesByEmailContaining(search, page);
+            }
+
+            var mv = getEmployeesView(employees, page);
+            mv.addObject("search", search);
+            mv.addObject("search_in", search_in);
+            return mv;
+        }
+
+        return getEmployeesView(empService.findAllEmployees(page), page);
+    }
+
+    private ModelAndView getEmployeesView(List<Employee> employees, Integer page) {
         var mv = new ModelAndView();
-        mv.addObject("employees", empService.findAllEmployees(page));
+        mv.addObject("employees", employees);
         mv.addObject("currentPage", page);
         mv.setViewName("employee/employee");
-
         return mv;
     }
 
