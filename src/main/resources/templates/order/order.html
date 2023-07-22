@@ -52,7 +52,8 @@
             <div class="col-sm-5">
                 <form id="search-form">
                     <div class="input-group mb-3">
-                        <select class="form-select border border-primary" style="max-width: 10px" name="search_in" onchange="submit()">
+                        <select id="search-option-select" class="form-select border border-primary" style="max-width: 10px" name="search_in"
+                                onchange="placeTrigger()">
                             <option th:selected="${search_in == 'name'}" value="name">Name</option>
                             <option th:selected="${search_in == 'phoneNo'}" value="phoneNo">PhoneNo</option>
                             <option th:selected="${search_in == 'email'}" value="email">Email</option>
@@ -309,6 +310,11 @@
     <footer th:replace="~{frags/general-frags.html :: footer}"></footer>
 
     <script>
+        function placeTrigger() {
+            let select = document.getElementById('search-option-select');
+            let searchInputField = document.getElementById('search-field');
+            searchInputField.placeholder = 'Search orders using customer ' + select.value;
+        }
         function clearSearch() {
             let searchField = document.getElementById('search-field');
             searchField.value = '';
