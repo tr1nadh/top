@@ -291,13 +291,16 @@
     <nav>
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${currentPage <= 0} ? 'disabled' : ''">
-                <a class="page-link" th:href="'/orders/' + ${active} + ${search != null ? '?search=' + search: ''}">
+                <a class="page-link"
+                   th:href="'/orders/' + ${active} + ${search != null ? '?search_in=' + search_in + '&search=' + search : ''}">
                     Start</a></li>
             <li class="page-item" th:classappend="${currentPage <= 0} ? 'disabled' : ''">
-                <a class="page-link" th:href="'/orders/' + ${active} + '?' + ${search != null ? 'search=' + search + '&' : ''}
+                <a class="page-link"
+                   th:href="'/orders/' + ${active} + ${search != null ? '?search_in=' + search_in + '&search=' + search + '&' : ''}
                  + 'page=' + (${currentPage} - 1)">Previous</a></li>
             <li class="page-item" th:classappend="${#lists.isEmpty(orders)} ? 'disabled' : ''">
-                <a class="page-link" th:href="'/orders/' + ${active} + '?' + ${search != null ? 'search=' + search + '&' : ''}
+                <a class="page-link"
+                   th:href="'/orders/' + ${active} + ${search != null ? '?search_in=' + search_in + '&search=' + search + '&' : ''}
                  + 'page=' + (${currentPage} + 1)">Next</a></li>
         </ul>
     </nav>
