@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping({"/","/orders"})
+@RequestMapping("/orders")
 public class OrderController extends AController {
 
     @Autowired
@@ -67,7 +67,7 @@ public class OrderController extends AController {
         return mv;
     }
 
-    @GetMapping({"/", "/{status}"})
+    @GetMapping("/{status}")
     public ModelAndView getOrdersByStatus(@PathVariable("status") String status, String search_in,
                                          String search, String handle_by, @RequestParam(required = false) Integer page) {
         page = (page == null) ? 0 : page;
