@@ -73,6 +73,17 @@
                 </form>
             </div>
 
+            <!-- Sort -->
+            <div class="col-sm-4">
+                <form>
+                    <select class="form-select border border-primary w-auto" id="handleBySelect" name="handle_by" onchange="submit()">
+                        <option selected disabled>Handle by</option>
+                        <option th:each="emp : ${employees}"
+                                th:selected="${handle_by == emp.name}" th:value="${emp.name}" th:text="${emp.name}"></option>
+                    </select>
+                </form>
+            </div>
+
             <!-- Table -->
             <div class="table-responsive-sm">
                 <table class="table table-hover border">
@@ -293,16 +304,17 @@
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${currentPage <= 0} ? 'disabled' : ''">
                 <a class="page-link"
-                   th:href="'/orders/' + ${active} + ${search != null ? '?search_in=' + search_in + '&search=' + search : ''}">
+                   th:href="'/orders/' + ${active} + ${search != null ? '?search_in=' + search_in + '&search=' + search : ''}
+                    + ${handle_by != null ? '?handle_by=' + handle_by : ''}">
                     Start</a></li>
             <li class="page-item" th:classappend="${currentPage <= 0} ? 'disabled' : ''">
                 <a class="page-link"
                    th:href="'/orders/' + ${active} + '?' + ${search != null ? 'search_in=' + search_in + '&search=' + search + '&' : ''}
-                 + 'page=' + (${currentPage} - 1)">Previous</a></li>
+                 + ${handle_by != null ? 'handle_by=' + handle_by + '&' : ''}  + 'page=' + (${currentPage} - 1)">Previous</a></li>
             <li class="page-item" th:classappend="${#lists.isEmpty(orders)} ? 'disabled' : ''">
                 <a class="page-link"
                    th:href="'/orders/' + ${active} + '?' + ${search != null ? 'search_in=' + search_in + '&search=' + search + '&' : ''}
-                 + 'page=' + (${currentPage} + 1)">Next</a></li>
+                 + ${handle_by != null ? 'handle_by=' + handle_by + '&' : ''} + 'page=' + (${currentPage} + 1)">Next</a></li>
         </ul>
     </nav>
 
