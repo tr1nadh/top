@@ -70,29 +70,32 @@ public class OrderController extends AController {
     public ModelAndView getOrdersByStatus(@PathVariable("status") String status, String search_in,
                                          String search, String handle_by, @RequestParam(required = false) Integer page) {
         page = (page == null) ? 0 : page;
-        if (search_in != null && search != null) {
-            List<Order> orders = null;
-            switch (search_in) {
-                case "name" -> orders = orderService.find.getPersonalizedOrdersByCustomerNameContaining(getOrderStatusEnum(status), search, page);
-                case "phoneNo" -> orders = orderService.find.getPersonalizedOrdersByPhoneNoContaining(getOrderStatusEnum(status), search, page);
-                case "email" -> orders = orderService.find.getPersonalizedOrdersByEmailContaining(getOrderStatusEnum(status), search, page);
-            }
+        if (search_in != null && search != null) return getSearchOrdersView(status, search_in, search, page);
+        if (handle_by != null) return getHandleBySortView(status, handle_by, page);
 
-            var mv = getOrdersViewByOrderStatus(orders, status, page);
-            mv.addObject("search", search);
-            mv.addObject("search_in", search_in);
-            return mv;
-        }
-
-        if (handle_by != null) {
-            var mv = getOrdersViewByOrderStatus(orderService.find.
-                    findOrdersOrderStatusAndHandleBy(getOrderStatusEnum(status), handle_by, page), status, page);
-            mv.addObject("handle_by", handle_by);
-            return mv;
-        }
-
-        return getOrdersViewByOrderStatus(orderService.find.getPersonalizedOrdersBy(getOrderStatusEnum(status), page),
+        return getOrdersView(orderService.find.getPersonalizedOrdersBy(getOrderStatusEnum(status), page),
                 status, page);
+    }
+
+    private ModelAndView getHandleBySortView(String status, String handle_by, Integer page) {
+        var mv = getOrdersView(orderService.find.
+                findOrdersOrderStatusAndHandleBy(getOrderStatusEnum(status), handle_by, page), status, page);
+        mv.addObject("handle_by", handle_by);
+        return mv;
+    }
+
+    private ModelAndView getSearchOrdersView(String status, String search_in, String search, int page) {
+        List<Order> orders = null;
+        switch (search_in) {
+            case "name" -> orders = orderService.find.getPersonalizedOrdersByCustomerNameContaining(getOrderStatusEnum(status), search, page);
+            case "phoneNo" -> orders = orderService.find.getPersonalizedOrdersByPhoneNoContaining(getOrderStatusEnum(status), search, page);
+            case "email" -> orders = orderService.find.getPersonalizedOrdersByEmailContaining(getOrderStatusEnum(status), search, page);
+        }
+
+        var mv = getOrdersView(orders, status, page);
+        mv.addObject("search", search);
+        mv.addObject("search_in", search_in);
+        return mv;
     }
 
     private OrderStatus getOrderStatusEnum(String name) {
@@ -104,7 +107,7 @@ public class OrderController extends AController {
         return OrderStatus.PENDING;
     }
 
-    private ModelAndView getOrdersViewByOrderStatus(List<Order> orders, String active, int page) {
+    private ModelAndView getOrdersView(List<Order> orders, String active, int page) {
         var mv = new ModelAndView();
         mv.addObject("orders", orders);
         mv.addObject("employees", employeeService.findAllEmployees());
