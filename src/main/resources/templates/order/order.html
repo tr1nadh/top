@@ -76,7 +76,7 @@
             <!-- Sort -->
             <div class="col-sm-4">
                 <form>
-                    <select class="form-select border border-primary w-auto" id="handleBySelect" name="handle_by" onchange="submit()">
+                    <select class="form-select border border-primary w-auto" name="handle_by" onchange="submit()">
                         <option selected disabled>Handle by</option>
                         <option th:each="emp : ${employees}"
                                 th:selected="${handle_by == emp.name}" th:value="${emp.name}" th:text="${emp.name}"></option>
