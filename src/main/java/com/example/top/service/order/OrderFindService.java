@@ -79,6 +79,6 @@ public class OrderFindService extends ServiceHelper {
     }
 
     private PageRequest getPageRequest(int page) {
-        return PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "orderId"));
+        return PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "service.bookingDate"));
     }
 }
