@@ -8,6 +8,7 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -61,6 +62,7 @@ public class OrderFindService extends ServiceHelper {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
     public List<Order> findOrdersOrderStatusAndHandleBy(OrderStatus status, String handleBy, int page) {
         return repository.findOrdersByOrderStatusAndHandleByName(status.toString(), handleBy, getPageRequest(page));
     }

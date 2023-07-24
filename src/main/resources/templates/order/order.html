@@ -74,7 +74,7 @@
             </div>
 
             <!-- Sort -->
-            <div class="col-sm-4">
+            <div sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_DEVELOPER')" class="col-sm-4">
                 <div class="d-flex flex-nowrap">
                     <form class="me-2">
                         <select class="form-select border border-primary w-auto" name="handle_by" onchange="submit()">
