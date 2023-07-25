@@ -19,6 +19,8 @@ public class Service {
     )
     @JoinColumn(name = "service_type_id")
     private ServiceType serviceType;
+
+    @Temporal(TemporalType.DATE)
     private LocalDate bookingDate = LocalDate.now();
     @OneToOne(
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}

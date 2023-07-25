@@ -4,6 +4,7 @@ import com.example.top.entity.order.Order;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
@@ -22,4 +23,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findOrdersByOrderStatusAndHandleByNameAndServiceServiceTypeName(String orderStatus,
                                                                                 String handleByName,
                                                                                 String serviceType, Pageable pageable);
+
+    List<Order> findOrdersByOrderStatusAndServiceBookingDate(String orderStatus, LocalDate date, Pageable pageable);
+    List<Order> findOrdersByOrderStatusAndServiceBookingDateBetween(String orderStatus,
+                                                                    LocalDate startDate, LocalDate endDate,
+                                                                    Pageable pageable);
 }

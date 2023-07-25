@@ -10,6 +10,7 @@ import com.example.top.service.DimensionsService;
 import com.example.top.service.EmployeeService;
 import com.example.top.service.ServiceTypeService;
 import com.example.top.service.order.OrderService;
+import com.example.top.util.GeneralUtil;
 import com.example.top.util.mapper.OrderMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -69,13 +71,29 @@ public class OrderController extends AController {
 
     @GetMapping("/{status}")
     public ModelAndView getOrdersByStatus(@PathVariable("status") String status, String search_in,
-                                         String search, String handle_by, @RequestParam(required = false) Integer page) {
+                                         String search, String handle_by,
+                                          String start_date, String end_date,
+                                          @RequestParam(required = false) Integer page) {
         page = (page == null) ? 0 : page;
         if (search_in != null && search != null) return getSearchOrdersView(status, search_in, search, page);
         if (handle_by != null) return getHandleBySortView(status, handle_by, page);
+        if (start_date != null) return getDateSortView(status, start_date, end_date, page);
 
         return getOrdersView(orderService.find.getPersonalizedOrdersBy(getOrderStatusEnum(status), page),
                 status, page);
+    }
+
+    private ModelAndView getDateSortView(String status, String start_date, String end_date, Integer page) {
+        List<Order> orders;
+        if (!GeneralUtil.isQualifiedString(end_date)) orders = orderService.find.findOrdersByBookingDate(getOrderStatusEnum(status),
+                LocalDate.parse(start_date), page);
+        else orders = orderService.find.findOrdersByBookingDateBetween(getOrderStatusEnum(status),
+                    LocalDate.parse(start_date), LocalDate.parse(end_date), page);
+
+        var mv = getOrdersView(orders, status, page);
+        mv.addObject("start_date", start_date);
+        mv.addObject("end_date", end_date);
+        return mv;
     }
 
     private ModelAndView getHandleBySortView(String status, String handle_by, Integer page) {

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -65,6 +66,15 @@ public class OrderFindService extends ServiceHelper {
     @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
     public List<Order> findOrdersOrderStatusAndHandleBy(OrderStatus status, String handleBy, int page) {
         return repository.findOrdersByOrderStatusAndHandleByName(status.toString(), handleBy, getPageRequest(page));
+    }
+
+    public List<Order> findOrdersByBookingDate(OrderStatus status, LocalDate date, int page) {
+        return repository.findOrdersByOrderStatusAndServiceBookingDate(status.toString(), date, getPageRequest(page));
+    }
+
+    public List<Order> findOrdersByBookingDateBetween(OrderStatus status, LocalDate startDate, LocalDate endDate, int page) {
+        return repository.findOrdersByOrderStatusAndServiceBookingDateBetween(status.toString(),
+                startDate, endDate, getPageRequest(page));
     }
 
     public List<Order> getPersonalizedOrdersByServiceType(OrderStatus status, String serviceType, int page) {
