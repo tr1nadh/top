@@ -95,42 +95,19 @@
 
                 <!-- Sort date -->
                 <div class="me-3 w-auto">
-
-                    <!-- Sort by date modal trigger button -->
-                    <button class="btn btn-outline-primary" data-bs-toggle="modal"
-                            data-bs-target="#sort-by-date-modal">Sort by date</button>
-
-                    <!-- Show sort by date modal -->
-                    <div class="modal fade" th:id="sort-by-date-modal" tabindex="-1"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5">Sort by date</h1>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="mb-3">
-                                            <label for="datepicker1">Start date:</label>
-                                            <input class="form-control" type="date" id="datepicker1" name="start_date"/>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="datepicker2">End date:</label>
-                                            <input class="form-control" type="date" id="datepicker2" name="end_date"/>
-                                            <span class="form-text">For particular date, Leave this field empty.</span>
-                                        </div>
-                                        <button class="btn btn-primary" type="submit">Submit</button>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </div>
+                    <form>
+                        <div class="input-group">
+                            <label class="input-group-text">Sort by date</label>
+                            <input class="form-control" type="date" id="datepicker1" placeholder="Start date" name="start_date"/>
+                            <input class="form-control" type="date" id="datepicker2" placeholder="End date" name="end_date"/>
+                            <button class="btn btn-primary" type="submit">Submit</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
-                <a class="btn btn-danger w-auto" th:attr="onclick=|clearSort('${active}')|" th:if="${handle_by != null}">
+
+                <a class="btn btn-danger" th:attr="onclick=|clearSort('${active}')|"
+                   th:if="${handle_by != null} or ${start_date != null}">
                     Clear</a>
             </div>
 
