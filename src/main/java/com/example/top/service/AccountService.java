@@ -27,14 +27,6 @@ public class AccountService {
     @Autowired
     private HttpServletResponse response;
 
-    public void saveAccount(Account account) {
-        if (account == null) throw new IllegalArgumentException("'account' cannot be null");
-
-        repository.save(checkPasswordChange(account));
-
-        log.info("Account with the username '" + account.getUsername() + "' has been saved" );
-    }
-
     public Account checkPasswordChange(Account account) {
         if (account.isPasswordChanged()) {
             account.setPassword(passwordEncoder.encode(account.getPassword()));
