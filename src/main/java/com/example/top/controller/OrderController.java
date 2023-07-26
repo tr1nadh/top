@@ -83,11 +83,13 @@ public class OrderController extends AController {
     }
 
     private ModelAndView getDateSortView(String status, String start_date, String end_date, Integer page) {
-        List<Order> orders;
-        if (!GeneralUtil.isQualifiedString(end_date)) orders = orderService.find.findOrdersByBookingDate(getOrderStatusEnum(status),
-                LocalDate.parse(start_date), page);
-        else orders = orderService.find.findOrdersByBookingDateBetween(getOrderStatusEnum(status),
-                    LocalDate.parse(start_date), LocalDate.parse(end_date), page);
+        List<Order> orders = null;
+        if (GeneralUtil.isQualifiedString(start_date)) {
+            if (!GeneralUtil.isQualifiedString(end_date))
+                orders = orderService.find.findOrdersByBookingDate(getOrderStatusEnum(status), LocalDate.parse(start_date), page);
+            else orders = orderService.find.findOrdersByBookingDateBetween(getOrderStatusEnum(status),
+                        LocalDate.parse(start_date), LocalDate.parse(end_date), page);
+        }
 
         var mv = getOrdersView(orders, status, page);
         mv.addObject("start_date", start_date);
