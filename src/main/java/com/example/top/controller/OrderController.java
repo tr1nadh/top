@@ -91,6 +91,8 @@ public class OrderController extends AController {
                         LocalDate.parse(start_date), LocalDate.parse(end_date), page);
         }
 
+        if (orders == null) throw new IllegalStateException("Dates cannot be empty");
+
         var mv = getOrdersView(orders, status, page);
         mv.addObject("start_date", start_date);
         mv.addObject("end_date", end_date);
