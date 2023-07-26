@@ -43,13 +43,13 @@ public class ServiceTypeService {
     public ServiceType deleteServiceType(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
-        var serviceType = repository.findById(id);
-        if (serviceType.isEmpty())
+        var OptServiceType = repository.findById(id);
+        if (OptServiceType.isEmpty())
             throw new IllegalStateException("Cannot delete the service type: No service type exists with the id '" + id + "'");
 
         repository.deleteById(id);
 
-        log.info("Service type '" + serviceType.get().getName() + "' has been deleted");
-        return serviceType.get();
+        log.info("Service type '" + OptServiceType.get().getName() + "' has been deleted");
+        return OptServiceType.get();
     }
 }

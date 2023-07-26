@@ -42,13 +42,13 @@ public class DimensionsService {
     public Dimensions deleteDimensions(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
-        var dimensions = repository.findById(id);
-        if (dimensions.isEmpty())
+        var OptDimensions = repository.findById(id);
+        if (OptDimensions.isEmpty())
             throw new IllegalStateException("Cannot delete dimensions: No dimensions exists with the id '" + id + "'");
 
         repository.deleteById(id);
 
-        log.info("Dimensions '" + dimensions.get().getName() + "' has been deleted");
-        return dimensions.get();
+        log.info("Dimensions '" + OptDimensions.get().getName() + "' has been deleted");
+        return OptDimensions.get();
     }
 }
