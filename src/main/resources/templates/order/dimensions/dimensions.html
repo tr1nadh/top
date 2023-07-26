@@ -26,11 +26,10 @@
 
             <!-- Add dimensions -->
             <div>
-                <form action="#" th:action="@{save-dimensions}" th:object="${dimensionsObj}" method="post">
+                <form action="#" th:action="@{save-dimensions}" method="post">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="New dimension" th:field="*{name}" required>
+                        <input type="text" class="form-control" placeholder="New dimension" name="name" required>
                         <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                        <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
                     </div>
                     <div class="form-text">Dimensions format: 1920 x 1080 px</div>
                 </form>

@@ -20,9 +20,9 @@ public class ServiceTypeController extends AController {
     @Autowired
     private ServiceTypeService service;
 
-    @GetMapping({"/add-service-type", "/update-service-type"})
-    public ModelAndView renderServiceType(Long id) {
-        return getRenderView((id == null) ? new ServiceType() : service.getServiceType(id));
+    @GetMapping("/add-service-type")
+    public String renderServiceType() {
+        return "order/service-type/save-service-type";
     }
 
     @PostMapping("/save-service-type")
@@ -43,19 +43,10 @@ public class ServiceTypeController extends AController {
         return new RedirectView("view");
     }
 
-    private ModelAndView getRenderView(Object type) {
-        var mv = new ModelAndView();
-        mv.addObject("serviceType", type);
-        mv.setViewName("order/service-type/save-service-type");
-
-        return mv;
-    }
-
     @RequestMapping("/view")
     public ModelAndView getServiceTypes(@RequestParam(defaultValue = "0") int page) {
         var mv = new ModelAndView();
         mv.addObject("serviceTypes", service.findAllServiceTypes(page));
-        mv.addObject("serviceType", new ServiceType());
         mv.addObject("currentPage", page);
         mv.setViewName("order/service-type/service-type");
 

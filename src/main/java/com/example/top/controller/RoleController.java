@@ -20,9 +20,9 @@ public class RoleController extends AController {
     @Autowired
     private RoleService service;
 
-    @GetMapping({"/add-role", "/update-role"})
-    public ModelAndView renderRole(Long id) {
-        return getRenderView((id == null) ? new Role() : service.getRole(id));
+    @GetMapping("/add-role")
+    public String renderRole() {
+        return "employee/role/role";
     }
 
     @PostMapping("/save-role")
@@ -42,19 +42,10 @@ public class RoleController extends AController {
         return new RedirectView("view");
     }
 
-    private ModelAndView getRenderView(Object role) {
-        var mv = new ModelAndView();
-        mv.addObject("role", role);
-        mv.setViewName("employee/role/role");
-
-        return mv;
-    }
-
     @RequestMapping("/view")
     public ModelAndView getRoles(@RequestParam(defaultValue = "0") int page) {
         var mv = new ModelAndView();
         mv.addObject("roles", service.findAllRoles(page));
-        mv.addObject("role", new Role());
         mv.addObject("currentPage", page);
         mv.setViewName("employee/role/role");
 

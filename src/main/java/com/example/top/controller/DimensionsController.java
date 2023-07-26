@@ -20,17 +20,9 @@ public class DimensionsController extends AController {
     @Autowired
     private DimensionsService service;
 
-    @GetMapping({"/add-dimensions", "/update-dimensions"})
-    public ModelAndView renderDimensions(Long id) {
-        return getRenderView((id == null) ? new Dimensions() : service.getDimensions(id));
-    }
-
-    private ModelAndView getRenderView(Object dimensions) {
-        var mv = new ModelAndView();
-        mv.addObject("dimensions", dimensions);
-        mv.setViewName("order/dimensions/save-dimensions");
-
-        return mv;
+    @GetMapping("/add-dimensions")
+    public String renderDimensions() {
+        return "order/dimensions/save-dimensions";
     }
 
     @PostMapping("/save-dimensions")
@@ -54,7 +46,6 @@ public class DimensionsController extends AController {
     public ModelAndView getDimensions(@RequestParam(defaultValue = "0") int page) {
         var mv = new ModelAndView();
         mv.addObject("dimensions", service.findAllDimensions(page));
-        mv.addObject("dimensionsObj", new Dimensions());
         mv.addObject("currentPage", page);
         mv.setViewName("order/dimensions/dimensions");
 

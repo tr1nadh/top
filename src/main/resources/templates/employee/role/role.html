@@ -26,9 +26,9 @@
 
       <!-- Add role -->
       <div class="mb-3">
-        <form action="#" th:action="@{save-role}" th:object="${role}" method="post">
+        <form action="#" th:action="@{save-role}" method="post">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="New role" th:field="*{name}" required>
+            <input type="text" class="form-control" placeholder="New role" name="name" required>
             <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
           </div>
         </form>

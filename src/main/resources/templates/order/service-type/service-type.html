@@ -26,11 +26,10 @@
 
       <!-- Add service type -->
       <div class="mb-3">
-        <form action="#" th:action="@{save-service-type}" th:object="${serviceType}" method="post">
+        <form action="#" th:action="@{save-service-type}" method="post">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="New service type" th:field="*{name}" required>
+            <input type="text" class="form-control" placeholder="New service type" name="name" required>
             <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
           </div>
         </form>
       </div>
