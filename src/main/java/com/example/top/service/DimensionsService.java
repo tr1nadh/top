@@ -39,20 +39,6 @@ public class DimensionsService {
         return dimensions.get().toList();
     }
 
-    public Dimensions getDimensions(Long id) {
-        if (id == null) throw new IllegalArgumentException("'id' cannot be null");
-
-        var optDimensions = repository.findById(id);
-        if (optDimensions.isEmpty()) {
-            log.severe("No dimensions found with the id '" + id + "'");
-            return null;
-        }
-
-        var dimensions = optDimensions.get();
-        log.info("Dimensions '" + dimensions.getName() + "' has been retrieved");
-        return dimensions;
-    }
-
     public Dimensions deleteDimensions(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 

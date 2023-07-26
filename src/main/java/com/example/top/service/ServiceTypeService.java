@@ -40,20 +40,6 @@ public class ServiceTypeService {
         return serviceTypes.get().toList();
     }
 
-    public ServiceType getServiceType(Long id) {
-        if (id == null) throw new IllegalArgumentException("'id' cannot be null");
-
-        var optServiceType = repository.findById(id);
-        if (optServiceType.isEmpty()) {
-            log.severe("No service type found with the id '" + id + "'");
-            return null;
-        }
-
-        var serviceType = optServiceType.get();
-        log.info("Service type '" + serviceType.getName() + "' has been retrieved");
-        return serviceType;
-    }
-
     public ServiceType deleteServiceType(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
