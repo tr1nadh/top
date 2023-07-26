@@ -53,7 +53,7 @@ public class OrderUpdateService {
         repository.save(dbOrder);
     }
 
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'DEVELOPER')")
     public void changeServiceStatus(Long orderId, String serviceStatus) {
         if (orderId == null) throw new IllegalArgumentException("'orderId' cannot be null");
 
