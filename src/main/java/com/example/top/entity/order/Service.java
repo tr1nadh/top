@@ -22,6 +22,7 @@ public class Service {
 
     @Temporal(TemporalType.DATE)
     private LocalDate bookingDate = LocalDate.now();
+
     @OneToOne(
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
@@ -31,9 +32,12 @@ public class Service {
     private int quantity;
 
     private int printingCharges;
+
     private int serviceCharges;
+
     @Transient
     private boolean anyChargesChanged;
+
     private String serviceStatus = "PENDING";
 
     public void setBookingDate(LocalDate bookingDate) {

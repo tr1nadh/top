@@ -27,14 +27,19 @@ public class Order {
             generator = "order_seq"
     )
     private Long orderId;
+
     @Embedded
     private Customer customer;
+
     @OneToOne
     @JoinColumn(name = "employee_id")
     private Employee handleBy;
+
     @Embedded
     private Service service;
+
     @Embedded
     private Payment payment;
+
     private String orderStatus = "PENDING";
 }
