@@ -77,17 +77,6 @@ public class OrderFindService extends ServiceHelper {
                 startDate, endDate, getPageRequest(page));
     }
 
-    public List<Order> getPersonalizedOrdersByServiceType(OrderStatus status, String serviceType, int page) {
-        var account = getCurrentLoggedInUserDetails();
-        if (specialRoles.contains((account.getRole()))) return repository.findOrdersByOrderStatusAndServiceServiceTypeName(
-                status.toString(), serviceType, getPageRequest(page)
-        );
-
-        return repository.findOrdersByOrderStatusAndHandleByNameAndServiceServiceTypeName(
-                status.toString(), account.getEmployee().getName(), serviceType, getPageRequest(page)
-        );
-    }
-
     private PageRequest getPageRequest(int page) {
         return PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "service.bookingDate"));
     }

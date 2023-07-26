@@ -9,15 +9,6 @@ public abstract class AController {
     @Autowired
     private HttpServletRequest request;
 
-    public ModelAndView getAlertView(String message) {
-        var mv = new ModelAndView();
-        mv.addObject("message", message);
-        mv.addObject("toMapping", getCurrentMapping());
-        mv.setViewName("alert-n-continue");
-
-        return mv;
-    }
-
     private String getCurrentMapping() {
         return request.getRequestURI();
     }
