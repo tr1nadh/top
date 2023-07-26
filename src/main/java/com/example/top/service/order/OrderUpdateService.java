@@ -7,6 +7,7 @@ import com.example.top.enums.ServiceStatus;
 import com.example.top.repository.OrderRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -52,6 +53,7 @@ public class OrderUpdateService {
         repository.save(dbOrder);
     }
 
+    @PreAuthorize("hasRole('EMPLOYEE')")
     public void changeServiceStatus(Long orderId, String serviceStatus) {
         if (orderId == null) throw new IllegalArgumentException("'orderId' cannot be null");
 
