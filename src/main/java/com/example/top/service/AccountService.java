@@ -41,7 +41,7 @@ public class AccountService extends ServiceHelper {
         var currentAccount = getCurrentLoggedInUserDetails();
         var dbAccount = repository.findAccountByUsername(currentAccount.getUsername());
         if (newUsername.equals(currentAccount.getUsername()))
-            throw new IllegalStateException("Cannot update username: New username is same as existing username");
+            throw new IllegalStateException("Cannot change username: New username is same as existing username");
 
         updateUsernameInContext(newUsername);
 
@@ -63,17 +63,17 @@ public class AccountService extends ServiceHelper {
         var dbAccount = repository.findAccountByUsername(currentAccount.getUsername());
 
         if (!passwordEncoder.matches(oldPassword, dbAccount.getPassword()))
-            throw new IllegalStateException("Cannot update password: Old password is wrong");
+            throw new IllegalStateException("Cannot change password: Old password is wrong");
 
         if (passwordEncoder.matches(newPassword, dbAccount.getPassword()))
-            throw new IllegalStateException("Cannot update password: New password is same as existing password");
+            throw new IllegalStateException("Cannot change password: New password is same as existing password");
 
         dbAccount.setPassword(newPassword);
         repository.save(checkPasswordChange(dbAccount));
 
         logoutUser();
 
-        log.info("Successfully updated the password of account username '" + currentAccount.getUsername() + "'");
+        log.info("Successfully changed the password of account username '" + currentAccount.getUsername() + "'");
     }
 
     private void logoutUser() {
