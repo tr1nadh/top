@@ -9,10 +9,6 @@ public abstract class AController {
     @Autowired
     private HttpServletRequest request;
 
-    private String getCurrentMapping() {
-        return request.getRequestURI();
-    }
-
     public ModelAndView getAlertView(String message, String toMapping) {
         var mv = new ModelAndView();
         mv.addObject("message", message);
