@@ -5,9 +5,6 @@ import com.example.top.entity.employee.Account;
 import com.example.top.entity.employee.Employee;
 import com.example.top.entity.employee.Role;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class EmployeeMapper {
 
     public static Employee mapInfo(EmployeeDto employeeDto) {
@@ -30,12 +27,5 @@ public class EmployeeMapper {
         mappedEmp.setAccount(mappedAccount);
 
         return mappedEmp;
-    }
-
-    public static List<EmployeeDto> mapList(List<Employee> employees) {
-        var list = new ArrayList<EmployeeDto>();
-        for (var emp : employees) list.add(Mapper.map(emp, new EmployeeDto()));
-
-        return list;
     }
 }
