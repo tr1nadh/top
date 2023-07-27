@@ -1,5 +1,6 @@
 package com.example.top.service;
 
+import com.example.top.dto.ResponseDto;
 import com.example.top.entity.employee.Account;
 import com.example.top.repository.AccountRepository;
 import com.example.top.util.GeneralUtil;
@@ -35,37 +36,41 @@ public class AccountService extends ServiceHelper {
         return account;
     }
 
-    public void changeUsername(String newUsername) {
+    public ResponseDto changeUsername(String newUsername) {
         if (!GeneralUtil.isQualifiedString(newUsername)) throw new IllegalArgumentException("'newUsername' is not a qualified string");
 
-        var currentAccount = getCurrentLoggedInUserDetails();
-        var dbAccount = repository.findAccountByUsername(currentAccount.getUsername());
-        if (newUsername.equals(currentAccount.getUsername()))
-            throw new IllegalStateException("Cannot change username: New username is same as existing username");
+        var currentUsername = getCurrentLoggedInUser().getUsername();
+        var dbAccount = repository.findAccountByUsername(currentUsername);
+        if (newUsername.equals(currentUsername))
+            throw new IllegalStateException("'" + newUsername + "' is already taken!");
 
         updateUsernameInContext(newUsername);
 
         dbAccount.setUsername(newUsername);
         repository.save(dbAccount);
-        log.info("Account username successfully changed from '" + currentAccount.getUsername() + "' to '" + newUsername + "'");
+
+        var message = "Username successfully changed from '" + currentUsername + "' to '" + newUsername + "'";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 
     private void updateUsernameInContext(String newUsername) {
-        var emp = getCurrentLoggedInUserDetails();
+        var emp = getCurrentLoggedInUser();
         emp.setUsername(newUsername);
     }
 
-    public void changePassword(String oldPassword, String newPassword) {
+    public ResponseDto changePassword(String oldPassword, String newPassword) {
         if (!GeneralUtil.isQualifiedString(oldPassword)) throw new IllegalArgumentException("'oldPassword' is not a qualified string");
         if (!GeneralUtil.isQualifiedString(newPassword)) throw new IllegalArgumentException("'newPassword' is not a qualified string");
 
-        var currentAccount = getCurrentLoggedInUserDetails();
-        var dbAccount = repository.findAccountByUsername(currentAccount.getUsername());
-
-        if (!passwordEncoder.matches(oldPassword, dbAccount.getPassword()))
+        var currentUsername = getCurrentLoggedInUser().getUsername();
+        var dbAccount = repository.findAccountByUsername(currentUsername);
+        var currentPassword = dbAccount.getPassword();
+        if (!arePasswordsMatching(oldPassword, currentPassword))
             throw new IllegalStateException("Cannot change password: Old password is wrong");
 
-        if (passwordEncoder.matches(newPassword, dbAccount.getPassword()))
+        if (arePasswordsMatching(newPassword, currentPassword))
             throw new IllegalStateException("Cannot change password: New password is same as existing password");
 
         dbAccount.setPassword(newPassword);
@@ -73,7 +78,14 @@ public class AccountService extends ServiceHelper {
 
         logoutUser();
 
-        log.info("Successfully changed the password of account username '" + currentAccount.getUsername() + "'");
+        var message = "Password changed successfully, please login again.";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
+    }
+
+    private boolean arePasswordsMatching(String newPassword, String currentPassword) {
+        return passwordEncoder.matches(newPassword, currentPassword);
     }
 
     private void logoutUser() {
