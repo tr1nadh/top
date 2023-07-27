@@ -34,7 +34,7 @@ public class AccountController extends AController {
             return new RedirectView("settings");
         }
 
-        service.updateUsername(updateEmp.getNewUsername());
+        service.changeUsername(updateEmp.getNewUsername());
 
         attributes.addFlashAttribute("alertMessage", "Username successfully changed");
         return new RedirectView("settings");
@@ -48,7 +48,7 @@ public class AccountController extends AController {
             return new ModelAndView("redirect:settings");
         }
 
-        service.updatePassword(updateEmp.getOldPassword(), updateEmp.getNewPassword());
+        service.changePassword(updateEmp.getOldPassword(), updateEmp.getNewPassword());
 
         return getAlertView("Password changed successfully, please login again.", "/login");
     }
