@@ -23,7 +23,7 @@
             <div class="alert alert-danger" role="alert" th:text="${message}">
                 Unknown error
             </div>
-            <div class="alert alert-danger" role="alert" th:text="${errorMessage}">
+            <div class="alert alert-danger" role="alert" th:text="${errorMessage}" th:if="${errorMessage != null}">
                 Unknown error
             </div>
 
