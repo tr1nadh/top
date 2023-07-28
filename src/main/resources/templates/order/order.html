@@ -328,16 +328,21 @@
             <li class="page-item" th:classappend="${currentPage <= 0} ? 'disabled' : ''">
                 <a class="page-link"
                    th:href="'/orders/' + ${active} + ${search != null ? '?search_in=' + search_in + '&search=' + search : ''}
-                    + ${handle_by != null ? '?handle_by=' + handle_by : ''}">
+                    + ${handle_by != null ? '?handle_by=' + handle_by : ''}
+                    + ${start_date != null ? '?start_date=' + start_date + '&end_date=' + end_date : ''}">
                     Start</a></li>
             <li class="page-item" th:classappend="${currentPage <= 0} ? 'disabled' : ''">
                 <a class="page-link"
                    th:href="'/orders/' + ${active} + '?' + ${search != null ? 'search_in=' + search_in + '&search=' + search + '&' : ''}
-                 + ${handle_by != null ? 'handle_by=' + handle_by + '&' : ''}  + 'page=' + (${currentPage} - 1)">Previous</a></li>
+                 + ${handle_by != null ? 'handle_by=' + handle_by + '&' : ''}
+                 + ${start_date != null ? 'start_date=' + start_date + '&end_date=' + end_date + '&' : ''}
+                 + 'page=' + (${currentPage} - 1)">Previous</a></li>
             <li class="page-item" th:classappend="${#lists.isEmpty(orders)} ? 'disabled' : ''">
                 <a class="page-link"
                    th:href="'/orders/' + ${active} + '?' + ${search != null ? 'search_in=' + search_in + '&search=' + search + '&' : ''}
-                 + ${handle_by != null ? 'handle_by=' + handle_by + '&' : ''} + 'page=' + (${currentPage} + 1)">Next</a></li>
+                 + ${handle_by != null ? 'handle_by=' + handle_by + '&' : ''}
+                 + ${start_date != null ? 'start_date=' + start_date + '&end_date=' + end_date + '&' : ''}
+                 + 'page=' + (${currentPage} + 1)">Next</a></li>
         </ul>
     </nav>
 
