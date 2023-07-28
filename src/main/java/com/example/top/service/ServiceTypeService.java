@@ -1,5 +1,6 @@
 package com.example.top.service;
 
+import com.example.top.dto.ResponseDto;
 import com.example.top.entity.order.ServiceType;
 import com.example.top.repository.ServiceTypeRepository;
 import lombok.extern.java.Log;
@@ -17,12 +18,16 @@ public class ServiceTypeService {
     @Autowired
     private ServiceTypeRepository repository;
 
-    public void saveServiceType(ServiceType type) {
+    public ResponseDto saveServiceType(ServiceType type) {
         if (type == null) throw new IllegalArgumentException("'type' cannot be null");
 
         repository.save(type);
 
-        log.info("Service type '" + type.getName() + "' is saved");
+        var message = (type.getId() == null) ? "New service type '"+ type.getName() +"' has been saved" :
+                "Service type has been renamed successfully";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 
     public List<ServiceType> findAllServiceTypes() {
@@ -40,7 +45,7 @@ public class ServiceTypeService {
         return serviceTypes.get().toList();
     }
 
-    public ServiceType deleteServiceType(Long id) {
+    public ResponseDto deleteServiceType(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
         var OptServiceType = repository.findById(id);
@@ -49,7 +54,9 @@ public class ServiceTypeService {
 
         repository.deleteById(id);
 
-        log.info("Service type '" + OptServiceType.get().getName() + "' has been deleted");
-        return OptServiceType.get();
+        var message = "Service type '" + OptServiceType.get().getName() + "' has been deleted";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 }

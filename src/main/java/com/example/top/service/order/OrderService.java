@@ -1,5 +1,6 @@
 package com.example.top.service.order;
 
+import com.example.top.dto.ResponseDto;
 import com.example.top.entity.order.Order;
 import com.example.top.enums.OrderStatus;
 import com.example.top.enums.PaymentStatus;
@@ -21,13 +22,17 @@ public class OrderService extends ServiceHelper {
     @Autowired
     private OrderRepository repository;
 
-    public void saveOrder(Order order) {
+    public ResponseDto saveOrder(Order order) {
         if (order == null) throw new IllegalArgumentException("'order' cannot be null");
 
         prepareOrderForSaving(order);
         repository.save(order);
 
-        log.info("Order with the id '" + order.getOrderId() + "' has been saved" );
+        var message = (order.getOrderId() == null) ?  "New order saved successfully!" :
+                "Order '"+ order.getOrderId() +"' has been updated successfully!";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 
     private void prepareOrderForSaving(Order order) {
@@ -78,7 +83,7 @@ public class OrderService extends ServiceHelper {
         return optionalOrder.get();
     }
 
-    public void deleteOrder(Long id) {
+    public ResponseDto deleteOrder(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
         var order = repository.findById(id);
@@ -87,10 +92,13 @@ public class OrderService extends ServiceHelper {
 
         repository.deleteById(id);
 
-        log.info("Order with the id '" + id + "' has been deleted");
+        var message = "Order '" + id + "' has been deleted";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 
-    public void moveOrderToPending(Long id) {
+    public ResponseDto moveOrderToPending(Long id) {
         if (id == null) throw new IllegalArgumentException("'orderId' cannot be null");
 
         var optDbOrder = repository.findById(id);
@@ -102,10 +110,13 @@ public class OrderService extends ServiceHelper {
         dbOrder.getService().setServiceStatus(ServiceStatus.PENDING.toString());
         repository.save(dbOrder);
 
-        log.info("Order with the id '" + id + "' has been moved to pending");
+        var message = "Order '" + id + "' has been moved to pending";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 
-    public void cancelOrder(Long id) {
+    public ResponseDto cancelOrder(Long id) {
         if (id == null) throw new IllegalArgumentException("'orderId' cannot be null");
 
         var optDbOrder = repository.findById(id);
@@ -118,7 +129,10 @@ public class OrderService extends ServiceHelper {
         dbOrder.getPayment().setPaymentStatus(PaymentStatus.UNPAID.toString());
         repository.save(dbOrder);
 
-        log.info("Order with the id '" + id + "' has been cancelled");
+        var message = "Order '" + id + "' has been cancelled";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 
 }

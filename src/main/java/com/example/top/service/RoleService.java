@@ -1,5 +1,6 @@
 package com.example.top.service;
 
+import com.example.top.dto.ResponseDto;
 import com.example.top.entity.employee.Role;
 import com.example.top.repository.RoleRepository;
 import lombok.extern.java.Log;
@@ -18,13 +19,17 @@ public class RoleService {
     private RoleRepository repository;
     private final List<String> excludeRoles = List.of("Admin", "Developer");
 
-    public void saveRole(Role role) {
+    public ResponseDto saveRole(Role role) {
         if (role == null)
             throw new IllegalArgumentException("'role' cannot be null");
 
         repository.save(role);
 
-        log.info("Role '" + role.getName() + "' is saved");
+        var message = (role.getRoleId() == null) ? "New role '"+ role.getName() +"' has been saved" :
+                "Role renamed successfully";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 
     public List<Role> findAllRoles(int page) {
@@ -55,7 +60,7 @@ public class RoleService {
         return role;
     }
 
-    public Role deleteRole(Long id) {
+    public ResponseDto deleteRole(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
         var optRole = repository.findById(id);
@@ -64,7 +69,9 @@ public class RoleService {
 
         repository.deleteById(id);
 
-        log.info("Role '" + optRole.get().getName() + "' has been deleted");
-        return optRole.get();
+        var message = "Role '" + optRole.get().getName() + "' has been deleted";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 }

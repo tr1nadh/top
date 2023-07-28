@@ -33,12 +33,9 @@ public class DimensionsController extends AController {
             return new RedirectView("view");
         }
 
-        service.saveDimensions(Mapper.map(dimensions, new Dimensions()));
+        var response = service.saveDimensions(Mapper.map(dimensions, new Dimensions()));
 
-        var message = "";
-        if (dimensions.getId() == null) message = "New dimension has been added";
-        else message = "Dimension has been successfully renamed";
-        attributes.addFlashAttribute("alertMessage", message);
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("view");
     }
 
@@ -54,10 +51,9 @@ public class DimensionsController extends AController {
 
     @GetMapping("/delete-dimensions")
     public RedirectView deleteDimensions(Long id, RedirectAttributes attributes) {
-        var dimensions = service.deleteDimensions(id);
+        var response = service.deleteDimensions(id);
 
-        var message = "Dimensions '" + dimensions.getName() + "' has been deleted";
-        attributes.addFlashAttribute("alertMessage", message);
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("view");
     }
 }

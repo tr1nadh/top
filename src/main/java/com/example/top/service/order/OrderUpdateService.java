@@ -1,5 +1,6 @@
 package com.example.top.service.order;
 
+import com.example.top.dto.ResponseDto;
 import com.example.top.entity.order.Order;
 import com.example.top.enums.OrderStatus;
 import com.example.top.enums.PaymentStatus;
@@ -17,7 +18,7 @@ public class OrderUpdateService {
     @Autowired
     private OrderRepository repository;
 
-    public void addAmount(Long orderId, int addAmount) {
+    public ResponseDto addAmount(Long orderId, int addAmount) {
         if (orderId == null) throw new IllegalArgumentException("'orderId' cannot be null");
 
         var optDbOrder = repository.findById(orderId);
@@ -33,9 +34,14 @@ public class OrderUpdateService {
         dbOrder.getPayment().setAmountPaid(addedAmount);
         updatePaymentStatus(dbOrder);
         repository.save(dbOrder);
+
+        var message = "Amount '" + addAmount + "' has been added to the order '" + orderId + "'";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 
-    public void removeAmount(Long orderId, int removeAmount) {
+    public ResponseDto removeAmount(Long orderId, int removeAmount) {
         if (orderId == null) throw new IllegalArgumentException("'orderId' cannot be null");
 
         var optDbOrder = repository.findById(orderId);
@@ -51,10 +57,15 @@ public class OrderUpdateService {
         dbOrder.getPayment().setAmountPaid(removedAmount);
         updatePaymentStatus(dbOrder);
         repository.save(dbOrder);
+
+        var message = "Amount '" + removeAmount + "' has been removed from the order '" + orderId + "'";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'DEVELOPER')")
-    public void changeServiceStatus(Long orderId, String serviceStatus) {
+    public ResponseDto changeServiceStatus(Long orderId, String serviceStatus) {
         if (orderId == null) throw new IllegalArgumentException("'orderId' cannot be null");
 
         var optDbOrder = repository.findById(orderId);
@@ -67,9 +78,14 @@ public class OrderUpdateService {
             updateOrderStatus(dbOrder);
         }
         repository.save(dbOrder);
+
+        var message = "Order '" + orderId + "' service status changed to '" + serviceStatus + "'";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 
-    public void changePaymentStatus(Long orderId, String paymentStatus) {
+    public ResponseDto changePaymentStatus(Long orderId, String paymentStatus) {
         if (orderId == null) throw new IllegalArgumentException("'orderId' cannot be null");
 
         var optDbOrder = repository.findById(orderId);
@@ -84,6 +100,11 @@ public class OrderUpdateService {
         }
         updatePaymentStatus(dbOrder);
         repository.save(dbOrder);
+
+        var message = "Order '" + orderId + "' payment status changed to '" + paymentStatus + "'";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 
     private void updatePaymentStatus(Order dbOrder) {

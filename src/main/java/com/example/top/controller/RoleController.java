@@ -33,12 +33,9 @@ public class RoleController extends AController {
             return new RedirectView("view");
         }
 
-        service.saveRole(Mapper.map(role, new Role()));
+        var response = service.saveRole(Mapper.map(role, new Role()));
 
-        var message = "";
-        if (role.getRoleId() == null) message = "New role "+ role.getName() +" has been saved";
-        else message = "Role has been successfully renamed";
-        attributes.addFlashAttribute("alertMessage", message);
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("view");
     }
 
@@ -54,10 +51,9 @@ public class RoleController extends AController {
 
     @GetMapping("/delete-role")
     public RedirectView deleteRole(Long id, RedirectAttributes attributes) {
-        var role = service.deleteRole(id);
+        var response = service.deleteRole(id);
 
-        var message = "Role '" + role.getName() + "' has been deleted";
-        attributes.addFlashAttribute("alertMessage", message);
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("view");
     }
 }

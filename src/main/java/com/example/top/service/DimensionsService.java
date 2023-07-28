@@ -1,5 +1,6 @@
 package com.example.top.service;
 
+import com.example.top.dto.ResponseDto;
 import com.example.top.entity.order.Dimensions;
 import com.example.top.repository.DimensionsRepository;
 import lombok.extern.java.Log;
@@ -17,12 +18,16 @@ public class DimensionsService {
     @Autowired
     private DimensionsRepository repository;
 
-    public void saveDimensions(Dimensions dimensions) {
+    public ResponseDto saveDimensions(Dimensions dimensions) {
         if (dimensions == null) throw new IllegalArgumentException("'dimensions' cannot be null");
 
         repository.save(dimensions);
 
-        log.info("Dimensions '" + dimensions.getName() + "' is saved");
+        var message = (dimensions.getId() == null) ? "New dimensions has been saved" :
+                "Dimensions has been renamed successfully";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 
     public List<Dimensions> findAllDimensions() {
@@ -39,7 +44,7 @@ public class DimensionsService {
         return dimensions.get().toList();
     }
 
-    public Dimensions deleteDimensions(Long id) {
+    public ResponseDto deleteDimensions(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
         var OptDimensions = repository.findById(id);
@@ -48,7 +53,9 @@ public class DimensionsService {
 
         repository.deleteById(id);
 
-        log.info("Dimensions '" + OptDimensions.get().getName() + "' has been deleted");
-        return OptDimensions.get();
+        var message = "Dimensions '" + OptDimensions.get().getName() + "' has been deleted";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 }

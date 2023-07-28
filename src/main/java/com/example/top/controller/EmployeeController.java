@@ -53,12 +53,9 @@ public class EmployeeController extends AController {
                                      RedirectAttributes attributes) {
         if (bindingResult.hasErrors() && !isAccountNull(employee, bindingResult)) return getNewEmployeeView(employee);
 
-        empService.saveEmployee(EmployeeMapper.map(employee));
+        var response = empService.saveEmployee(EmployeeMapper.map(employee));
 
-        var message = "";
-        if (employee.getEmployeeId() == null) message = "New employee '"+ employee.getName() +"' has been successfully saved!";
-        else message = "Employee '"+ employee.getName() +"' has been successfully updated!";
-        attributes.addFlashAttribute("alertMessage", message);
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new ModelAndView("redirect:view");
     }
 
@@ -96,10 +93,9 @@ public class EmployeeController extends AController {
                                          RedirectAttributes attributes) {
         if (bindingResult.hasErrors()) return getUpdateEmployeeView(employee);
 
-        empService.saveEmployee(EmployeeMapper.mapInfo(employee));
+        var response = empService.saveEmployee(EmployeeMapper.mapInfo(employee));
 
-        var message = "Employee '"+ employee.getName() +"' has been successfully updated!";
-        attributes.addFlashAttribute("alertMessage", message);
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new ModelAndView("redirect:view");
     }
 
@@ -123,12 +119,9 @@ public class EmployeeController extends AController {
             return mv;
         }
 
-        empService.saveAccount(account.getEmployeeId(), Mapper.map(account, new Account()));
+        var response = empService.saveAccount(account.getEmployeeId(), Mapper.map(account, new Account()));
 
-        var message = "";
-        if (account.getAccountId() == null) message = "Account successfully created for username: '"+ account.getUsername() +"'";
-        else message = "Account details updated for username: '"+ account.getUsername() +"'";
-        attributes.addFlashAttribute("alertMessage", message);
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new ModelAndView("redirect:view");
     }
 
@@ -163,10 +156,9 @@ public class EmployeeController extends AController {
 
     @GetMapping("/delete-employee")
     public RedirectView deleteEmployee(Long id, RedirectAttributes attributes) {
-        var employee = empService.deleteEmployee(id);
+        var response = empService.deleteEmployee(id);
 
-        var message = "Employee '"+ employee.getName() +"' has been successfully deleted!";
-        attributes.addFlashAttribute("alertMessage", message);
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("view");
     }
 }

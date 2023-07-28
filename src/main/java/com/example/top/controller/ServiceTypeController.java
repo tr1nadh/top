@@ -34,12 +34,9 @@ public class ServiceTypeController extends AController {
         }
 
 
-        service.saveServiceType(Mapper.map(type, new ServiceType()));
+        var response = service.saveServiceType(Mapper.map(type, new ServiceType()));
 
-        var message = "";
-        if (type.getId() == null) message = "New service type "+ type.getName() +" has been saved";
-        else message = "Service type has been successfully renamed";
-        attributes.addFlashAttribute("alertMessage", message);
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("view");
     }
 
@@ -55,10 +52,9 @@ public class ServiceTypeController extends AController {
 
     @GetMapping("/delete-service-type")
     public RedirectView deleteServiceType(Long id, RedirectAttributes attributes) {
-        var type = service.deleteServiceType(id);
+        var response = service.deleteServiceType(id);
 
-        var message = "Service type '" + type.getName() + "' has been deleted";
-        attributes.addFlashAttribute("alertMessage", message);
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("view");
     }
 }

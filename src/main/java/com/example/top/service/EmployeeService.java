@@ -1,5 +1,6 @@
 package com.example.top.service;
 
+import com.example.top.dto.ResponseDto;
 import com.example.top.entity.employee.Account;
 import com.example.top.entity.employee.Employee;
 import com.example.top.repository.AccountRepository;
@@ -27,12 +28,16 @@ public class EmployeeService {
     private BCryptPasswordEncoder passwordEncoder;
     private final List<String> excludeRoles = List.of("Admin", "Developer");
 
-    public void saveEmployee(Employee employee) {
+    public ResponseDto saveEmployee(Employee employee) {
         if (employee == null) throw new IllegalArgumentException("'employee' cannot be null");
 
         repository.save(checkPasswordChange(employee));
 
-        log.info("Employee '" + employee.getName() + "' has been saved" );
+        var message = (employee.getEmployeeId() == null) ? "New employee '"+ employee.getName() +"' has been saved successfully!" :
+                "Employee '"+ employee.getName() +"' has been updated successfully!" ;
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 
     public Employee checkPasswordChange(Employee employee) {
@@ -45,7 +50,7 @@ public class EmployeeService {
         return employee;
     }
 
-    public void saveAccount(Long empId, Account account) {
+    public ResponseDto saveAccount(Long empId, Account account) {
         if (empId == null) throw new IllegalArgumentException("'empId' cannot be null");
         if (account == null) throw new IllegalArgumentException("'account' cannot be null");
 
@@ -65,6 +70,9 @@ public class EmployeeService {
         repository.save(checkPasswordChange(dbEmployee));
 
         log.info("Account has been successfully saved to an employee of id " + empId);
+        var message = (account.getAccountId() == null) ? "Account created successfully" : "Account updated successfully";
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 
     public List<Employee> findAllEmployees() {
@@ -128,7 +136,7 @@ public class EmployeeService {
         return account;
     }
 
-    public Employee deleteEmployee(Long id) {
+    public ResponseDto deleteEmployee(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
         var optEmployee = repository.findById(id);
@@ -137,7 +145,9 @@ public class EmployeeService {
 
         repository.deleteById(id);
 
-        log.info("Employee '" + optEmployee.get().getName() + "' has been deleted");
-        return optEmployee.get();
+        var message = "Employee '" + optEmployee.get().getName() + "' has been deleted";
+        log.info(message);
+
+        return ResponseDto.builder().success(true).message(message).build();
     }
 }

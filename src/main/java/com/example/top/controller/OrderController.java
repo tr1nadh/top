@@ -48,12 +48,9 @@ public class OrderController extends AController {
     public ModelAndView saveOrder(@Valid @ModelAttribute("order") OrderDto order, BindingResult bindingResult, RedirectAttributes attributes) {
         if (bindingResult.hasErrors()) return getRenderView(order);
 
-        orderService.saveOrder(OrderMapper.map(order));
+        var response = orderService.saveOrder(OrderMapper.map(order));
 
-        var message = "";
-        if (order.getOrderId() == null) message = "New order successfully saved!";
-        else message = "Order '"+ order.getOrderId() +"' has been successfully updated!";
-        attributes.addFlashAttribute("alertMessage", message);
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new ModelAndView("redirect:pending");
     }
 
@@ -142,9 +139,9 @@ public class OrderController extends AController {
 
     @PostMapping("/update-order-service-status")
     public RedirectView updateOrderServiceStatus(UpdateOrderServiceStatusDto updateOrder, RedirectAttributes attributes) {
-        orderService.update.changeServiceStatus(updateOrder.getOrderId(), updateOrder.getServiceStatus());
+        var response = orderService.update.changeServiceStatus(updateOrder.getOrderId(), updateOrder.getServiceStatus());
 
-        attributes.addFlashAttribute("alertMessage", "Order '" + updateOrder.getOrderId() + "' service status changed to '" + updateOrder.getServiceStatus() + "'");
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("pending");
     }
 
@@ -157,9 +154,9 @@ public class OrderController extends AController {
             return new RedirectView("pending");
         }
 
-        orderService.update.addAmount(updateOrder.getOrderId(), updateOrder.getAddAmount());
+        var response = orderService.update.addAmount(updateOrder.getOrderId(), updateOrder.getAddAmount());
 
-        attributes.addFlashAttribute("alertMessage", "Amount '" + updateOrder.getAddAmount() + "' added to order '" + updateOrder.getOrderId() + "'");
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("pending");
     }
 
@@ -172,49 +169,49 @@ public class OrderController extends AController {
             return new RedirectView("pending");
         }
 
-        orderService.update.removeAmount(updateOrder.getOrderId(), updateOrder.getRemoveAmount());
+        var response = orderService.update.removeAmount(updateOrder.getOrderId(), updateOrder.getRemoveAmount());
 
-        attributes.addFlashAttribute("alertMessage", "Amount '" + updateOrder.getRemoveAmount() + "' removed from order '" + updateOrder.getOrderId() + "'");
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("pending");
     }
 
     @GetMapping("/move-order-pending")
     public RedirectView moveOrderToPending(Long id, RedirectAttributes attributes) {
-        orderService.moveOrderToPending(id);
+        var response = orderService.moveOrderToPending(id);
 
-        attributes.addFlashAttribute("alertMessage", "Order '" + id + "' moved to 'PENDING'");
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("pending");
     }
 
     @PostMapping("/change-service-status")
     public RedirectView changeServiceStatus(Long id, String serviceStatus, RedirectAttributes attributes) {
-        orderService.update.changeServiceStatus(id, serviceStatus);
+        var response = orderService.update.changeServiceStatus(id, serviceStatus);
 
-        attributes.addFlashAttribute("alertMessage", "Order '" + id + "' service status changed to '" + serviceStatus + "'");
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("pending");
     }
 
     @PostMapping("/change-payment-status")
     public RedirectView changePaymentStatus(Long id, String paymentStatus, RedirectAttributes attributes) {
-        orderService.update.changePaymentStatus(id, paymentStatus);
+        var response = orderService.update.changePaymentStatus(id, paymentStatus);
 
-        attributes.addFlashAttribute("alertMessage", "Order '" + id + "' payment status changed to '" + paymentStatus + "'");
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("pending");
     }
 
     @GetMapping("/cancel-order")
     public RedirectView cancelOrder(Long id, RedirectAttributes attributes) {
-        orderService.cancelOrder(id);
+        var response = orderService.cancelOrder(id);
 
-        attributes.addFlashAttribute("alertMessage", "Order '" + id + "' has been cancelled");
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("pending");
     }
 
     @GetMapping("/delete-order")
     public RedirectView deleteOrder(Long id, RedirectAttributes attributes) {
-        orderService.deleteOrder(id);
+        var response = orderService.deleteOrder(id);
 
-        attributes.addFlashAttribute("alertMessage", "Order '" + id + "' has been deleted");
+        attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("pending");
     }
 }
