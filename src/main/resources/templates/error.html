@@ -20,6 +20,9 @@
     <main class="container">
         <div class="d-flex flex-column">
             <!-- Error message -->
+            <div class="alert alert-danger" role="alert" th:text="${message}">
+                Unknown error
+            </div>
             <div class="alert alert-danger" role="alert" th:text="${errorMessage}">
                 Unknown error
             </div>
