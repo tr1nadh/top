@@ -14,3 +14,10 @@ function checkForToastAlert(alertMessage) {
 }
 
 checkForToastAlert(alertMessage);
+
+function popupWindow(url, name) {
+    let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+    width=600,height=800,left=200,top=100`;
+
+    window.open(url, name, params);
+}
