@@ -23,7 +23,7 @@
                 <form id="search-form">
                     <div class="input-group mb-3">
                         <select id="search-option-select" class="form-select border border-primary" style="max-width: 10px" name="search_in"
-                                onchange="placeTrigger()">
+                                onchange="placeTrigger('Search employee using')">
                             <option th:selected="${search_in == 'name'}" value="name">Name</option>
                             <option th:selected="${search_in == 'phoneNo'}" value="phoneNo">PhoneNo</option>
                             <option th:selected="${search_in == 'email'}" value="email">Email</option>
@@ -111,23 +111,11 @@
     <!-- Footer -->
     <footer th:replace="~{frags/general-frags.html :: footer}"></footer>
 
-    <script>
-        function placeTrigger() {
-            let select = document.getElementById('search-option-select');
-            let searchInputField = document.getElementById('search-field');
-            searchInputField.placeholder = 'Search employee using ' + select.value;
-        }
-        function clearSearch() {
-            let searchField = document.getElementById('search-field');
-            searchField.value = '';
-            document.getElementById('clear-btn').style.display = 'none';
-            document.getElementById('search-form').submit();
-        }
-    </script>
-
     <!-- Bottom script and js -->
     <div th:replace="~{frags/general-frags.html :: bottom-script-n-js}"></div>
 
     <script th:replace="~{frags/general-frags.html :: top-view-script-js}"></script>
+
+    <script th:replace="~{frags/general-frags.html :: top-search-script-js}"></script>
 </body>
 </html>
