@@ -4,3 +4,7 @@ function confirmDelete(link) {
       window.location.replace(link);
     }
 }
+
+function submitForm(id) {
+  document.getElementById(id).submit();
+}

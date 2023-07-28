@@ -8,10 +8,6 @@
         })
     }
 
-    function submitForm(id) {
-        document.getElementById(id).submit();
-    }
-
     function checkForToastAlert(alertMessage) {
         if (alertMessage) {
             showAlertToast(alertMessage);
