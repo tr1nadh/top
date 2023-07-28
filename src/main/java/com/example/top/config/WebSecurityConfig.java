@@ -40,6 +40,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests()
+                .requestMatchers("/employees/**").hasAnyRole("ADMIN", "DEVELOPER")
                 .anyRequest()
                 .authenticated()
                 .and()

@@ -9,7 +9,6 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,6 @@ import java.util.List;
 
 @Service
 @Log
-@PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
 public class EmployeeService {
 
     @Autowired
