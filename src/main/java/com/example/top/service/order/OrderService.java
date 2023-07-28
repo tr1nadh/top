@@ -6,14 +6,14 @@ import com.example.top.enums.OrderStatus;
 import com.example.top.enums.PaymentStatus;
 import com.example.top.enums.ServiceStatus;
 import com.example.top.repository.OrderRepository;
-import com.example.top.service.ServiceHelper;
+import com.example.top.security.userdetails.AppSecurity;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @Log
-public class OrderService extends ServiceHelper {
+public class OrderService {
 
     @Autowired
     public OrderFindService find;
@@ -21,6 +21,8 @@ public class OrderService extends ServiceHelper {
     public OrderUpdateService update;
     @Autowired
     private OrderRepository repository;
+    @Autowired
+    private AppSecurity appSecurity;
 
     public ResponseDto saveOrder(Order order) {
         if (order == null) throw new IllegalArgumentException("'order' cannot be null");
@@ -66,7 +68,7 @@ public class OrderService extends ServiceHelper {
     }
 
     private void setHandleBy(Order order) {
-        var account = getCurrentLoggedInUserDetails();
+        var account = appSecurity.getCurrentLoggedInUserDetails();
         if (order.getHandleBy() == null) order.setHandleBy(account.getEmployee());
     }
 

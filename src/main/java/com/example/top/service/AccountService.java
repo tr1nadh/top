@@ -3,6 +3,7 @@ package com.example.top.service;
 import com.example.top.dto.ResponseDto;
 import com.example.top.entity.employee.Account;
 import com.example.top.repository.AccountRepository;
+import com.example.top.security.userdetails.AppSecurity;
 import com.example.top.util.GeneralUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Log
-public class AccountService extends ServiceHelper {
+public class AccountService {
 
     @Autowired
     private AccountRepository repository;
@@ -26,6 +27,8 @@ public class AccountService extends ServiceHelper {
     private HttpServletRequest request;
     @Autowired
     private HttpServletResponse response;
+    @Autowired
+    private AppSecurity appSecurity;
 
     public Account checkPasswordChange(Account account) {
         if (account.isPasswordChanged()) {
@@ -39,7 +42,7 @@ public class AccountService extends ServiceHelper {
     public ResponseDto changeUsername(String newUsername) {
         if (!GeneralUtil.isQualifiedString(newUsername)) throw new IllegalArgumentException("'newUsername' is not a qualified string");
 
-        var currentUsername = getCurrentLoggedInUser().getUsername();
+        var currentUsername = appSecurity.getCurrentLoggedInUser().getUsername();
         var dbAccount = repository.findAccountByUsername(currentUsername);
         if (newUsername.equals(currentUsername))
             throw new IllegalStateException("'" + newUsername + "' is already taken!");
@@ -56,7 +59,7 @@ public class AccountService extends ServiceHelper {
     }
 
     private void updateUsernameInContext(String newUsername) {
-        var emp = getCurrentLoggedInUser();
+        var emp = appSecurity.getCurrentLoggedInUser();
         emp.setUsername(newUsername);
     }
 
@@ -64,7 +67,7 @@ public class AccountService extends ServiceHelper {
         if (!GeneralUtil.isQualifiedString(oldPassword)) throw new IllegalArgumentException("'oldPassword' is not a qualified string");
         if (!GeneralUtil.isQualifiedString(newPassword)) throw new IllegalArgumentException("'newPassword' is not a qualified string");
 
-        var currentUsername = getCurrentLoggedInUser().getUsername();
+        var currentUsername = appSecurity.getCurrentLoggedInUser().getUsername();
         var dbAccount = repository.findAccountByUsername(currentUsername);
         var currentPassword = dbAccount.getPassword();
         if (!arePasswordsMatching(oldPassword, currentPassword))
