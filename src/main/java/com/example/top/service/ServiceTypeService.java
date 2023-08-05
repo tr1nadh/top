@@ -35,7 +35,7 @@ public class ServiceTypeService {
         var serviceTypes = repository.findAll(
                 PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id")));
 
-        var message = "Successfully retrieved all service types";
+        var message = "Successfully retrieved service types of page '"+ page +"'";
         return ResponseDto.builder().success(true).message(message).data(serviceTypes).build();
     }
 
