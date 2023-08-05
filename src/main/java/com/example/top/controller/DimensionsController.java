@@ -42,7 +42,7 @@ public class DimensionsController extends AController {
     @RequestMapping("/view")
     public ModelAndView getDimensions(@RequestParam(defaultValue = "0") int page) {
         var mv = new ModelAndView();
-        mv.addObject("dimensions", service.findAllDimensions(page));
+        mv.addObject("dimensions", service.findAllDimensions(page).getData());
         mv.addObject("currentPage", page);
         mv.setViewName("order/dimensions/dimensions");
 

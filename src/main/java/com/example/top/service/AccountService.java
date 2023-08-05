@@ -7,7 +7,6 @@ import com.example.top.security.userdetails.AppSecurity;
 import com.example.top.util.GeneralUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +15,6 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Service;
 
 @Service
-@Log
 public class AccountService {
 
     @Autowired
@@ -53,8 +51,6 @@ public class AccountService {
         repository.save(dbAccount);
 
         var message = "Username successfully changed from '" + currentUsername + "' to '" + newUsername + "'";
-        log.info(message);
-
         return ResponseDto.builder().success(true).message(message).build();
     }
 
@@ -82,8 +78,6 @@ public class AccountService {
         logoutUser();
 
         var message = "Password changed successfully, please login again.";
-        log.info(message);
-
         return ResponseDto.builder().success(true).message(message).build();
     }
 

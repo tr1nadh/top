@@ -3,16 +3,12 @@ package com.example.top.service;
 import com.example.top.dto.ResponseDto;
 import com.example.top.entity.order.Dimensions;
 import com.example.top.repository.DimensionsRepository;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-@Log
 public class DimensionsService {
 
     @Autowired
@@ -25,23 +21,21 @@ public class DimensionsService {
 
         var message = (dimensions.getId() == null) ? "New dimensions has been saved" :
                 "Dimensions has been renamed successfully";
-        log.info(message);
-
         return ResponseDto.builder().success(true).message(message).build();
     }
 
-    public List<Dimensions> findAllDimensions() {
+    public ResponseDto findAllDimensions() {
         var dimensions = repository.findAll();
 
-        log.info("Successfully retrieved all dimensions");
-        return dimensions;
+        var message = "Successfully retrieved all dimensions";
+        return ResponseDto.builder().success(true).message(message).data(dimensions).build();
     }
 
-    public List<Dimensions> findAllDimensions(int page) {
+    public ResponseDto findAllDimensions(int page) {
         var dimensions = repository.findAll(PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id")));
 
-        log.info("Successfully retrieved all dimensions");
-        return dimensions.get().toList();
+        var message = "Successfully retrieved dimensions of page '"+ page +"'";
+        return ResponseDto.builder().success(true).message(message).data(dimensions).build();
     }
 
     public ResponseDto deleteDimensions(Long id) {
@@ -54,8 +48,6 @@ public class DimensionsService {
         repository.deleteById(id);
 
         var message = "Dimensions '" + OptDimensions.get().getName() + "' has been deleted";
-        log.info(message);
-
         return ResponseDto.builder().success(true).message(message).build();
     }
 }

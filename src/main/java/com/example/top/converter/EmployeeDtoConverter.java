@@ -16,6 +16,6 @@ public class EmployeeDtoConverter implements Converter<String, EmployeeDto> {
     @Override
     public EmployeeDto convert(String source) {
         var id = Long.parseLong(source);
-        return Mapper.map(service.getEmployee(id), new EmployeeDto());
+        return Mapper.map(service.getEmployee(id).getData(), new EmployeeDto());
     }
 }

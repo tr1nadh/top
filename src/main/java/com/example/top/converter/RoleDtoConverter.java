@@ -16,6 +16,6 @@ public class RoleDtoConverter implements Converter<String, RoleDto> {
     @Override
     public RoleDto convert(String source) {
         var id = Long.parseLong(source);
-        return Mapper.map(service.getRole(id), new RoleDto());
+        return Mapper.map(service.getRole(id).getData(), new RoleDto());
     }
 }

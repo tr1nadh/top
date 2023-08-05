@@ -3,7 +3,6 @@ package com.example.top.service;
 import com.example.top.dto.ResponseDto;
 import com.example.top.entity.employee.Role;
 import com.example.top.repository.RoleRepository;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Log
 public class RoleService {
 
     @Autowired
@@ -27,28 +25,26 @@ public class RoleService {
 
         var message = (role.getRoleId() == null) ? "New role '"+ role.getName() +"' has been saved" :
                 "Role renamed successfully";
-        log.info(message);
-
         return ResponseDto.builder().success(true).message(message).build();
     }
 
-    public List<Role> findAllRoles(int page) {
+    public ResponseDto findAllRoles(int page) {
         var roles = repository
                 .findByNameNotIn(excludeRoles, PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "roleId")));
 
-        log.info("Successfully retrieved all roles");
-        return roles;
+        var message = "Successfully retrieved roles of page '"+ page +"'";
+        return ResponseDto.builder().success(true).message(message).data(roles).build();
     }
 
-    public List<Role> findAllRoles() {
+    public ResponseDto findAllRoles() {
         var roles = repository
                 .findByNameNotIn(excludeRoles);
 
-        log.info("Successfully retrieved all roles");
-        return roles;
+        var message = "Successfully retrieved all roles";
+        return ResponseDto.builder().success(true).message(message).data(roles).build();
     }
 
-    public Role getRole(Long id) {
+    public ResponseDto getRole(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
         var optRole = repository.findById(id);
@@ -56,8 +52,8 @@ public class RoleService {
             throw new IllegalStateException("No role found with the id '" + id + "'");
 
         var role = optRole.get();
-        log.info("Role '" + role.getName() + "' has been retrieved");
-        return role;
+        var message = "Role '" + role.getName() + "' has been retrieved";
+        return ResponseDto.builder().success(true).message(message).data(role).build();
     }
 
     public ResponseDto deleteRole(Long id) {
@@ -70,8 +66,6 @@ public class RoleService {
         repository.deleteById(id);
 
         var message = "Role '" + optRole.get().getName() + "' has been deleted";
-        log.info(message);
-
         return ResponseDto.builder().success(true).message(message).build();
     }
 }

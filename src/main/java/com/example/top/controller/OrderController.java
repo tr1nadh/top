@@ -24,7 +24,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Controller
 @RequestMapping("/orders")
@@ -41,14 +40,14 @@ public class OrderController extends AController {
 
     @GetMapping({"/new-order", "/update-order"})
     public ModelAndView renderOrder(Long id) {
-        return getRenderView((id == null) ? new Order() : orderService.getOrder(id));
+        return getRenderView((id == null) ? new Order() : orderService.curd.getOrder(id).getData());
     }
 
     @PostMapping("/save-order")
     public ModelAndView saveOrder(@Valid @ModelAttribute("order") OrderDto order, BindingResult bindingResult, RedirectAttributes attributes) {
         if (bindingResult.hasErrors()) return getRenderView(order);
 
-        var response = orderService.saveOrder(OrderMapper.map(order));
+        var response = orderService.curd.saveOrder(OrderMapper.map(order));
 
         attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new ModelAndView("redirect:pending");
@@ -57,9 +56,9 @@ public class OrderController extends AController {
     private ModelAndView getRenderView(Object order) {
         var mv = new ModelAndView();
         mv.addObject("order", order);
-        mv.addObject("employees", employeeService.findAllEmployees());
-        mv.addObject("serviceTypes", serviceTypeService.findAllServiceTypes());
-        mv.addObject("dimensions", dimensionsService.findAllDimensions());
+        mv.addObject("employees", employeeService.findAllEmployees().getData());
+        mv.addObject("serviceTypes", serviceTypeService.findAllServiceTypes().getData());
+        mv.addObject("dimensions", dimensionsService.findAllDimensions().getData());
         mv.setViewName("order/save-order");
 
         return mv;
@@ -75,17 +74,17 @@ public class OrderController extends AController {
         if (handle_by != null) return getHandleBySortView(status, handle_by, page);
         if (start_date != null) return getDateSortView(status, start_date, end_date, page);
 
-        return getOrdersView(orderService.find.getPersonalizedOrdersBy(getOrderStatusEnum(status), page),
+        return getOrdersView(orderService.find.getPersonalizedOrdersBy(getOrderStatusEnum(status), page).getData(),
                 status, page);
     }
 
     private ModelAndView getDateSortView(String status, String start_date, String end_date, Integer page) {
-        List<Order> orders = null;
+        Object orders = null;
         if (GeneralUtil.isQualifiedString(start_date)) {
             if (!GeneralUtil.isQualifiedString(end_date))
-                orders = orderService.find.findOrdersByBookingDate(getOrderStatusEnum(status), LocalDate.parse(start_date), page);
+                orders = orderService.find.findOrdersByBookingDate(getOrderStatusEnum(status), LocalDate.parse(start_date), page).getData();
             else orders = orderService.find.findOrdersByBookingDateBetween(getOrderStatusEnum(status),
-                        LocalDate.parse(start_date), LocalDate.parse(end_date), page);
+                        LocalDate.parse(start_date), LocalDate.parse(end_date), page).getData();
         }
 
         if (orders == null) throw new IllegalStateException("Dates cannot be empty");
@@ -98,17 +97,17 @@ public class OrderController extends AController {
 
     private ModelAndView getHandleBySortView(String status, String handle_by, Integer page) {
         var mv = getOrdersView(orderService.find.
-                findOrdersOrderStatusAndHandleBy(getOrderStatusEnum(status), handle_by, page), status, page);
+                findOrdersOrderStatusAndHandleBy(getOrderStatusEnum(status), handle_by, page).getData(), status, page);
         mv.addObject("handle_by", handle_by);
         return mv;
     }
 
     private ModelAndView getSearchOrdersView(String status, String search_in, String search, int page) {
-        List<Order> orders = new ArrayList<>();
+        Object orders = new ArrayList<>();
         switch (search_in) {
-            case "name" -> orders = orderService.find.getPersonalizedOrdersByCustomerNameContaining(getOrderStatusEnum(status), search, page);
-            case "phoneNo" -> orders = orderService.find.getPersonalizedOrdersByPhoneNoContaining(getOrderStatusEnum(status), search, page);
-            case "email" -> orders = orderService.find.getPersonalizedOrdersByEmailContaining(getOrderStatusEnum(status), search, page);
+            case "name" -> orders = orderService.find.getPersonalizedOrdersByCustomerNameContaining(getOrderStatusEnum(status), search, page).getData();
+            case "phoneNo" -> orders = orderService.find.getPersonalizedOrdersByPhoneNoContaining(getOrderStatusEnum(status), search, page).getData();
+            case "email" -> orders = orderService.find.getPersonalizedOrdersByEmailContaining(getOrderStatusEnum(status), search, page).getData();
         }
 
         var mv = getOrdersView(orders, status, page);
@@ -126,10 +125,10 @@ public class OrderController extends AController {
         return OrderStatus.PENDING;
     }
 
-    private ModelAndView getOrdersView(List<Order> orders, String active, int page) {
+    private ModelAndView getOrdersView(Object orders, String active, int page) {
         var mv = new ModelAndView();
         mv.addObject("orders", orders);
-        mv.addObject("employees", employeeService.findAllEmployees());
+        mv.addObject("employees", employeeService.findAllEmployees().getData());
         mv.addObject("active", active);
         mv.addObject("currentPage", page);
         mv.setViewName("order/order");
@@ -177,7 +176,7 @@ public class OrderController extends AController {
 
     @GetMapping("/move-order-pending")
     public RedirectView moveOrderToPending(Long id, RedirectAttributes attributes) {
-        var response = orderService.moveOrderToPending(id);
+        var response = orderService.curd.moveOrderToPending(id);
 
         attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("pending");
@@ -201,7 +200,7 @@ public class OrderController extends AController {
 
     @GetMapping("/cancel-order")
     public RedirectView cancelOrder(Long id, RedirectAttributes attributes) {
-        var response = orderService.cancelOrder(id);
+        var response = orderService.curd.cancelOrder(id);
 
         attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("pending");
@@ -209,7 +208,7 @@ public class OrderController extends AController {
 
     @GetMapping("/delete-order")
     public RedirectView deleteOrder(Long id, RedirectAttributes attributes) {
-        var response = orderService.deleteOrder(id);
+        var response = orderService.curd.deleteOrder(id);
 
         attributes.addFlashAttribute("alertMessage", response.getMessage());
         return new RedirectView("pending");

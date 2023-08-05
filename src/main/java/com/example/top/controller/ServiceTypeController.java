@@ -43,7 +43,7 @@ public class ServiceTypeController extends AController {
     @RequestMapping("/view")
     public ModelAndView getServiceTypes(@RequestParam(defaultValue = "0") int page) {
         var mv = new ModelAndView();
-        mv.addObject("serviceTypes", service.findAllServiceTypes(page));
+        mv.addObject("serviceTypes", service.findAllServiceTypes(page).getData());
         mv.addObject("currentPage", page);
         mv.setViewName("order/service-type/service-type");
 

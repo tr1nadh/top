@@ -1,5 +1,6 @@
 package com.example.top.service.order;
 
+import com.example.top.dto.ResponseDto;
 import com.example.top.entity.order.Order;
 import com.example.top.enums.OrderStatus;
 import com.example.top.repository.OrderRepository;
@@ -24,59 +25,85 @@ public class OrderFindService {
     private AppSecurity appSecurity;
     private final List<String> specialRoles = List.of("ROLE_ADMIN", "ROLE_DEVELOPER");
 
-    public List<Order> getPersonalizedOrdersBy(OrderStatus status, int page) {
+    public ResponseDto getPersonalizedOrdersBy(OrderStatus status, int page) {
         var account = appSecurity.getCurrentLoggedInUserDetails();
+        List<Order> orders;
         if (specialRoles.contains(account.getRole()))
-            return repository.findOrdersByOrderStatus(status.toString(), getPageRequest(page));
+            orders = repository.findOrdersByOrderStatus(status.toString(), getPageRequest(page));
+        else orders = repository.findOrdersByOrderStatusAndHandleByName(
+            status.toString(), account.getEmployee().getName(), getPageRequest(page));
 
-        return repository.findOrdersByOrderStatusAndHandleByName(
-                status.toString(), account.getEmployee().getName(), getPageRequest(page));
+        var message = "Successfully retrieved personalized orders by order status '"+ status +"' of page '"+ page +"'";
+        return ResponseDto.builder().success(true).message(message).data(orders).build();
     }
 
-    public List<Order> getPersonalizedOrdersByCustomerNameContaining(OrderStatus status, String customerNameContaining, int page) {
+    public ResponseDto getPersonalizedOrdersByCustomerNameContaining(OrderStatus status, String customerNameContaining, int page) {
         var account = appSecurity.getCurrentLoggedInUserDetails();
+        List<Order> orders;
         if (specialRoles.contains(account.getRole()))
-            return repository.findOrdersByOrderStatusAndCustomerNameContaining(status.toString(), customerNameContaining,
+            orders = repository.findOrdersByOrderStatusAndCustomerNameContaining(status.toString(), customerNameContaining,
                     getPageRequest(page));
-
-        return repository.findOrdersByOrderStatusAndHandleByNameAndCustomerNameContaining(
+        else orders = repository.findOrdersByOrderStatusAndHandleByNameAndCustomerNameContaining(
                 status.toString(), account.getEmployee().getName(), customerNameContaining, getPageRequest(page)
         );
+
+        var message = "Successfully retrieved personalized orders by order status '"+ status +
+                "' and customer name containing '"+ customerNameContaining + "' of page '"+ page +"'";
+        return ResponseDto.builder().success(true).message(message).data(orders).build();
     }
 
-    public List<Order> getPersonalizedOrdersByPhoneNoContaining(OrderStatus status, String phoneNoContaining, int page) {
+    public ResponseDto getPersonalizedOrdersByPhoneNoContaining(OrderStatus status, String phoneNoContaining, int page) {
         var account = appSecurity.getCurrentLoggedInUserDetails();
+        List<Order> orders;
         if (specialRoles.contains(account.getRole()))
-            return repository.findOrdersByOrderStatusAndCustomerPhoneNoContaining(status.toString(), phoneNoContaining,
+            orders = repository.findOrdersByOrderStatusAndCustomerPhoneNoContaining(status.toString(), phoneNoContaining,
                     getPageRequest(page));
+        else orders = repository.findOrdersByOrderStatusAndHandleByNameAndCustomerPhoneNoContaining(
+                status.toString(), account.getEmployee().getName(), phoneNoContaining, getPageRequest(page));
 
-        return repository.findOrdersByOrderStatusAndHandleByNameAndCustomerPhoneNoContaining(
-                status.toString(), account.getEmployee().getName(), phoneNoContaining, getPageRequest(page)
-        );
+        var message = "Successfully retrieved personalized orders by order status '"+ status +
+                "' and phone number name containing '"+ phoneNoContaining + "' of page '"+ page +"'";
+        return ResponseDto.builder().success(true).message(message).data(orders).build();
     }
 
-    public List<Order> getPersonalizedOrdersByEmailContaining(OrderStatus status, String emailContaining, int page) {
+    public ResponseDto getPersonalizedOrdersByEmailContaining(OrderStatus status, String emailContaining, int page) {
         var account = appSecurity.getCurrentLoggedInUserDetails();
-        if (specialRoles.contains(account.getRole())) return repository.findOrdersByOrderStatusAndCustomerEmailAddressContaining(status.toString(), emailContaining,
+        List<Order> orders;
+        if (specialRoles.contains(account.getRole()))
+             orders = repository.findOrdersByOrderStatusAndCustomerEmailAddressContaining(status.toString(), emailContaining,
                 getPageRequest(page));
+        else orders = repository.findOrdersByOrderStatusAndHandleByNameAndCustomerEmailAddressContaining(
+                status.toString(), account.getEmployee().getName(), emailContaining, getPageRequest(page));
 
-        return repository.findOrdersByOrderStatusAndHandleByNameAndCustomerEmailAddressContaining(
-                status.toString(), account.getEmployee().getName(), emailContaining, getPageRequest(page)
-        );
+        var message = "Successfully retrieved personalized orders by order status '"+ status +
+                "' and email containing '"+ emailContaining + "' of page '"+ page +"'";
+        return ResponseDto.builder().success(true).message(message).data(orders).build();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
-    public List<Order> findOrdersOrderStatusAndHandleBy(OrderStatus status, String handleBy, int page) {
-        return repository.findOrdersByOrderStatusAndHandleByName(status.toString(), handleBy, getPageRequest(page));
+    public ResponseDto findOrdersOrderStatusAndHandleBy(OrderStatus status, String handleBy, int page) {
+        List<Order> orders = repository.findOrdersByOrderStatusAndHandleByName(status.toString(), handleBy, getPageRequest(page));
+
+        var message = "Successfully retrieved personalized orders by order status '"+ status +
+                "' and handle by '"+ handleBy + "' of page '"+ page +"'";
+        return ResponseDto.builder().success(true).message(message).data(orders).build();
     }
 
-    public List<Order> findOrdersByBookingDate(OrderStatus status, LocalDate date, int page) {
-        return repository.findOrdersByOrderStatusAndServiceBookingDate(status.toString(), date, getPageRequest(page));
+    public ResponseDto findOrdersByBookingDate(OrderStatus status, LocalDate date, int page) {
+        List<Order> orders = repository.findOrdersByOrderStatusAndServiceBookingDate(status.toString(), date, getPageRequest(page));
+
+        var message = "Successfully retrieved personalized orders by order status '"+ status +
+                "' and date '"+ date + "' of page '"+ page +"'";
+        return ResponseDto.builder().success(true).message(message).data(orders).build();
     }
 
-    public List<Order> findOrdersByBookingDateBetween(OrderStatus status, LocalDate startDate, LocalDate endDate, int page) {
-        return repository.findOrdersByOrderStatusAndServiceBookingDateBetween(status.toString(),
+    public ResponseDto findOrdersByBookingDateBetween(OrderStatus status, LocalDate startDate, LocalDate endDate, int page) {
+        List<Order> orders = repository.findOrdersByOrderStatusAndServiceBookingDateBetween(status.toString(),
                 startDate, endDate, getPageRequest(page));
+
+        var message = "Successfully retrieved personalized orders by order status '"+ status +
+                "' and start date '"+ startDate + "' & end date '"+ endDate +"' of page '"+ page +"'";
+        return ResponseDto.builder().success(true).message(message).data(orders).build();
     }
 
     private PageRequest getPageRequest(int page) {

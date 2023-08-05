@@ -3,16 +3,12 @@ package com.example.top.service;
 import com.example.top.dto.ResponseDto;
 import com.example.top.entity.order.ServiceType;
 import com.example.top.repository.ServiceTypeRepository;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-@Log
 public class ServiceTypeService {
 
     @Autowired
@@ -25,24 +21,22 @@ public class ServiceTypeService {
 
         var message = (type.getId() == null) ? "New service type '"+ type.getName() +"' has been saved" :
                 "Service type has been renamed successfully";
-        log.info(message);
-
         return ResponseDto.builder().success(true).message(message).build();
     }
 
-    public List<ServiceType> findAllServiceTypes() {
+    public ResponseDto findAllServiceTypes() {
         var serviceTypes = repository.findAll();
 
-        log.info("Successfully retrieved all service types");
-        return serviceTypes;
+        var message = "Successfully retrieved all service types";
+        return ResponseDto.builder().success(true).message(message).data(serviceTypes).build();
     }
 
-    public List<ServiceType> findAllServiceTypes(int page) {
+    public ResponseDto findAllServiceTypes(int page) {
         var serviceTypes = repository.findAll(
                 PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id")));
 
-        log.info("Successfully retrieved all service types");
-        return serviceTypes.get().toList();
+        var message = "Successfully retrieved all service types";
+        return ResponseDto.builder().success(true).message(message).data(serviceTypes).build();
     }
 
     public ResponseDto deleteServiceType(Long id) {
@@ -55,8 +49,6 @@ public class ServiceTypeService {
         repository.deleteById(id);
 
         var message = "Service type '" + OptServiceType.get().getName() + "' has been deleted";
-        log.info(message);
-
         return ResponseDto.builder().success(true).message(message).build();
     }
 }

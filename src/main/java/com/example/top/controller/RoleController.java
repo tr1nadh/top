@@ -42,7 +42,7 @@ public class RoleController extends AController {
     @RequestMapping("/view")
     public ModelAndView getRoles(@RequestParam(defaultValue = "0") int page) {
         var mv = new ModelAndView();
-        mv.addObject("roles", service.findAllRoles(page));
+        mv.addObject("roles", service.findAllRoles(page).getData());
         mv.addObject("currentPage", page);
         mv.setViewName("employee/role/role");
 

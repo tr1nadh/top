@@ -17,8 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController extends AController {
@@ -35,13 +33,13 @@ public class EmployeeController extends AController {
 
     @GetMapping("/update-employee")
     public ModelAndView renderUpdateEmployeeInfo(Long id) {
-        return getUpdateEmployeeView(empService.getEmployee(id));
+        return getUpdateEmployeeView(empService.getEmployee(id).getData());
     }
 
     @GetMapping("/update-emp-account")
     public ModelAndView renderUpdateEmployeeAccount(Long id) {
         var mv = new ModelAndView();
-        mv.addObject("account", empService.getAccount(id));
+        mv.addObject("account", empService.getAccount(id).getData());
         mv.addObject("employeeId", id);
         mv.setViewName("employee/save-emp-account");
 
@@ -82,7 +80,7 @@ public class EmployeeController extends AController {
     private ModelAndView getNewEmployeeView(Object employee) {
         var mv = new ModelAndView();
         mv.addObject("employee", employee);
-        mv.addObject("roles", roleService.findAllRoles());
+        mv.addObject("roles", roleService.findAllRoles().getData());
         mv.setViewName("employee/save-employee");
 
         return mv;
@@ -102,7 +100,7 @@ public class EmployeeController extends AController {
     private ModelAndView getUpdateEmployeeView(Object employee) {
         var mv = new ModelAndView();
         mv.addObject("employee",  employee);
-        mv.addObject("roles", roleService.findAllRoles());
+        mv.addObject("roles", roleService.findAllRoles().getData());
         mv.setViewName("employee/save-emp-info");
 
         return mv;
@@ -130,11 +128,11 @@ public class EmployeeController extends AController {
                                      @RequestParam(required = false) Integer page) {
         page = (page == null) ? 0 : page;
         if (search_in != null && search != null) {
-            List<Employee> employees = null;
+            Object employees = null;
             switch (search_in) {
-                case "name" -> employees = empService.findEmployeesByNameContaining(search, page);
-                case "phoneNo" -> employees = empService.findEmployeesByPhoneNoContaining(search, page);
-                case "email" -> employees = empService.findEmployeesByEmailContaining(search, page);
+                case "name" -> employees = empService.findEmployeesByNameContaining(search, page).getData();
+                case "phoneNo" -> employees = empService.findEmployeesByPhoneNoContaining(search, page).getData();
+                case "email" -> employees = empService.findEmployeesByEmailContaining(search, page).getData();
             }
 
             var mv = getEmployeesView(employees, page);
@@ -143,10 +141,10 @@ public class EmployeeController extends AController {
             return mv;
         }
 
-        return getEmployeesView(empService.findAllEmployees(page), page);
+        return getEmployeesView(empService.findAllEmployees(page).getData(), page);
     }
 
-    private ModelAndView getEmployeesView(List<Employee> employees, Integer page) {
+    private ModelAndView getEmployeesView(Object employees, Integer page) {
         var mv = new ModelAndView();
         mv.addObject("employees", employees);
         mv.addObject("currentPage", page);

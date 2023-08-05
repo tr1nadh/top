@@ -5,7 +5,6 @@ import com.example.top.entity.employee.Account;
 import com.example.top.entity.employee.Employee;
 import com.example.top.repository.AccountRepository;
 import com.example.top.repository.EmployeeRepository;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -15,15 +14,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Log
 public class EmployeeService {
 
     @Autowired
     private EmployeeRepository repository;
+
     @Autowired
     private AccountRepository accountRepository;
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
     private final List<String> excludeRoles = List.of("Admin", "Developer");
 
     public ResponseDto saveEmployee(Employee employee) {
@@ -33,8 +34,6 @@ public class EmployeeService {
 
         var message = (employee.getEmployeeId() == null) ? "New employee '"+ employee.getName() +"' has been saved successfully!" :
                 "Employee '"+ employee.getName() +"' has been updated successfully!" ;
-        log.info(message);
-
         return ResponseDto.builder().success(true).message(message).build();
     }
 
@@ -67,71 +66,70 @@ public class EmployeeService {
 
         repository.save(checkPasswordChange(dbEmployee));
 
-        log.info("Account has been successfully saved to an employee of id " + empId);
-        var message = (account.getAccountId() == null) ? "Account created successfully" : "Account updated successfully";
-
+        var message = (account.getAccountId() == null) ? "Account has been successfully created for employee '"+ dbEmployee.getName() + "'" :
+                "Account has been successfully updated of employee '"+ dbEmployee.getName() + "'";
         return ResponseDto.builder().success(true).message(message).build();
     }
 
-    public List<Employee> findAllEmployees() {
+    public ResponseDto findAllEmployees() {
         var employees = repository.findByRoleNameNotIn(excludeRoles);
 
-        log.info("Successfully retrieved all employees");
-        return employees;
+        var message = "Successfully retrieved all employees";
+        return ResponseDto.builder().success(true).message(message).data(employees).build();
     }
 
-    public List<Employee> findAllEmployees(int page) {
+    public ResponseDto findAllEmployees(int page) {
         var employees = repository.findByRoleNameNotIn(excludeRoles,
                         PageRequest.of(page, 15, Sort.by(Sort.Direction.DESC, "employeeId")));
 
-        log.info("Successfully retrieved all employees");
-        return employees;
+        var message = "Successfully retrieved employees of page '"+ page +"'";
+        return ResponseDto.builder().success(true).message(message).data(employees).build();
     }
 
-    public List<Employee> findEmployeesByNameContaining(String nameContaining, int page) {
-        return repository.findByRoleNameNotInAndNameContaining(excludeRoles,
+    public ResponseDto findEmployeesByNameContaining(String nameContaining, int page) {
+        var employees = repository.findByRoleNameNotInAndNameContaining(excludeRoles,
                 nameContaining, PageRequest.of(page, 15, Sort.by(Sort.Direction.DESC, "employeeId")));
+
+        var message = "Successfully retrieved employees name containing '"+ nameContaining +"' of page '"+ page +"'";
+        return ResponseDto.builder().success(true).message(message).data(employees).build();
     }
 
-    public List<Employee> findEmployeesByPhoneNoContaining(String phoneNoContaining, int page) {
-        return repository.findByRoleNameNotInAndPhoneNoContaining(excludeRoles, phoneNoContaining,
+    public ResponseDto findEmployeesByPhoneNoContaining(String phoneNoContaining, int page) {
+        var employees = repository.findByRoleNameNotInAndPhoneNoContaining(excludeRoles, phoneNoContaining,
                 PageRequest.of(page, 15, Sort.by(Sort.Direction.DESC, "employeeId")));
+
+        var message = "Successfully retrieved employees phone no containing '"+ phoneNoContaining +"' of page '"+ page +"'";
+        return ResponseDto.builder().success(true).message(message).data(employees).build();
     }
 
-    public List<Employee> findEmployeesByEmailContaining(String emailContaining, int page) {
-        return repository.findByRoleNameNotInAndEmailAddressContaining(excludeRoles, emailContaining,
+    public ResponseDto findEmployeesByEmailContaining(String emailContaining, int page) {
+        var employees = repository.findByRoleNameNotInAndEmailAddressContaining(excludeRoles, emailContaining,
                 PageRequest.of(page, 15, Sort.by(Sort.Direction.DESC, "employeeId")));
+
+        var message = "Successfully retrieved employees email containing '"+ emailContaining +"' of page '"+ page +"'";
+        return ResponseDto.builder().success(true).message(message).data(employees).build();
     }
 
-    public Employee getEmployee(Long id) {
+    public ResponseDto getEmployee(Long id) {
         if (id == null) throw new IllegalArgumentException("'id' cannot be null");
 
-        var optEmployee = repository.findById(id);
-        if (optEmployee.isEmpty()) {
-             log.severe("No employee found with the id '" + id + "'");
-             return null;
-        }
-
-        var employee = optEmployee.get();
-        log.info("Employee '" + employee.getName() + "' has been retrieved");
-        return employee;
+        var employee = repository.findById(id).orElse(null);
+        var message = (employee == null) ? "No employee found with the id '" + id + "'" :
+                "Employee '" + employee.getName() + "' has been retrieved";
+        return ResponseDto.builder().success(true).message(message).data(employee).build();
     }
 
-    public Account getAccount(Long empId) {
+    public ResponseDto getAccount(Long empId) {
         if (empId == null) throw new IllegalArgumentException("'empId' cannot be null");
 
-        var employee = repository.findById(empId);
-        if (employee.isEmpty())
+        var optEmployee = repository.findById(empId);
+        if (optEmployee.isEmpty())
             throw new IllegalStateException("No employee exists with the id '" + empId + "'");
 
-        var account = employee.get().getAccount();
-        if (account == null) {
-            log.severe("There isn't any account associated with the employee of id '" + empId + "'");
-            return new Account();
-        }
-
-        log.info("Account with the employee id '" + empId + "' has been retrieved");
-        return account;
+        var account = optEmployee.get().getAccount();
+        var message = (account == null) ? "There isn't any account associated with the employee of id '" + empId + "'" :
+         "Account with the employee id '" + empId + "' has been retrieved";
+        return ResponseDto.builder().success(true).message(message).data(account).build();
     }
 
     public ResponseDto deleteEmployee(Long id) {
@@ -144,8 +142,6 @@ public class EmployeeService {
         repository.deleteById(id);
 
         var message = "Employee '" + optEmployee.get().getName() + "' has been deleted";
-        log.info(message);
-
         return ResponseDto.builder().success(true).message(message).build();
     }
 }

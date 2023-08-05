@@ -6,13 +6,11 @@ import com.example.top.enums.OrderStatus;
 import com.example.top.enums.PaymentStatus;
 import com.example.top.enums.ServiceStatus;
 import com.example.top.repository.OrderRepository;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
-@Log
 public class OrderUpdateService {
 
     @Autowired
@@ -36,8 +34,6 @@ public class OrderUpdateService {
         repository.save(dbOrder);
 
         var message = "Amount '" + addAmount + "' has been added to the order '" + orderId + "'";
-        log.info(message);
-
         return ResponseDto.builder().success(true).message(message).build();
     }
 
@@ -59,8 +55,6 @@ public class OrderUpdateService {
         repository.save(dbOrder);
 
         var message = "Amount '" + removeAmount + "' has been removed from the order '" + orderId + "'";
-        log.info(message);
-
         return ResponseDto.builder().success(true).message(message).build();
     }
 
@@ -80,8 +74,6 @@ public class OrderUpdateService {
         repository.save(dbOrder);
 
         var message = "Order '" + orderId + "' service status changed to '" + serviceStatus + "'";
-        log.info(message);
-
         return ResponseDto.builder().success(true).message(message).build();
     }
 
@@ -102,8 +94,6 @@ public class OrderUpdateService {
         repository.save(dbOrder);
 
         var message = "Order '" + orderId + "' payment status changed to '" + paymentStatus + "'";
-        log.info(message);
-
         return ResponseDto.builder().success(true).message(message).build();
     }
 
