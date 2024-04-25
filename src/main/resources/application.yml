@@ -1,13 +1,9 @@
 #Hibernate
 spring:
-  jpa:
-    show-sql: true
-  hibernate:
-    ddl-auto: update
-  security:
-    user:
-      name: admin
-      password: pass
+#  jpa:
+#    show-sql: false
+#  hibernate:
+#    ddl-auto: update
 
 ##Datasource
 #  datasource:
@@ -18,7 +14,7 @@ spring:
 
 # Derby datasource
   datasource:
-    url: jdbc:derby:topDB;create=true
+    url: jdbc:derby:topDB;create=true;
     driver-class-name: org.apache.derby.jdbc.EmbeddedDriver
     username: topdb
     password: ${DB_PASSWORD}
@@ -29,14 +25,14 @@ spring:
       maximum-pool-size: 5
 
 # Hibernate configuration
-jpa:
-  database-platform: org.hibernate.dialect.DerbyTenSevenDialect
-  hibernate:
-    ddl-auto: update
-  properties:
+  jpa:
+    database-platform: org.hibernate.dialect.DerbyDialect
     hibernate:
-      show-sql: true
-      dialect: org.hibernate.dialect.DerbyDialect
+      ddl-auto: update
+    properties:
+      hibernate:
+        show-sql: true
+        dialect: org.hibernate.dialect.DerbyDialect
 
 #Thymeleaf
   thymeleaf:
