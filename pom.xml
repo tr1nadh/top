@@ -92,6 +92,25 @@
 			<artifactId>derbytools</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx</artifactId>
+			<version>23-ea+3</version>
+			<type>pom</type>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-web -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-web</artifactId>
+			<version>23-ea+3</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-swing -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-swing</artifactId>
+			<version>23-ea+3</version>
+		</dependency>
 	</dependencies>
 
 	<build>
