@@ -10,5 +10,6 @@ public class MVCConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("redirect:/orders/pending");
+        registry.addViewController("/login").setViewName("login.html");
     }
 }

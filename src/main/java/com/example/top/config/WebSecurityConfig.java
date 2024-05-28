@@ -45,6 +45,7 @@ public class WebSecurityConfig {
                 .authenticated()
                 .and()
                 .formLogin()
+                .loginPage("/login")
                 .permitAll()
                 .and()
                 .logout(Customizer.withDefaults())
