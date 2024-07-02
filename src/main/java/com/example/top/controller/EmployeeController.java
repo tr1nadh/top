@@ -148,6 +148,9 @@ public class EmployeeController extends AController {
         var mv = new ModelAndView();
         mv.addObject("employees", employees);
         mv.addObject("currentPage", page);
+        mv.addObject("employee",  new Employee());
+        mv.addObject("roles", roleService.findAllRoles().getData());
+        mv.setViewName("employee/save-emp-info");
         mv.setViewName("employee/employee");
         return mv;
     }
