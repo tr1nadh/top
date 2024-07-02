@@ -45,7 +45,37 @@
 
             <!-- Links -->
             <div class="col-sm-4">
-                <a class="btn btn-outline-primary" href="new-employee">New employee</a>
+<!--                <a class="btn btn-outline-primary" href="new-employee">New employee</a>-->
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    New employee
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">New employee</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="container m-y-2 border modal-body">
+
+                                <!-- New employee form -->
+                                <div th:replace="~{frags/emp-frags.html :: emp-save-form(isAccountAllowed='true', isBtnSAllowed='false',
+                                actionLink='save-employee', actionBtnName='Save')}"></div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <!-- Save and Cancel -->
+                                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                                    <i class="fa-solid fa-ban"></i> Cancel</button>
+                                <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('ae-save-form').submit();">
+                                    <i class="fa-solid fa-file-pen"></i> Create/Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <a class="btn btn-outline-primary"
                    onclick="popupWindow('http://localhost:8080/employees/roles/view', 'Roles')">Roles</a>
             </div>
@@ -118,5 +148,22 @@
     <script th:replace="~{frags/general-frags.html :: top-view-script-js}"></script>
 
     <script th:replace="~{frags/general-frags.html :: top-search-script-js}"></script>
+
+    <!-- Inline script -->
+    <script>
+        if (document.getElementById('hasAccount').checked) {
+          document.getElementById('account-details').style.display = 'block';
+        }
+
+        function toggleData(id) {
+          var element = document.getElementById(id);
+          var elementDisplay = element.style.display;
+          if (elementDisplay === 'none') {
+            element.style.display = 'block';
+          } else {
+            element.style.display = 'none';
+          }
+        }
+    </script>
 </body>
 </html>
