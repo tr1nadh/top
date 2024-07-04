@@ -9,18 +9,18 @@
     <form id="ae-save-form" class="row g-3" action="#" th:action="@{${actionLink}}" th:object="${employee}" method="post">
         <input type="hidden" th:field="*{employeeId}">
         <div class="col-md-6 form-floating mb-3">
-            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Venkatappa Raju" required>
+            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Venkatappa Raju" >
             <label for="name">Full name</label>
-            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
+            <p th:if="${#fields.hasErrors('name')}" id="name-error" th:errorclass="error" th:errors="*{name}"></p>
         </div>
         <div class="col-md-6 form-floating mb-3">
-            <input type="number" class="form-control" id="phoneNumber" placeholder="9848032919" th:field="*{phoneNo}" required>
+            <input type="number" class="form-control" id="phoneNumber" placeholder="9848032919" th:field="*{phoneNo}" >
             <label for="phoneNumber">Phone number</label>
             <p th:if="${#fields.hasErrors('phoneNo')}" th:errorclass="error" th:errors="*{phoneNo}"></p>
         </div>
         <div class="col-md-12 form-floating mb-3">
             <input type="email" class="form-control" id="emailAddress" placeholder="venkatapparaju@email.com" th:field="*{emailAddress}"
-            required>
+            >
             <label for="emailAddress">Email address</label>
             <p th:if="${#fields.hasErrors('emailAddress')}" th:errorclass="error" th:errors="*{emailAddress}"></p>
         </div>
@@ -38,9 +38,9 @@
             </div>
         </div>
         <div class="col-md-4">
-            <input type="radio" class="btn-check" id="male-gender" th:field="*{gender}" th:value="Male" checked required>
+            <input type="radio" class="btn-check" id="male-gender" th:field="*{gender}" th:value="Male" checked >
             <label class="btn btn-outline-primary" for="male-gender"><i class="fa-solid fa-mars"></i> Male</label>
-            <input type="radio" class="btn-check" id="female-gender" th:field="*{gender}" th:value="Female" required>
+            <input type="radio" class="btn-check" id="female-gender" th:field="*{gender}" th:value="Female" >
             <label class="btn btn-outline-primary" for="female-gender"><i class="fa-solid fa-venus"></i> Female</label>
             <p th:if="${#fields.hasErrors('gender')}" th:errorclass="error" th:errors="*{gender}"></p>
         </div>
