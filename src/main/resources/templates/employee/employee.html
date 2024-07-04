@@ -62,8 +62,8 @@
                             <div class="container m-y-2 border modal-body">
 
                                 <!-- New employee form -->
-                                <div th:replace="~{frags/emp-frags.html :: emp-save-form(isAccountAllowed='true', isBtnSAllowed='false',
-                                actionLink='save-employee', actionBtnName='Save')}"></div>
+                                <div th:replace="~{frags/emp-frags.html :: emp-save-form(isAccountAllowed='true', isBtnSAllowed='true',
+                                actionLink='', actionBtnName='Save')}"></div>
 
                             </div>
                             <div class="modal-footer">
@@ -164,6 +164,49 @@
             element.style.display = 'none';
           }
         }
+    </script>
+
+    <!-- Include jQuery from a CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#ae-save-form').submit(function(event) {
+                event.preventDefault();
+
+                var formData = {
+                    name: $('#name').val(),
+                    phoneNumber: $('#phoneNumber').val()
+                    emailAddress: $('#emailAddress').val()
+                    male-gender: $('#male-gender').val()
+                    female-gender: $('#female-gender').val()
+                    username: $('#username').val()
+                    password: $('#password').val()
+                    // Add more fields as needed
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'employees/save-employee',
+                    data: JSON.stringify(formData),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        $('#message').text('Form submitted successfully!');
+                        $('.error').text(''); // Clear previous error messages
+                    },
+                    error: function(xhr) {
+                        $('.error').text(''); // Clear previous error messages
+                        if (xhr.status === 400) {
+                            var errors = xhr.responseJSON.errors;
+                            $.each(errors, function(field, message) {
+                                $('#' + field + '-error').text(message);
+                            });
+                        } else {
+                            $('#message').text(`Failed to submit form: ${xhr.responseText}`);
+                        }
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
