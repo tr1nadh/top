@@ -39,11 +39,16 @@ public class EmployeeController extends AController {
     @GetMapping("/update-emp-account")
     public ModelAndView renderUpdateEmployeeAccount(Long id) {
         var mv = new ModelAndView();
-        mv.addObject("account", empService.getAccount(id).getData());
+        mv.addObject("account", getAccount(id));
         mv.addObject("employeeId", id);
         mv.setViewName("employee/save-emp-account");
 
         return mv;
+    }
+
+    public Account getAccount(Long id) {
+        var account = (Account) empService.getAccount(id).getData();
+        return  (account == null ? new Account() : account);
     }
 
     @PostMapping("/save-employee")
@@ -81,7 +86,7 @@ public class EmployeeController extends AController {
         var mv = new ModelAndView();
         mv.addObject("employee", employee);
         mv.addObject("roles", roleService.findAllRoles().getData());
-//        mv.setViewName("employee/save-employee");
+        mv.setViewName("employee/save-employee");
 
         return mv;
     }
